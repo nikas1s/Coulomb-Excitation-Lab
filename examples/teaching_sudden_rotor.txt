@@ -1,0 +1,37 @@
+# Exactly solvable teaching model: a rigid rotor with all levels at 0 MeV (adiabaticity xi = 0).
+# At 180 deg the excitation is known in closed form [Alder & Winther, Mat. Fys. Medd. 32, no. 8
+# (1960), Eq. 5.14]. Their Table 5 gives, for q = 2: P(0)=0.2152, P(2)=0.5597, P(4)=0.1972,
+# P(6)=0.0260, P(8)=0.0018, P(10)=0.0001. Run 180 deg and compare.
+# The electric dipole polarization is not part of this model; the app switches it off.
+# Kinematics of 152Sm + 208Pb at 600 MeV; Q0 = 1.372208 e b gives q = 2.
+Teaching model: degenerate rigid rotor, q = 2 (Alder-Winther benchmark)
+9
+62 152
+82 208
+600
+120 180 20
+1 0 0 1 0
+2 2 0 1 0
+3 4 0 1 0
+4 6 0 1 0
+5 8 0 1 0
+6 10 0 1 0
+7 12 0 1 0
+8 14 0 1 0
+9 16 0 1 0
+1 2 0.4327829835 2
+2 2 -0.5172746035 2
+2 3 0.6939967058 2
+3 3 -0.6616998961 2
+3 4 0.8753466838 2
+4 4 -0.7872714925 2
+4 5 1.0241514636 2
+5 5 -0.8968884998 2
+5 6 1.1536133156 2
+6 6 -0.9950283345 2
+6 7 1.2698103236 2
+7 7 -1.0845677338 2
+7 8 1.3761621788 2
+8 8 -1.1673903361 2
+8 9 1.4748253027 2
+9 9 -1.2447918303 2

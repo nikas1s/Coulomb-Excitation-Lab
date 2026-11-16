@@ -1,0 +1,19 @@
+# 16O beam on a 208Pb target (choose "target" as the excited nucleus): octupole E3 and E2 excitation.
+# E(3-) = 2614.522 keV, B(E3; 0+ -> 3-) = 0.611(9) e2 b3, Q(3-) = -0.34(15) e b,
+# E(2+) = 4085.52 keV, Q(2+) = -0.7(3) e b [M. J. Martin, NDS 108, 1583 (2007)]
+# B(E2; 0+ -> 2+) = 0.287(18) e2 b2 [Pritychenko et al., ADNDT 107, 1 (2016)]
+# The very weak 3- <-> 2+ E1 coupling (B(E1) = 0.00035 W.u., NDS 108) is omitted.
+# 60 MeV = 3.75 MeV/u keeps the nuclear surfaces > 5 fm apart at every angle.
+16O + 208Pb, 60 MeV, target excitation (literature data)
+3
+8 16
+82 208
+60
+1 180 1
+1 0 0 1 0
+2 3 2.614522 -1 0
+3 2 4.08552 1 0
+1 2 0.7816648898 3
+2 2 -0.4395250504 2
+1 3 0.5357238094 2
+3 3 -0.9235643037 2

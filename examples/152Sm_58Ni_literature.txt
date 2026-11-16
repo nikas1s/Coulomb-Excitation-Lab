@@ -1,0 +1,39 @@
+# 152Sm beam on a 58Ni target: multi-step excitation of a rotational band, inverse kinematics.
+# Ground-band energies 0+ ... 16+ [M. J. Martin, NDS 114, 1497 (2013)]
+# B(E2; 0+ -> 2+) = 3.4611(21) e2 b2 [Pritychenko et al., ADNDT 107, 1 (2016)]
+# Rigid-rotor model (Bohr & Mottelson Vol. II): Q0 = sqrt(16pi B/5) = 5.8987 e b, and
+# <I||E2||I'> = sqrt(2I+1) <I 0 2 0|I' 0> sqrt(5/16pi) Q0 for every band member (model values).
+# Check: the rotor predicts Q(2+) = -2/7 Q0 = -1.685 e b; measured -1.683(18) e b [NDS 114].
+# 500 MeV = 3.29 MeV/u keeps the nuclear surfaces > 5 fm apart at every angle.
+# Check band truncation by adding levels; a small highest-level population alone is not proof.
+152Sm + 58Ni, 500 MeV (literature data + rigid rotor)
+9
+62 152
+28 58
+500
+1 180 1
+1 0 0 1 0
+2 2 0.1217818 1 0
+3 4 0.3664793 1 0
+4 6 0.706928 1 0
+5 8 1.12539 1 0
+6 10 1.60926 1 0
+7 12 2.14881 1 0
+8 14 2.73619 1 0
+9 16 3.36502 1 0
+1 2 1.8604031821 2
+2 2 -2.2236071082 2
+2 3 2.9832819894 2
+3 3 -2.8444477701 2
+3 4 3.7628507085 2
+4 4 -3.3842420932 2
+4 5 4.4025174616 2
+5 5 -3.8554524617 2
+5 6 4.9590348170 2
+6 6 -4.2773259360 2
+6 7 5.4585306193 2
+7 7 -4.6622287387 2
+7 8 5.9157050862 2
+8 8 -5.0182580622 2
+8 9 6.3398280225 2
+9 9 -5.3509836815 2

@@ -1,0 +1,31 @@
+# 16O beam on a 238U target (choose "target" as the excited nucleus): multiple excitation.
+# Ground-band energies 0+ ... 12+ [E. Browne, J. K. Tuli, NDS 127, 191 (2015)]
+# B(E2; 0+ -> 2+) = 12.19(62) e2 b2 [Pritychenko et al., ADNDT 107, 1 (2016)]
+# Rigid-rotor model: Q0 = 11.0701 e b for every band member (model values).
+# 66 MeV = 4.13 MeV/u keeps the nuclear surfaces > 5 fm apart at every angle.
+# Check band truncation by adding levels; a small highest-level population alone is not proof.
+16O + 238U, 66 MeV, target excitation (literature data + rigid rotor)
+7
+8 16
+92 238
+66
+1 180 1
+1 0 0 1 0
+2 2 0.044916 1 0
+3 4 0.14838 1 0
+4 6 0.30718 1 0
+5 8 0.5181 1 0
+6 10 0.7759 1 0
+7 12 1.0767 1 0
+1 2 3.4914180500 2
+2 2 -4.1730427405 2
+2 3 5.5987243445 2
+3 3 -5.3381742100 2
+3 4 7.0617407074 2
+4 4 -6.3512060415 2
+4 5 8.2622030960 2
+5 5 -7.2355263876 2
+5 6 9.3066190367 2
+6 6 -8.0272562003 2
+6 7 10.2440226474 2
+7 7 -8.7496031656 2

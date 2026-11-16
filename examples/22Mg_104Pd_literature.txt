@@ -1,0 +1,18 @@
+# 22Mg radioactive beam on 104Pd: a light nucleus whose B(E2) is known only to about 40%.
+# E(2+) = 1247.02 keV, E(4+) = 3308.22 keV [M. S. Basunia, NDS 127, 69 (2015)]
+# B(E2; 0+ -> 2+) = 0.034(+16-11) e2 b2 [Pritychenko et al., ADNDT 107, 1 (2016)]
+# <2||E2||4> from the rigid-rotor model with Q0 = sqrt(16pi B/5) = 0.5846 e b (model value).
+# Q(2+) is not measured, so no diagonal (reorientation) element is included; add a "2 2 value 2" line
+# to explore its effect.
+# 66 MeV = 3.0 MeV/u keeps the nuclear surfaces > 5 fm apart at every angle.
+22Mg + 104Pd, 66 MeV (literature data + rigid rotor)
+3
+12 22
+46 104
+66
+1 180 1
+1 0 0 1 0
+2 2 1.24702 1 0
+3 4 3.30822 1 0
+1 2 0.1843908891 2
+2 3 0.2956832282 2

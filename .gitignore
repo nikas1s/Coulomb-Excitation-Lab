@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.cache/
+# Links into .venv created by agent tooling; not part of the project.
+.agents/
+.claude/
+# TCLX has no licence: its example inputs are downloaded locally, never committed.
+validation/tclx_inputs/*
+!validation/tclx_inputs/README.md
+.DS_Store

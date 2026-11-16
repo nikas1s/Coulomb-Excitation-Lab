@@ -1,0 +1,15 @@
+# 58Ni projectile on 208Pb: an almost first-order E2 excitation with a small reorientation term.
+# E(2+) = 1454.21 keV, Q(2+) = -0.10(6) e b [Nesaraja et al., NDS 111, 897 (2010)]
+# B(E2; 0+ -> 2+) = 0.0650(12) e2 b2 [Pritychenko et al., ADNDT 107, 1 (2016)]
+# <0||E2||2> = sqrt(B(E2)); <2||E2||2> from Q(2+) = sqrt(16pi/5) (2 2 2; -2 0 2) <2||E2||2>
+# 220 MeV = 3.79 MeV/u keeps the nuclear surfaces > 5 fm apart at every angle.
+58Ni + 208Pb, 220 MeV (literature data)
+2
+28 58
+82 208
+220
+1 180 1
+1 0 0 1 0
+2 2 1.45421 1 0
+1 2 0.2549509757 2
+2 2 -0.1319377577 2
