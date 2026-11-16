@@ -4,11 +4,29 @@
 import hashlib
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import venv
 
 ROOT = Path(__file__).resolve().parent
+
+
+def has_pip(python):
+    return python.exists() and subprocess.run([str(python), "-m", "pip", "--version"],
+                                              capture_output=True).returncode == 0
+
+
+def create_environment(environment):
+    print("Creating an isolated Python environment…", flush=True)
+    try:
+        venv.EnvBuilder(with_pip=True, clear=True).create(environment)
+    except (OSError, subprocess.CalledProcessError) as error:
+        shutil.rmtree(environment, ignore_errors=True)
+        version = f"{sys.version_info.major}.{sys.version_info.minor}"
+        raise SystemExit(f"Could not create the Python environment ({error}).\n"
+                         f"Python's venv module is probably missing. On Debian/Ubuntu: sudo apt install python{version}-venv\n"
+                         "Then run this command again.")
 
 
 def main():
@@ -19,9 +37,9 @@ def main():
     requirements = ROOT / "requirements.txt"
     digest = hashlib.sha256(requirements.read_bytes()).hexdigest()
     marker = environment / ".requirements-sha256"
-    if not python.exists():
-        print("Creating an isolated Python environment…", flush=True)
-        venv.EnvBuilder(with_pip=True).create(environment)
+    # A half-created environment (python without pip) from an earlier failed attempt is rebuilt.
+    if not python.exists() or (not marker.exists() and not has_pip(python)):
+        create_environment(environment)
     if not marker.exists() or marker.read_text().strip() != digest:
         print("Installing the pinned open-source dependencies (internet needed on first run)…", flush=True)
         subprocess.run([str(python), "-m", "pip", "install", "--disable-pip-version-check",

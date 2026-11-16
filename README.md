@@ -6,12 +6,13 @@ This application is a Python adaptation of [TCLX](https://github.com/jhenderson8
 
 ## Start the app
 
-### Easiest: double-click a start script
+### Easiest: a start script
 
-| System | Double-click |
+| System | Start script |
 |---|---|
-| macOS | `start_mac.command` |
-| Windows | `start_windows.bat` |
+| macOS | Double-click `start_mac.command` |
+| Windows | Double-click `start_windows.bat` |
+| Linux | Run `./start_linux.sh` in a terminal |
 
 Each script finds a suitable Python, then sets up and starts the app:
 
@@ -23,6 +24,7 @@ You need **Python 3.12, 3.13 or 3.14** (with `venv` and `pip`, as in the python.
 
 - **macOS:** install from [python.org](https://www.python.org/downloads/macos/) or with Homebrew (`brew install python@3.13`).
 - **Windows:** install from [python.org](https://www.python.org/downloads/windows/) and tick **Add python.exe to PATH**. The script uses the `py` launcher when it is available.
+- **Linux:** use your package manager, e.g. `sudo apt install python3 python3-venv` (Ubuntu 24.04 or newer), `sudo dnf install python3` (Fedora) or `sudo pacman -S python` (Arch). Debian and Ubuntu ship the `venv` module separately; the script detects this and names the package to install (e.g. `python3.12-venv`).
 
 If no suitable Python is found, the script says so and keeps its window open.
 
@@ -31,7 +33,7 @@ If no suitable Python is found, the script says so and keeps its window open.
 - **macOS** may refuse to open a downloaded `.command` file. Right-click it and choose **Open**, or allow it under **System Settings → Privacy & Security → Open Anyway**. You can also run `bash start_mac.command` in Terminal.
 - **Windows SmartScreen** may warn about a downloaded `.bat` file. Choose **More info → Run anyway**.
 
-### From a terminal (also Linux)
+### Without a start script
 
 From this folder:
 
@@ -39,7 +41,7 @@ From this folder:
 python3 run.py
 ```
 
-Or from the parent directory: `python3 coulex_streamlit/run.py`. On Windows use `py -3.13 run.py` (or another supported version). Some Linux installations need the `python3-venv` package.
+Or from the parent directory: `python3 coulex_streamlit/run.py`. On Windows use `py -3.13 run.py` (or another supported version).
 
 ### Options
 
@@ -52,13 +54,13 @@ The scripts and `run.py` accept the same options:
 | `--verify` | Recheck the solver against the archived TCLX comparison; `--full` checks all angles |
 | `--server.port 8502` | Start the app on another port |
 
-For example, run `./start_mac.command --test` or `start_windows.bat --test`. No C++ compiler or separate installation command is needed.
+For example, run `./start_mac.command --test`, `./start_linux.sh --test` or `start_windows.bat --test`. No C++ compiler or separate installation command is needed.
 
 ## What is new in this application
 
 These are additions and implementation improvements in this project, not claims of new physics:
 
-- **Double-click start scripts for macOS and Windows** (plus a one-command launcher) and a Streamlit frontend with separate calculation and help sections.
+- **Start scripts for macOS, Windows and Linux** (plus a one-command launcher) and a Streamlit frontend with separate calculation and help sections.
 - **English and Greek interfaces**, including instructions, upload guidance, validation messages and plot labels. Changing language preserves inputs and results.
 - **A Python numerical implementation** using SciPy DOP853, sparse coupling operators and exact SymPy Wigner symbols. No Numerical Recipes routines are used. Probabilities are neither clipped nor renormalized.
 - **Complete initial magnetic-substate averaging**, integer and half-integer spins, signed couplings, E1–E4 transitions and consistent projectile/target kinematics.
@@ -188,7 +190,7 @@ Read [NUMERICS.md](docs/NUMERICS.md) for equations and error controls, [LESSON.m
 
 | Location | Role |
 |---|---|
-| `start_mac.command`, `start_windows.bat` | Double-click launchers: find Python, then call `run.py` |
+| `start_mac.command`, `start_windows.bat`, `start_linux.sh` | Start scripts: find Python, then call `run.py` |
 | `run.py`, `app.py` | Environment setup, launch, interface and exports |
 | `coulex/model.py`, `solver.py` | Validated reactions and coupled-amplitude integration |
 | `coulex/observables.py`, `stopping.py`, `workflow.py` | Cross sections, detectors, energy loss and scans |

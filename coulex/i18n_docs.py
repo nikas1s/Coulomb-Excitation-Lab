@@ -128,7 +128,7 @@ when you need it, and opening it does not reset anything in Calculation.
 - **The surface-separation curve falls below 5 fm.** Nuclear forces may then matter; a pure Coulomb calculation may
   not apply even if it converged.
 - **How do I start the app next time?** Double-click `start_mac.command` (macOS) or `start_windows.bat` (Windows) in
-  the application folder, or run `python3 run.py` there. Keep that terminal window open while you work; Ctrl+C stops
+  the application folder, or run `./start_linux.sh` (Linux) or `python3 run.py` there in a terminal. Keep that terminal window open while you work; Ctrl+C stops
   the app. The first start installs the packages and needs internet; later starts work offline.''',
         'el': '''- **Το κουμπί εκτέλεσης είναι γκρι.** Η λίστα πάνω από τις καρτέλες δείχνει τι λείπει (π.χ. η ενέργεια δέσμης
   ή η γραμμή της θεμελιώδους κατάστασης).
@@ -142,7 +142,8 @@ when you need it, and opening it does not reset anything in Calculation.
 - **Η καμπύλη απόστασης επιφανειών πέφτει κάτω από 5 fm.** Τότε μπορεί να συνεισφέρουν πυρηνικές δυνάμεις· ένας
   καθαρά ηλεκτρομαγνητικός υπολογισμός ίσως να μην ισχύει, ακόμη κι αν συγκλίνει.
 - **Πώς ξεκινώ την εφαρμογή την επόμενη φορά;** Κάντε διπλό κλικ στο `start_mac.command` (macOS) ή στο
-  `start_windows.bat` (Windows) στον φάκελο της εφαρμογής, ή εκτελέστε εκεί `python3 run.py`. Αφήστε ανοιχτό εκείνο το
+  `start_windows.bat` (Windows) στον φάκελο της εφαρμογής, ή εκτελέστε εκεί σε τερματικό `./start_linux.sh` (Linux) ή
+  `python3 run.py`. Αφήστε ανοιχτό εκείνο το
   παράθυρο τερματικού όσο εργάζεστε· το Ctrl+C σταματά την εφαρμογή. Η πρώτη εκκίνηση εγκαθιστά τα πακέτα και χρειάζεται
   σύνδεση στο διαδίκτυο· οι επόμενες λειτουργούν χωρίς σύνδεση.''',
     },

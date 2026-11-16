@@ -14,17 +14,19 @@ Coverage includes:
 - Nuclear and measurement uploads, custom headers, units, uncertainties, count efficiencies, invalid-data errors and stale-result handling.
 - English/Greek controls and error messages, input preservation across language changes, empty own-data modes, every example input, instructions and downloadable formats.
 - Licensing and distribution: no TCLX input is shipped with the examples, and archived evidence and inputs are hash-checked.
-- Start scripts: both stay consistent with `run.py` (supported Python versions, arguments, CRLF line endings for the `.bat`, executable `.command`).
+- Start scripts: all three stay consistent with `run.py` (supported Python versions, arguments, CRLF line endings for the `.bat`, executable `.command`).
 
 ## Start scripts
 
-`start_mac.command` and `start_windows.bat` find Python 3.12–3.14 and call `run.py`, which creates `.venv`, installs the pinned packages and starts the app. Checked on macOS:
+`start_mac.command`, `start_windows.bat` and `start_linux.sh` find Python 3.12–3.14 and call `run.py`, which creates `.venv`, installs the pinned packages and starts the app. Checked on macOS:
 
 - A clean copy without `.venv` or TCLX inputs built its environment from scratch and ran the suite through the launcher, exit code 0; the TCLX regression tests were skipped as intended.
 - The app started headless through the launcher and answered its health check.
 - With only the system Python 3.9 available, the script printed the install instructions and exited with code 1.
 
-**The Windows script has not been run on Windows.**
+For Linux, the script was run through bash on macOS, and the Debian/Ubuntu case (Python present without `venv`) was simulated: the script names the `python3.X-venv` package to install, and `run.py` removes a half-created `.venv` and gives the same advice instead of a misleading network error.
+
+**The Windows script has not been run on Windows, and the Linux script has not been run on Linux.**
 
 ## Licensing (GNU GPL v3)
 
