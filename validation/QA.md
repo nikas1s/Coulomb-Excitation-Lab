@@ -4,7 +4,7 @@ Checked on **2026-11-16**, macOS ARM64 / Python 3.14. Dependency versions are pi
 
 ## Automated tests
 
-`./start_mac.command --test` passed **103 tests with no skips** in 71 seconds, with the TCLX inputs present; see [tests.log](tests.log). In a fresh clone the three regression tests that need those inputs are skipped with an explanation (see [tclx_inputs/README.md](tclx_inputs/README.md)).
+`./start_mac.command --test` passed **117 tests with no skips** in 72 seconds, with the TCLX inputs present; see [tests.log](tests.log). In a fresh clone the three regression tests that need those inputs are skipped with an explanation (see [tclx_inputs/README.md](tclx_inputs/README.md)).
 
 Coverage includes:
 
@@ -14,6 +14,7 @@ Coverage includes:
 - Nuclear and measurement uploads, custom headers, units, uncertainties, count efficiencies, invalid-data errors and stale-result handling.
 - English/Greek controls and error messages, input preservation across language changes, empty own-data modes, every example input, instructions and downloadable formats.
 - Licensing and distribution: no TCLX input is shipped with the examples, and archived evidence and inputs are hash-checked.
+- Public level data: the IAEA service returns levels for 22Mg, 58Ni and 152Sm that match the cited ENSDF values (checked live; the request is sent only on the button press). Parsing skips entries with uncertain energies or non-unique spins and never guesses; the tests run without network access.
 - Start scripts: all three stay consistent with `run.py` (supported Python versions, arguments, CRLF line endings for the `.bat`, executable `.command`).
 
 ## Start scripts

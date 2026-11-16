@@ -43,7 +43,8 @@ def show_error(error):
 
 # Choice widgets whose option labels are translated. Streamlit stores such a choice by its displayed label,
 # so a language switch would reset it; the callback re-asserts the internal value before the rerun.
-TRANSLATED_CHOICES = ('reaction_source', 'excitation', 'measurement_kind', 'measurement_source')
+TRANSLATED_CHOICES = ('reaction_source', 'excitation', 'measurement_kind', 'measurement_source',
+                      'public_nucleus')
 TRANSLATED_PREFIXES = ('measurement_frame_',)  # map_* selectboxes keep their raw values and need no help
 
 

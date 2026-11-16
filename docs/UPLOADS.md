@@ -49,6 +49,15 @@ initial,final,value,lambda
 
 These nuclear tables retain their template header names. The measurement importer below additionally offers custom-column mapping.
 
+### Levels from public data
+
+In **My own tables**, **Load levels from public data** downloads the adopted energy levels and spins of the nucleus you choose (projectile or target) from the IAEA Nuclear Data Services, which publish the ENSDF evaluations. Set the maximum excitation energy (default 5 MeV) first.
+
+- It is a one-time request per nucleus and day; nothing is sent until you press the button, and the app never requests data for examples.
+- Only energies and spins are provided. Entries with an uncertain energy (for example `6242.7?`) or a spin that is not unique (for example `(2+,3)`) are listed under *Not loaded* and are never guessed.
+- Parities come from the sign of the spin; levels are numbered in energy order from the ground state.
+- Matrix elements are not part of the public data. Enter them yourself, for example from the B(E2) values in the cited tables.
+
 ## Upload experimental measurements
 
 Open **Measurements**. A preceding angle scan is not required: the comparison uses the current validated sidebar model and numerical settings directly.

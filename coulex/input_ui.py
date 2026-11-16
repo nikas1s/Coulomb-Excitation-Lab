@@ -12,6 +12,7 @@ from .help_ui import format_box
 from .i18n import error_text, t
 from .imports import nuclear_tables, reaction_text, read_table
 from .model import parse_input
+from . import public_data
 
 MODES = ('example', 'file', 'tables')
 LEVEL_COLUMNS = ('level', 'spin', 'energy_mev', 'parity', 'k')
@@ -106,11 +107,79 @@ def _empty(columns, integer=()):
     return pd.DataFrame({name: pd.Series(dtype='Int64' if name in integer else 'float') for name in columns})
 
 
-def _table(title, key, columns, integer, root, help_text):
+PUBLIC_KEY = 'public_levels'
+
+
+@st.cache_data(ttl=86400, show_time=True)
+def _download_levels(nuclide):
+    """One download per nuclide and day; failures are not cached."""
+    return public_data.fetch_levels_csv(nuclide)
+
+
+def _public_levels(zp, ap, zt, at):
+    """Load a level scheme from public data on request. Returns the loaded table, or None."""
+    with st.expander(t('Load levels from public data'), icon=':material/cloud_download:'):
+        st.caption(t('Downloads adopted energy levels and spins from the IAEA Nuclear Data Services (ENSDF). The '
+                     'request is made only when you press the button. The result fills the level table, which you '
+                     'can then edit.'))
+        labels = {'projectile': t('Projectile'), 'target': t('Target')}
+        choice = st.radio(t('Nucleus to load'), ('projectile', 'target'), horizontal=True, key='public_nucleus',
+                          format_func=labels.__getitem__)
+        z, a = (zp, ap) if choice == 'projectile' else (zt, at)
+        if z is None or a is None:
+            st.info(t('Enter the Z and A of this nucleus first (sidebar, step 1).'))
+            st.session_state.pop(PUBLIC_KEY, None)
+            return None
+        try:
+            nuclide = public_data.nuclide_symbol(int(z), int(a))
+        except ValueError as error:
+            st.error(error_text(error), icon=':material/error:')
+            return None
+        loaded = st.session_state.get(PUBLIC_KEY)
+        if loaded is not None and loaded.nuclide != nuclide:
+            # The nucleus changed: levels loaded for another nucleus must not stay in the table.
+            st.session_state.pop(PUBLIC_KEY, None)
+            loaded = None
+        max_energy = st.number_input(t('Maximum excitation energy to load (MeV)'), min_value=0.1, max_value=50.,
+                                     value=5., step=0.5, key='public_max_energy')
+        left, right = st.columns([1, 1], vertical_alignment='bottom')
+        if left.button(t('Load levels'), key='load_levels', icon=':material/download:', width='stretch'):
+            try:
+                text = _download_levels(nuclide)
+                loaded = public_data.parse_levels(text, nuclide, max_energy)
+                st.session_state[PUBLIC_KEY] = loaded
+            except public_data.PublicDataError as error:
+                st.session_state.pop(PUBLIC_KEY, None)
+                loaded = None
+                st.error(t('Could not load levels ({reason}). Enter the levels by hand or upload a CSV file.',
+                           reason=str(error)), icon=':material/error:')
+        if loaded is None:
+            return None
+        if right.button(t('Remove loaded levels'), key='clear_levels', icon=':material/delete:', width='stretch'):
+            st.session_state.pop(PUBLIC_KEY, None)
+            st.rerun()
+        st.success(t('Loaded {count} levels for {nuclide} ({source}, retrieved {date}).', count=len(loaded.levels),
+                     nuclide=loaded.nuclide, source=public_data.SOURCE, date=loaded.retrieved),
+                   icon=':material/check_circle:')
+        st.caption(t('Public data give energies and spins only. Enter the matrix elements (couplings) yourself; the '
+                     'built-in examples show evaluated B(E2) values as a guide.'))
+        if loaded.skipped:
+            with st.expander(t('Not loaded: {count} entries', count=len(loaded.skipped))):
+                reasons = {'energy': t('energy uncertain or missing'), 'spin': t('spin not unique')}
+                st.markdown('\n'.join(f'- {label}: {reasons[code]}' for label, code in loaded.skipped))
+        return loaded.levels
+
+
+def _table(title, key, columns, integer, root, help_text, preset=None):
     st.markdown(f'**{title}**')
     format_box(key, root, 'tables')
     upload = st.file_uploader(t('Upload a CSV file (optional)'), type=['csv', 'tsv', 'txt'], key=f'{key}_file')
-    frame = read_table(upload.getvalue().decode('utf-8-sig')) if upload else _empty(columns, integer)
+    if upload:
+        frame = read_table(upload.getvalue().decode('utf-8-sig'))
+    elif preset is not None:
+        frame = preset
+    else:
+        frame = _empty(columns, integer)
     editor_key = f'{key}_editor_'+_digest(frame.to_csv(index=False))
     config = {name: st.column_config.Column(help=help_text[name]) for name in columns if name in frame}
     edited = st.data_editor(frame, num_rows='dynamic', hide_index=True, key=editor_key, column_config=config,
@@ -132,9 +201,10 @@ def _table_input(root, table_container):
                 if value is None]
     with table_container:
         st.subheader(t('Your level scheme'), anchor=False)
-        st.markdown(t('Fill in both tables (add rows with **+**) or upload CSV files. They start empty: '
-                      'nothing from the examples is used here. Measured cross sections or counts belong in '
-                      'the **Measurements** tab, not in these tables.'))
+        st.markdown(t('Fill in both tables (add rows with **+**), load levels from public data, or upload CSV files. '
+                      'They start empty: nothing from the examples is used here. Measured cross sections or counts '
+                      'belong in the **Measurements** tab, not in these tables.'))
+        preset = _public_levels(zp, ap, zt, at)
         left, right = st.columns(2)
         with left:
             levels = _table(t('Nuclear levels'), 'levels', LEVEL_COLUMNS, ('level', 'parity'), root,
@@ -142,7 +212,7 @@ def _table_input(root, table_container):
                              'spin': t('Spin J: integer or half-integer (0, 2, 1.5 …)'),
                              'energy_mev': t('Excitation energy; level 1 must be the ground state at 0'),
                              'parity': t('Parity: 1 for +, −1 for −'),
-                             'k': t('K quantum number, kept as metadata only (default 0)')})
+                             'k': t('K quantum number, kept as metadata only (default 0)')}, preset=preset)
         with right:
             elements = _table(t('Electric matrix elements'), 'matrix_elements', ELEMENT_COLUMNS,
                               ('initial', 'final', 'lambda'), root,

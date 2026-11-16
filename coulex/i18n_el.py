@@ -87,11 +87,35 @@ EL = {
     'Target A': 'A στόχου',
     'Enter {name} (sidebar, step 1).': 'Συμπληρώστε: {name} (πλαϊνή στήλη, βήμα 1).',
     'Your level scheme': 'Το σχήμα σταθμών σας',
-    'Fill in both tables (add rows with **+**) or upload CSV files. They start empty: nothing from the examples is used here. '
-    'Measured cross sections or counts belong in the **Measurements** tab, not in these tables.':
-        'Συμπληρώστε και τους δύο πίνακες (προσθέστε γραμμές με **+**) ή ανεβάστε αρχεία CSV. Ξεκινούν κενοί: τίποτα από '
-        'τα παραδείγματα δεν χρησιμοποιείται εδώ. Μετρημένες ενεργές διατομές ή αριθμοί γεγονότων ανήκουν στην καρτέλα '
-        '**Μετρήσεις**, όχι σε αυτούς τους πίνακες.',
+    'Fill in both tables (add rows with **+**), load levels from public data, or upload CSV files. They start empty: '
+    'nothing from the examples is used here. Measured cross sections or counts belong in the **Measurements** tab, '
+    'not in these tables.':
+        'Συμπληρώστε και τους δύο πίνακες (προσθέστε γραμμές με **+**), φορτώστε σταθμούς από δημόσια δεδομένα ή ανεβάστε '
+        'αρχεία CSV. Ξεκινούν κενοί: τίποτα από τα παραδείγματα δεν χρησιμοποιείται εδώ. Μετρημένες ενεργές διατομές ή '
+        'αριθμοί γεγονότων ανήκουν στην καρτέλα **Μετρήσεις**, όχι σε αυτούς τους πίνακες.',
+    'Load levels from public data': 'Φόρτωση σταθμών από δημόσια δεδομένα',
+    'Downloads adopted energy levels and spins from the IAEA Nuclear Data Services (ENSDF). The request is made only when '
+    'you press the button. The result fills the level table, which you can then edit.':
+        'Λαμβάνει τις αξιολογημένες ενέργειες σταθμών και τα σπιν από τις Υπηρεσίες Πυρηνικών Δεδομένων του IAEA (ENSDF). Το '
+        'αίτημα γίνεται μόνο όταν πατήσετε το κουμπί. Το αποτέλεσμα συμπληρώνει τον πίνακα σταθμών, τον οποίο μπορείτε '
+        'στη συνέχεια να επεξεργαστείτε.',
+    'Nucleus to load': 'Πυρήνας για φόρτωση',
+    'Enter the Z and A of this nucleus first (sidebar, step 1).':
+        'Εισαγάγετε πρώτα τα Z και A αυτού του πυρήνα (πλαϊνή στήλη, βήμα 1).',
+    'Maximum excitation energy to load (MeV)': 'Μέγιστη ενέργεια διέγερσης για φόρτωση (MeV)',
+    'Load levels': 'Φόρτωση σταθμών',
+    'Remove loaded levels': 'Αφαίρεση φορτωμένων σταθμών',
+    'Could not load levels ({reason}). Enter the levels by hand or upload a CSV file.':
+        'Δεν ήταν δυνατή η φόρτωση των σταθμών ({reason}). Εισαγάγετε τους σταθμούς με το χέρι ή ανεβάστε αρχείο CSV.',
+    'Loaded {count} levels for {nuclide} ({source}, retrieved {date}).':
+        'Φορτώθηκαν {count} στάθμες για τον {nuclide} ({source}, ανάκτηση {date}).',
+    'Public data give energies and spins only. Enter the matrix elements (couplings) yourself; the built-in examples '
+    'show evaluated B(E2) values as a guide.':
+        'Τα δημόσια δεδομένα δίνουν μόνο ενέργειες και σπιν. Εισαγάγετε εσείς τα στοιχεία πίνακα (συζεύξεις)· τα '
+        'ενσωματωμένα παραδείγματα δείχνουν αξιολογημένες τιμές B(E2) ως οδηγό.',
+    'Not loaded: {count} entries': 'Δεν φορτώθηκαν: {count} καταχωρίσεις',
+    'energy uncertain or missing': 'ενέργεια αβέβαιη ή ελλιπής',
+    'spin not unique': 'σπιν όχι μοναδικό',
     'Nuclear levels': 'Πυρηνικές στάθμες',
     'Electric matrix elements': 'Ηλεκτρικά στοιχεία πίνακα',
     'Upload a CSV file (optional)': 'Μεταφόρτωση αρχείου CSV (προαιρετικά)',

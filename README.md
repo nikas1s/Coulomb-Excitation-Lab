@@ -92,7 +92,7 @@ Plots support Plotly's PNG download. Numerical results can be exported as CSV or
 
 ## Upload another experiment
 
-Choose **My own reaction file** for a `.txt`/`.dat` input or **My own tables** for nuclear levels and matrix elements. Every uploader provides a format description, a blank template and a separately labelled example. Switching reaction sources clears results belonging to the previous source.
+Choose **My own reaction file** for a `.txt`/`.dat` input or **My own tables** for nuclear levels and matrix elements. In **My own tables** you can also press **Load levels from public data** to fetch the adopted levels and spins of a nucleus from the [IAEA Nuclear Data Services](https://nds.iaea.org/relnsd/vcharts/) (ENSDF). The request is made only when you press the button, and it needs internet access; the loaded levels fill the level table for you to edit. Public data give no matrix elements, so couplings must still be entered. Every uploader provides a format description, a blank template and a separately labelled example. Switching reaction sources clears results belonging to the previous source.
 
 The **Measurements** tab accepts **CSV UTF-8, TSV or pasted spreadsheet cells**. Excel users should export CSV; `.xlsx` workbooks are not read directly. Column mapping handles different measurement headers. Comma, semicolon and tab separators are supported; decimal commas require semicolon or tab separation.
 
