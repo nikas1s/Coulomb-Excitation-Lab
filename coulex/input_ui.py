@@ -152,7 +152,7 @@ def _public_levels(zp, ap, zt, at):
                 st.session_state.pop(PUBLIC_KEY, None)
                 loaded = None
                 st.error(t('Could not load levels ({reason}). Enter the levels by hand or upload a CSV file.',
-                           reason=str(error)), icon=':material/error:')
+                           reason=error_text(error)), icon=':material/error:')
         if loaded is None:
             return None
         if right.button(t('Remove loaded levels'), key='clear_levels', icon=':material/delete:', width='stretch'):

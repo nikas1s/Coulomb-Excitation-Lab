@@ -60,7 +60,7 @@ def parse_levels(text: str, nuclide: str, max_energy_mev: float, retrieved: str 
     and listed, never guessed."""
     rows = list(csv.DictReader(StringIO(text)))
     if not rows:
-        raise PublicDataError(f'The service has no levels for {nuclide}.')
+        raise PublicDataError(f'no level data for {nuclide} in the service; check Z and the mass number A')
     loaded, skipped = [], []
     for row in rows:
         label = f"{row.get('energy') or '—'} keV ({row.get('jp') or 'spin unknown'})"
@@ -106,5 +106,5 @@ def fetch_levels_csv(nuclide: str) -> str:
         raise PublicDataError('The response is larger than expected.')
     text = body.decode('latin-1')
     if not text.strip() or text.strip() == '2':
-        raise PublicDataError(f'The service returned no data for {nuclide}.')
+        raise PublicDataError(f'no level data for {nuclide} in the service; check Z and the mass number A')
     return text

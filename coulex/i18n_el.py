@@ -727,6 +727,11 @@ EL.update({
 })
 
 ERRORS_EL = [
+    (r'no level data for (\S+) in the service; check Z and the mass number A',
+     'δεν υπάρχουν δεδομένα σταθμών για τον {0} στην υπηρεσία· ελέγξτε το Z και τον μαζικό αριθμό A'),
+    (r'The ground state of (\S+) \(0 MeV, unique spin\) was not found\.',
+     'Δεν βρέθηκε η θεμελιώδης κατάσταση του {0} (0 MeV, μοναδικό σπιν).'),
+    (r'(\S+) is not a valid nuclide name\.', 'Το {0} δεν είναι έγκυρο όνομα πυρήνα.'),
     (r'Invalid reaction input: (.*)', 'Μη έγκυρη είσοδος αντίδρασης: {0}'),
     (r'Invalid CSV: (.*)', 'Μη έγκυρο CSV: {0}'),
     (r'CSV row (\d+): expected (\d+) columns, found (\d+)\.', 'Γραμμή CSV {0}: αναμένονταν {1} στήλες, βρέθηκαν {2}.'),

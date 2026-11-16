@@ -61,7 +61,7 @@ def test_parity_and_fractional_spins():
 def test_ground_state_is_required():
     with pytest.raises(PublicDataError, match='ground state'):
         parse_levels('z,n,symbol,idx,energy_shift,energy,unc_e,jp\n12,10,22MG,0,,1247,,2+\n', '22Mg', 5.)
-    with pytest.raises(PublicDataError, match='no levels'):
+    with pytest.raises(PublicDataError, match='no level data'):
         parse_levels('', '22Mg', 5.)
 
 
@@ -88,7 +88,7 @@ def test_empty_service_answer_is_reported(monkeypatch):
         def __exit__(self, *exc): return False
         def read(self, size=-1): return b'2\n'
     monkeypatch.setattr(urllib.request, 'urlopen', lambda *a, **k: Response())
-    with pytest.raises(PublicDataError, match='no data'):
+    with pytest.raises(PublicDataError, match='no level data for 22Mg'):
         fetch_levels_csv('22Mg')
 
 
