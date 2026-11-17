@@ -192,6 +192,25 @@ python3 run.py --verify --full
 
 No C++, ROOT or compiler is required. The original source and build tools have been removed. TCLX has no licence, so its two input files are not distributed either: download them into `validation/tclx_inputs/` as described in [its README](validation/tclx_inputs/README.md). Without them, verification stops with these instructions and the tests that need them are skipped; everything else, including the literature benchmarks, runs without them. Verification checks the archived data and input hashes, then writes its new report to `validation/current/`; the historical evidence in `validation/results/` remains unchanged. Without `--full`, it checks ten representative angles. It does not regenerate C++ reference outputs. See [validation/README.md](validation/README.md) for details.
 
+## Research tools and validation
+
+The **Research** tab adds sensitivity scans and experimental-design information, correlated input uncertainty bands, 0+ quadrupole shape invariants, joint multi-experiment fitting, gamma feeding and pure-electric angular correlations, and E3/polarization/model-space comparisons. It includes English/Greek controls, CSV decay/covariance uploads, portable JSON fit configurations and downloadable results tied to their inputs.
+
+Start with the [research guide](docs/RESEARCH.md), its equations and stated physical scope. The [synthetic examples](examples/research/) include two-energy fit data, a covariance matrix, a decay network, an opposite-parity model and a [standalone sensitivity plot](examples/research/sensitivity.png). These fixtures are teaching models, not experimental measurements. Research extensions have analytical and synthetic tests; fitting and gamma response are not claimed to be validated replacements for a full experimental analysis package.
+
+These features extend the same Coulomb-excitation calculation: sensitivity asks what an experiment can constrain, uncertainty propagation tests input assumptions, fitting extracts matrix elements, invariants interpret their structure, and gamma networks connect excitation to photon observables. They are appropriate for university exercises and exploratory studies within the stated physics domain.
+
+| Feature | Checks performed | Remaining limits |
+|---|---|---|
+| Sensitivity and design | Finite-difference step comparison; normalization-degenerate information test | Local derivatives and an assumed observation-error model do not prove unique parameter determination |
+| Uncertainty bands | Zero-covariance limit; covariance validation; reproducible ensemble/UI checks | Assumed input distributions; no uncertainty-coverage validation or bound on omitted physics |
+| 0+ shape invariants | Prolate/oblate rotor limits; basis-phase invariance; missing-element reporting | Finite E2 network; effective beta/gamma interpretation; no full shape distribution |
+| Joint fitting | Synthetic multi-energy recovery; normalization/lifetime constraints; profile test; Gaussian covariance and Poisson residual checks | No published raw-data benchmark, demonstrated confidence-interval coverage or exhaustive minimum search |
+| Gamma feeding and angular response | Branch/conversion bookkeeping; analytic E1/E2 patterns and gamma–gamma correlation; density trace/positivity; full-solid-angle E4 regression | Pure electric transitions and rest-frame axes; no complete laboratory detector response or mixed-multipole calculation |
+| Octupole/model comparisons | Explicit solver recalculation for altered E3, reorientation, polarization and retained levels | Alternative input models are not a unique inference of permanent octupole shape |
+
+**Validation status:** the recorded full regression run passed 132 tests, followed by focused checks and an additional profile test. The new inference and gamma extensions have not undergone independent expert review or end-to-end validation against a published experimental analysis. The archived excitation-code comparison does not validate these new extensions. See [QA.md](validation/QA.md) and [RESEARCH.md](docs/RESEARCH.md) for the evidence and assumptions.
+
 ## Energy loss, yields and scope
 
 Upload validated stopping data for your ion and target as `energy_mev,stopping_mev_per_mg_cm2`. The calculation integrates `dE/dx = −S(E)` with shape-preserving interpolation and rejects extrapolation. Depth quadrature averages each energy's cross section and detector acceptance. Increase its order to test convergence. Stopping-table uncertainty and straggling are not determined by numerical tolerance; straggling is not modeled.
@@ -214,6 +233,9 @@ Read [NUMERICS.md](docs/NUMERICS.md) for equations and error controls, [LESSON.m
 | `coulex/*_ui.py`, `formats.py`, `plots.py` | Input workflows, help and figures |
 | `coulex/i18n*.py` | English/Greek text |
 | `coulex/examples.py`, `literature.py` | Example provenance and independent scientific benchmarks |
+| `coulex/research.py`, `research_io.py`, `research_ui.py` | Sensitivity, ensembles, joint inference and research inputs/UI |
+| `coulex/shapes.py`, `decay.py` | 0+ quadrupole invariants, decay networks and photon angular response |
+| `docs/RESEARCH.md`, `examples/research/` | Scientific scope, upload schemas, synthetic fixtures and plots |
 | `examples/library_examples.py` | Seven worked Python API examples |
 | `tests/`, `validation/` | Automated tests and reproducible comparison artifacts |
 
@@ -237,9 +259,3 @@ This program is free software: you can redistribute it and/or modify it under th
 **Origin and modifications.** This is a modified work: a Python reimplementation, written in 2026, of the semiclassical Coulomb-excitation calculation in [TCLX](https://github.com/jhenderson88/TCLX) and its successor [Cygnus](https://github.com/jhenderson88/Cygnus) by J. Henderson, which build on the Fortran CLX code of H. Ower and J. Gerl and the GOSIA formalism. The collision functions and the integration of the excitation amplitudes over the orbit follow that code, which Cygnus publishes under the GNU GPL v3. Changes include a new Python/SciPy solver, the English/Greek Streamlit interface, measurement comparisons, detector and energy-loss calculations, literature benchmarks, examples, documentation and tests.
 
 TCLX itself carries no licence. Its source is not included, and its two example input files are not distributed; [validation/tclx_inputs/README.md](validation/tclx_inputs/README.md) explains how to obtain them. Third-party libraries and their licences are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-### New research tools
-
-The **Research** tab adds sensitivity scans and experimental-design information, correlated input uncertainty bands, 0+ quadrupole shape invariants, joint multi-experiment fitting, gamma feeding and pure-electric angular correlations, and E3/polarization/model-space comparisons. It includes English/Greek controls, CSV decay/covariance uploads, portable JSON fit configurations and downloadable results tied to their inputs.
-
-Start with the [research guide](docs/RESEARCH.md), its equations and stated physical scope. The [synthetic examples](examples/research/) include two-energy fit data, a covariance matrix, a decay network, an opposite-parity model and a [standalone sensitivity plot](examples/research/sensitivity.png). These fixtures are teaching models, not experimental measurements. Research extensions have analytical and synthetic tests; fitting and gamma response are not claimed to be validated replacements for a full experimental analysis package.
