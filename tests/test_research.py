@@ -45,7 +45,7 @@ def test_gamma_cascade_conversion_and_feeding():
     assert occupancy==pytest.approx([1,1,1])
     with pytest.raises(ValueError): cascade(r,[0,0,1],(Transition(1,2,1),))
     with pytest.raises(ValueError): cascade(r,[0,0,1],(Transition(2,1,1.1),))
-    with pytest.raises(ValueError): cascade_densities(r,[np.eye(1),np.eye(5),np.eye(9)],edges)
+    with pytest.raises(ValueError): cascade_densities(r,[np.zeros((1,1)),np.zeros((5,5)),np.diag([1.]+[0.]*8)],edges)
 
 
 def test_radiation_analytic_patterns_and_solid_angle():

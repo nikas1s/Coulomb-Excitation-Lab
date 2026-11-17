@@ -1,82 +1,99 @@
 # Research qualification record
 
-**Current status: qualification incomplete.** The application has scoped numerical evidence, rather than a blanket certification for research. A scientific code can be validated for specified observables and conditions; neither automated tests nor a literature citation establishes correctness for every measurement.
+**Current status: computational checks pass in the recorded cases; research qualification remains incomplete.** A version can be validated for specified observables, physical conditions and error budgets. Automated tests and bibliography alone do not establish correctness for every measurement. All three requested uses—planning, shape studies and experimental gamma-yield analysis—are tracked in the report.
 
-The first qualification target is the existing nonrelativistic, semiclassical, pure-electromagnetic model. Its domain excludes magnetic excitation, mutual excitation, nuclear-force coupling and relativistic trajectories. Gamma tools have additional pure-electric/rest-frame restrictions. Physical adequacy must be justified for the particular reaction, including separation, omitted levels and systematic effects.
+The model is nonrelativistic, semiclassical and electromagnetic, with one collision partner excited at a time. It excludes magnetic excitation, nuclear-force coupling, relativistic trajectories and product-space mutual excitation. Separate projectile and target models may share a normalization scale. The laboratory gamma model supports pure-electric feeding and supplied intrinsic detector response. Its additional restrictions are in [RESEARCH.md](RESEARCH.md).
 
-## Reproduce the current evidence
+## Reproduce the evidence
 
 ```sh
+python run.py --test
 python run.py --qualify
+python run.py --qualify --extended
 ```
 
-The offline command uses published numerical fixtures and archived numerical outputs. It requires no Fortran compiler, download, or additional dependencies. It records the Python/package versions, source and fixture hashes, individual results and remaining gates in `validation/research_qualification/latest.json`. Exit code zero means the listed computational checks pass; it does **not** mean all research qualification gates have been met. `research_qualified` remains false until the outstanding work and review are resolved.
+The first qualification command runs the published invariant check, archived GOSIA comparisons, a new independent geometric E1/E4 calculation, angular algebra, and scoped linear/nonlinear statistical checks. It requires no compiler or reference-code download. The extended command also performs 100 multilevel coupled-channel pseudoexperiment fits with normalization calibration and two starts per fit; allow additional time. The separate full detector convergence study is:
 
-### Published shape-invariant check
+```sh
+.venv/bin/python validation/lab_response_convergence.py
+```
 
-The five ground-state-network E2 elements in Tables 1–2 of [Gray et al., 106Cd (2022)](https://arxiv.org/abs/2209.06298) give q2 = 0.442521 e²b², q3 = 0.0115213 e³b³ and effective gamma = 29.2523°. They agree with the printed invariant results within input/output rounding. The fixture records its source, precision and restricted purpose. This verifies the invariant calculation, not an experimental-yield fit or the paper's full covariance analysis.
+Use `.venv/Scripts/python.exe` on Windows. The report records package/platform versions, source and fixture hashes, individual checks and remaining gates in `validation/research_qualification/latest.json`. Exit zero means the computational checks executed by that command pass. It does **not** grant research qualification. Archived multilevel and detector-convergence evidence is identified separately from checks rerun by that invocation.
 
-### Independent excitation-code comparison
+## Published shape-invariant check
 
-The official [GOSIA reference distribution](https://www.pas.rochester.edu/~cline/Research/GOSIA.htm) was compiled separately in the ignored local cache. The recorded comparison uses our generated synthetic inputs, polarization off and three lab angles per model. Fifteen finite reference points cover target E2/E3 excitation, E2 multistep excitation with diagonal reorientation, and an unpolarized half-integer ground state. They agree within the preselected criterion `|delta P| <= 1e-10 + 3e-4 |P_ref|`; observed relative differences are below 6e-6.
+The five E2 elements in Tables 1–2 of [Gray et al., 106Cd (2022)](https://arxiv.org/abs/2209.06298) give q2 = 0.442521 e²b², q3 = 0.0115213 e³b³ and effective gamma = 29.2523°. These agree with the printed invariant results within rounding. `cd106.json` records the source and precision. This verifies the invariant calculation, not the paper's full covariance analysis or experimental-yield fit.
 
-The E1 and E4 isolated reference runs produced nonfinite populations. Their input/output records remain in the evidence, but they do not qualify these multipoles. This may reflect reference-code assumptions, numerical behavior or setup constraints; the cause has not been resolved. No tolerance was widened to pass them.
+## Independent excitation calculations
 
-The official integrated speed/accuracy benchmark was also inspected. It contains magnetic matrix elements and gamma detector corrections, so its outputs are not directly comparable to our present pure-electric/rest-frame implementation. It is not counted as a passed benchmark.
+The official [March 2008 GOSIA distribution](https://www.pas.rochester.edu/~cline/Research/GOSIA.htm), compiled separately in an ignored cache, supplies 27 passing points across target E2/E3, multistep/reorientation, half-integer ground spin, coupled E2/E4, projectile E2 and target polarization. The preselected criterion is `|delta P| <= 1e-10 + 3e-4 |P_ref|`; these differences are below 6 ppm. Generated inputs/results are in `gosia_points/` and `gosia_expanded/`.
 
-To regenerate the optional point comparison, download the official `gosia.f` into `.cache/research-qualification/` and compile it there:
+The original isolated E1/E4 runs were nonfinite. Their failed records and the first diagnostic study remain intact as historical evidence. The later investigation resolves the **specific benchmark limitations**, without widening tolerances:
+
+- A bounds-checked build confirms that legacy E1 accesses orbit entry 366 beyond the 365-element table at `ACC,8.0`. Extending storage alone leaves a mesh error just outside the original relative tolerance.
+- The [maintainer version dated 24 February 2026](https://apps.ikp.uni-koeln.de/~warr/gosia/) includes explicit initialization of the startup coefficient that was uninitialized in the inspected legacy path. Its **unmodified isolated E4** runs pass at all three lab angles. The maintainer page itself cautions that its variants have not all been tested.
+- A controlled numerical variant of that version extends storage and its guard to 3000 entries and changes orbit spacing from 0.03 to 0.015 and 0.0075. No collision-function or coupling expression is changed. Fine-mesh isolated E1 passes at all three angles; the maximum relative difference is about 52 ppm. These are explicitly **modified numerical-reference runs**, not unmodified-code comparisons.
+
+`gosia_precision/results.json` records source/executable hashes, compiler commands, every replacement, coarse/fine results and the unmodified E1 storage-guard stops. The default replay checks nine outcomes: three unmodified E4, three fine-mesh E1, and three fine-mesh E4. These are six distinct physical points with an additional E4 numerical-variant comparison. Together with the earlier 27, the report contains 36 accepted outcomes; this count does not imply 36 independent physical configurations.
+
+An additional solver, `independent_cc.py`, constructs the Hamiltonian directly from spherical harmonics of the physical Rutherford separation vector and the Wigner–Eckart theorem. It uses CODATA constants and unitary midpoint propagation, without importing production collision polynomials, coupling constants, angular operators or ODE routines. Six isolated E1/E4 cases at CM 45°, 90° and 135° pass probability and **complex spin-density** comparisons, 4000/8000/16000-step refinement, orbit-range and norm checks. The acceptance criterion is `2e-8 + 1e-4 |P|`, with separate step/tail limits. The remaining approximately 55 ppm E4 difference is consistent with historical rounded production constants versus independent physical constants; it is not removed by renormalization. See `geometric-reference.json`.
+
+Optional regeneration of the numerical reference requires a compiler and separately downloaded source:
 
 ```sh
 gfortran -std=legacy -O0 -o .cache/research-qualification/gosia .cache/research-qualification/gosia.f
 python validation/gosia_points.py --binary .cache/research-qualification/gosia --source .cache/research-qualification/gosia.f
+python validation/gosia_points.py --suite expanded --binary .cache/research-qualification/gosia --source .cache/research-qualification/gosia.f
+python validation/gosia_precision.py --source .cache/research-qualification/gosia-current.f
+python validation/geometric_benchmark.py
 ```
 
-The source URL, source/executable hashes, compiler version, command, generated inputs and numerical comparison are recorded. The external Fortran code is not redistributed or required to run the app. The older code generated compiler warnings; the comparison does not certify that reference implementation itself.
+For the last GOSIA command, download `gosia_20110524.13.f` from the maintainer page as `gosia-current.f`. Reference source/executables stay in `.cache` and are not distributed or required by the app. The old integrated speed/accuracy example contains magnetic elements and additional detector physics, so it is not counted as a directly matched benchmark.
 
-### Independent angular algebra
+## Angular algebra and laboratory photon response
 
-Wigner rotations are compared against matrix exponentials of the angular-momentum generator, using an implementation independent of the production finite factorial sum. Sixty allowed integer/half-integer spin and E1–E4 combinations also test trace transfer, full-solid-angle normalization and isotropy. The largest rotation discrepancy was about 1.1e-15. These are algebra/normalization checks; they do not validate beam-to-detector coordinate transformations, mixed multipoles, conversion-electron transfer or a complete experimental response model.
+Independent angular-momentum matrix exponentials verify the production finite-sum Wigner rotations. Sixty integer/half-integer E1–E4 cases check trace transfer, isotropy and full-solid-angle normalization. The largest recorded rotation discrepancy is approximately 1.1e-15.
 
-### Statistical coverage experiment
+The new laboratory response has checks for proper rotation of incoming/outgoing Rutherford velocities, analytic Lorentz aberration/Doppler factors, isotropic-efficiency limits, boosted full-sphere photon conservation including aligned E4, and the analytic oriented-state formula
 
-Five hundred seeded Gaussian quadrupole-moment pseudoexperiments were fitted through the actual inference entry point. The independent analytical estimator and its variance agree with the numerical outputs. Observed coverages were 67.0% for nominal 68% intervals and 95.6% for nominal 95% intervals; each nominal value lies in the corresponding exact 99% binomial interval. No fits failed.
+```
+W(|L,0> → |0,0>; c) = (2L+1)(1-c²)[P'_L(c)]² / [4π L(L+1)].
+```
 
-This checks an interior, linear Gaussian external-Q constraint. It does not establish coverage for nonlinear coupled-channel fits, low-count Poisson observations, boundary solutions, correlated normalization calibration, alternative signs or omitted physical effects. More pseudoexperiments reduce Monte Carlo uncertainty but do not expand the model cases being tested.
+The latter uses independent Legendre derivatives and checks arbitrary detector sectors, both collision partners, coordinate rotation and boosts together. A full-sphere intrinsic-efficiency detector also recovers the population-cascade count limit, including feeding and symmetry-allowed conversion. Tiny density matrices are validated relative to their scale; invalid Hermiticity or positivity cannot hide behind an absolute tolerance.
 
-## Gates required before a scoped research release
+`lab-response-convergence.json` records simultaneous angular-bin, target-depth, detector-mesh and particle-azimuth refinement for a synthetic nondegenerate fed E2 network with stopping, a gamma sector, energy-dependent intrinsic efficiency, either-particle acceptance and a particle threshold. Its predeclared medium/fine criterion is `1e-8 + 5e-4 |count|`, and a tighter-ODE check uses relative 1e-5. This is one numerical case, not a measured detector uncertainty budget. Mesh calibration, masks, finite-flight response and omitted physics require separate experimental evidence.
 
-| Gate | Acceptance evidence | Status |
+![Laboratory response teaching example](lab_gamma_response.png)
+
+## Statistical evidence
+
+- **Linear Gaussian:** 500 seeded external-Q fits agree with the independent estimator and variance. Observed nominal 68%/95% coverage is 67.0%/95.6%, consistent with exact 99% binomial intervals; no failed fits.
+- **Nonlinear analytic limit:** the actual coupled-channel ODE is fitted in the sudden degenerate two-state limit on its first monotone branch. One hundred Gaussian trials give 71%/96% coverage. Five hundred ideal Poisson-thinned population trials give 98.4% coverage for transformed exact central 95% limits, consistent with analytic discrete coverage 98.8095%. All failures are retained. Exact transformed limits are a qualification reference, not a general interval algorithm in the UI.
+- **Nondegenerate multilevel:** `multilevel-coverage.json` and its log record 100 seeded 0+/2+/4+ E2 fits, four cross sections, an independent Q measurement, a fresh normalization calibration, two physical parameters and the shared scale. Each fit uses two starts and direct ODE predictions. Local Wald coverages for all three parameters are compared with predeclared exact 99% binomial intervals; failed and boundary fits count against the result. This checks one ideal Gaussian configuration, not Poisson multilevel fitting, fitted detector calibration or a general guarantee for local intervals. Run `--extended` to regenerate it.
+
+The count objective is checked against high-precision arithmetic near equal high counts. Single-parameter profiles refit nuisance scales and distinguish impossible zero-mean observations from optimizer failure. Shared normalization priors are counted once; a synthetic simultaneous projectile/target fit recovers planted elements and its free scale. Spectroscopic constraints remain independent of that scale unless explicitly assigned to a group.
+
+Exact central Poisson limits follow [Garwood (1936)](https://doi.org/10.1093/biomet/28.3-4.437). The UI's asymptotic profile thresholds use [Wilks (1938)](https://doi.org/10.1214/aoms/1177732360); they are not exact small-count intervals.
+
+## Experimental target and release gates
+
+The first experimental target remains 96Sr + 120Sn from [Clément et al. (2016)](https://doi.org/10.1103/PhysRevC.94.054326). Seven Table I peak intensities and their reported errors are archived with attribution in `experiments/sr96_sn120/`. They are not efficiency-corrected and are not asserted to be raw Poisson counts. The manifest explicitly lists missing calibrated response, stopping/beam distribution, complete spectroscopic inputs, normalization/covariance and original fit settings. No guessed detector curve is substituted for the experiment's calibration.
+
+A public-input search also inspected the [202Rn/109Ag example](https://github.com/lpgaff/chisqsurface/tree/master/example), which includes M1 structure outside this pure-electric implementation, and [PR285 platinum/nickel inputs](https://github.com/UWCNuclear/Andile_Gosia-input-Files), which reference response/yield files absent from that repository's root listing. These are useful future candidates, not reproduced experiments. The search and cached-input hashes are recorded in `bibliography-search.json`; external input files themselves are not redistributed.
+
+| Gate | Current evidence | Remaining requirement |
 |---|---|---|
-| Excitation solver | Independent point references over projectile/target, multipoles, spin character, energy and angular regimes; convergence/error budget | Partial: finite target E2/E3 cases pass; broader domain open |
-| Derivatives and integration | Several difference steps, orbit/ODE settings and angular/depth quadratures, with changes below the intended measurement error budget | Basic tests exist; representative experimental cases still required |
-| Experimental yields | Published or supplied raw yields, complete nuclear input network, exposure, stopping and detector/response information; matched corrections and conventions | Open |
-| Parameter inference | Alternative starts/signs, independent optimizer comparison, nuisance calibrations and profile checks on representative nonlinear fits | Synthetic recovery exists; comprehensive qualification open |
-| Interval coverage | Repeated nonlinear Gaussian/Poisson fits with calibration uncertainty and bounds; failures retained; predeclared nominal coverage tests | Linear-Gaussian reference passes; nonlinear/count cases open |
-| Gamma response | Matched laboratory coordinate rotations and acceptances; feeding/branching/ICC checks; mixed-multipole support where required by the chosen experiment | Rest-frame pure-electric module only |
-| Model adequacy | Separation, relativity, channel/level completeness, omitted couplings and model-systematic study for each declared reaction class | Experiment dependent; open |
-| Independent review | Nuclear-physics reviewer reproduces the versioned benchmarks, checks conventions, signs, units and claim scope | Open; cannot be supplied by self-testing |
-| Reproducibility | Tagged revision, package lock, source/fixture hashes, automated cross-platform results | Local records present; CI workflow added but remote runs not yet performed |
+| Excitation solver | Independent E1–E4 cases, projectile/target, multistep, polarization and half-integer spin | Broader energy/adiabaticity/model-space error budgets |
+| Derivatives/integration | Step checks, recoil/event-union kinematics, depth/particle/gamma quadrature study | Measurement-specific accuracy targets and representative configurations |
+| Shapes | Published 106Cd and prolate/oblate rotor/phase checks | Additional networks, complete experimental covariance and review |
+| Inference | Gaussian/Poisson residuals, multi-start synthetic recovery, shared target normalization and profiles | Matched experimental fit, broader minimum and calibration studies |
+| Coverage | Linear Gaussian, sudden nonlinear Gaussian/Poisson, and recorded nondegenerate Gaussian study | Multilevel low-count/detector-systematic coverage and model inadequacy |
+| Laboratory gamma response | Analytic patterns, rotations/boosts, feeding and numerical convergence | Matched calibrated detector/trigger response; additional multipoles where required |
+| Experimental reproduction | Published yields, reaction conditions and input manifest | Missing measured response/analysis files and reproduced matrix-element intervals |
+| Independent review | Reproducible evidence available | Nuclear-physics review of conventions, scope and a versioned sign-off |
+| Reproducibility | Pinned dependencies, local tests/hashes and cross-platform CI workflow | Remote CI results and a tagged reviewed release |
 
-Before calling a release research validated, choose the measurement class and agreed accuracy budget, close the applicable gates, and retain a reviewer-approved report tied to a version. A finite benchmark set supports a bounded claim; it cannot prove correctness for all possible inputs.
-
-## Audit fixes
-
-The qualification work found and fixed covariance symmetry checks that depended on an absolute tolerance and could accept a strongly asymmetric matrix expressed in tiny units. Symmetry is now checked without an absolute unit scale, and positive semidefiniteness is tested in dimensionless correlation coordinates, including mixed-unit and zero-variance cases. Fit covariance is constructed with an SVD rather than inversion of the squared-condition normal matrix. A missing electric decay network now gives a scientific input error for a lifetime constraint rather than a DataFrame attribute error. Each fix has regression coverage or existing inference recovery checks.
-
-## Experimental target selected from the literature
-
-The first target is the 96Sr + 120Sn measurement of [Clément et al. (2016)](https://doi.org/10.1103/PhysRevC.94.054326). The source-attributed manifest and Table I subset are in `validation/research_qualification/experiments/sr96_sn120/`. Missing response and analysis inputs are explicitly marked. The qualification report audits their availability, without claiming that an experimental fit has been reproduced. All three requested use cases—planning, shape studies and experimental gamma analysis—are tracked separately in the report.
+The remaining experimental inputs and independent review cannot be established by adding more self-tests. Before a research-validated release, close the applicable gates for each declared measurement class and retain the approved report with that version.
 
 ![Scoped computational evidence](../validation/research_qualification/summary.png)
-
-## Continued qualification: additional evidence
-
-The independently compiled reference now supplies **12 additional passing points**: coupled E2/E4 target excitation, E2 projectile excitation and target E2 with polarization. Together with the original finite cases, 27 points pass the unchanged comparison criterion. The added cases agree within 6 ppm. Generated inputs and outputs are in `gosia_expanded/` and can be regenerated with `validation/gosia_points.py --suite expanded` using the official reference binary.
-
-The optional `validation/gosia_diagnostics.py` records the legacy-reference limitations. A bounds-checked build confirms that E1 at the requested `ACC,8.0` accesses orbit-table entry 366 beyond the original size 365. A cached variant extending only orbit-storage dimensions removes that nonfinite failure. Its weak-E1 probability still differs by approximately 0.0314%, just outside the unchanged 0.03% relative criterion. The independent first-order calculation agrees with this app's weak-E1 result within 0.001%; this is additional evidence, not a reason to silently relax the reference criterion. The source, dimension-only edits, compiler commands and results are recorded; no external Fortran source is distributed. The isolated E4 reference still produces NaNs. Its failure is not erased by the separate successful coupled E2/E4 comparison.
-
-The default qualification run now also evaluates the **actual coupled-channel solver** in the exactly solvable sudden two-state limit, restricted to its first monotone branch. It fits 100 Gaussian pseudoexperiments and 500 ideal Poisson-thinned population-count pseudoexperiments, retaining all failures. The analytic nonlinear estimator, variance and profile objective provide independent comparisons. Exact central Poisson intervals are transformed onto the declared branch for a coverage reference; these intervals are conservative because counts are discrete. They are not a general interval algorithm for arbitrary fits in the UI. Fitted normalization systematics, realistic nondegenerate multi-level spectra and complete experimental detector response remain outside this study.
-
-The Poisson audit exposed cancellation at large nearly equal counts and prompted a stable residual implementation, checked against high-precision arithmetic. Single-parameter profile scans now work with or without normalization nuisance scales and distinguish impossible zero-mean profile points from failed optimization. Recoil-aware count acceptance and energy thresholds have also been added, with independent two-body kinematic and overlap tests; their experimental selection inputs still need to be matched.
-
-The reference for the exact central Poisson limits is [Garwood (1936)](https://doi.org/10.1093/biomet/28.3-4.437). The plotted asymptotic profile thresholds follow the large-sample likelihood-ratio framework of [Wilks (1938)](https://doi.org/10.1214/aoms/1177732360); they are deliberately not described as exact small-count intervals.

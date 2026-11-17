@@ -121,13 +121,15 @@ def gaussian_coverage(trials=500,seed=581):
                 scope='Interior linear Gaussian external-Q constraints only; not nonlinear/Poisson/normalization coverage')
 
 
-def gosia_replay(fixture='gosia_points/results.json'):
+def gosia_replay(fixture='gosia_points/results.json',builds=None):
     """Replay only finite reference cases; unusable reference runs stay explicit."""
     path=HERE/fixture
     reference=json.loads(path.read_text())
     rows=[];unusable=[];cache={}
     from coulex.solver import CoupledChannels,SolverSettings
     for row in reference['rows']:
+        if builds is not None and row.get('build') not in builds:
+            continue
         if not row.get('reference_valid',True):
             unusable.append(dict(case=row['case'],reason=row['reason']))
             continue

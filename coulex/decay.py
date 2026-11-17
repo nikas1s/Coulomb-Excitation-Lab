@@ -126,16 +126,25 @@ def small_d(j, m, n, theta):
     return value
 
 
+def validate_density(density,spin):
+    """Validate in relative units, including arbitrarily small cross-section blocks."""
+    rho=np.asarray(density,complex);size=int(2*spin+1)
+    if rho.shape!=(size,size) or not np.all(np.isfinite(rho)):
+        raise ValueError('Emission requires a positive Hermitian spin density matrix.')
+    scale=float(np.max(abs(rho)))
+    if scale and (not np.allclose(rho,rho.conj().T,atol=1e-14*scale,rtol=1e-10)
+                  or np.linalg.eigvalsh(rho/scale).min() < -1e-12):
+        raise ValueError('Emission requires a positive Hermitian spin density matrix.')
+    return rho
+
+
 def photon_map(density, ji, jf, lam, theta, phi):
     """Unpolarized photon response, per sr; angles radians in emitting rest frame.
 
-    z is the solver orbit quantization axis, x lies in the scattering plane.
+    z is the solver orbit quantization axis; the scattering plane is yz and x is its normal.
     Trace is photon angular density, output is conditional daughter density.
     """
-    rho = np.asarray(density,complex)
-    size = int(2*ji+1)
-    if rho.shape != (size,size) or not np.all(np.isfinite(rho)) or not np.allclose(rho,rho.conj().T) or np.linalg.eigvalsh(rho).min() < -1e-10:
-        raise ValueError('Emission requires a positive Hermitian spin density matrix.')
+    rho = validate_density(density,ji)
     if not 0 <= theta <= pi or not np.isfinite(phi):
         raise ValueError('Photon angles must be finite with theta in [0,pi].')
     if not abs(ji-jf) <= lam <= ji+jf or lam not in (1,2,3,4):
@@ -180,18 +189,28 @@ def fold_detector(density, ji, jf, lam, theta_min, theta_max, phi_min=0., phi_ma
 
 
 def cascade_densities(reaction, densities, transitions):
-    """Trace-preserving unobserved PURE-PHOTON feeding; α>0 rejected.
+    """Trace-preserving unobserved electric feeding; conversion needs isotropy.
 
-    Conversion-electron feeding requires separate angular momentum transfer
-    coefficients and must not be approximated by photon transfer tensors.
+    Conversion-electron feeding requires transfer coefficients unless rotational
+    invariance fixes the result (isotropic parent or spin-zero daughter).
     """
     validate_network(reaction,transitions)
-    if any(edge.alpha for edge in transitions):
-        raise ValueError('Aligned cascade feeding with internal conversion requires electron transfer tensors; use population cascades for alpha > 0.')
-    output = [np.array(rho,complex,copy=True) for rho in densities]
+    if len(densities)!=len(reaction.levels):
+        raise ValueError('Supply one spin density matrix per nuclear level.')
+    output=[validate_density(rho,level.spin).copy() for rho,level in zip(densities,reaction.levels)]
     for upper in sorted(range(len(output)),key=lambda i:reaction.levels[i].energy,reverse=True):
         for edge in transitions:
-            if edge.upper == upper:
-                output[edge.lower] += edge.branch*unobserved_map(output[upper],reaction.levels[upper].spin,
-                                                       reaction.levels[edge.lower].spin,edge.multipolarity)
+            if edge.upper == upper and edge.branch:
+                rho=output[upper];ji=reaction.levels[upper].spin;jf=reaction.levels[edge.lower].spin
+                transfer=unobserved_map(rho,ji,jf,edge.multipolarity)
+                if edge.alpha:
+                    trace=float(np.trace(rho).real);size=len(rho)
+                    scale=float(np.max(abs(rho)))
+                    isotropic=np.eye(size)*trace/size
+                    if jf!=0 and scale and not np.allclose(rho,isotropic,rtol=1e-10,atol=1e-13*scale):
+                        raise ValueError('Aligned conversion feeding requires electron transfer tensors. An isotropic parent or spin-zero daughter is required without them.')
+                    # Rotational invariance fixes the daughter of an unobserved
+                    # isotropic parent, independently of electron partial waves; a spin-zero daughter is also unique.
+                    transfer=np.eye(int(2*jf+1))*trace/(2*jf+1)
+                output[edge.lower]+=edge.branch*transfer
     return output

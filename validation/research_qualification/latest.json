@@ -1,8 +1,8 @@
 {
-  "created_utc": "2026-11-17T08:34:49.924195+00:00",
+  "created_utc": "2026-11-17T09:25:52.174945+00:00",
   "python": "3.14.0",
   "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
-  "git_commit": "0b85ebff66e352471a401baea7ca0271d07549ea",
+  "git_commit": "2568ca0f6069fc518c1cbda67bb9e6aa6703e306",
   "working_tree_dirty": true,
   "dependencies": {
     "numpy": "2.5.4",
@@ -13,15 +13,18 @@
   "hashes": {
     "coulex/__init__.py": "d1d0a70df425f60b4772d566b0b819a7e1a1c6bb3e420e7b99af8f3ed3c66e1e",
     "coulex/acceptance.py": "771aa8ad3e207ffc1c91ad1698ee17d340e552abb98f89d87198abd660c0454a",
-    "coulex/decay.py": "c3ed6f2a087d3cac05a839aa9c84ae3679c392c18cdc12b19901a5bcbf2ee004",
+    "coulex/decay.py": "55dbead702a7ad274d43bb6d453561a1633caf18d9b2c2dc673275526b5832ec",
     "coulex/examples.py": "9556d17da60ba4edd85a05a710f0cbeeea38378a486eefaf68936aa9487b5110",
     "coulex/formats.py": "cb933c248c7adaa7eebabaa391cdc99940c8db2d5085f920b323b900259bed52",
+    "coulex/gamma_yields.py": "4928e70f72a7cae45cb0f6c85b75019c6dc5421e174166347a07dc6b61daf46f",
     "coulex/help_ui.py": "a02018916b80a77de5b19d4be5b19b7e138d1ce447895e44d4f7d3e7b7847906",
     "coulex/i18n.py": "2cfd44a4233bc5ddb8b094829404d8c199d4df716a5fef0575ca67d60b746ce8",
     "coulex/i18n_docs.py": "02b13a4435ead9ab15245af87337077493d41f78ad25e0f1c410cad88db250c4",
     "coulex/i18n_el.py": "81a96c8ad16e1a403b417e627f9af3d005e2026adc6d0821fd20ef608b833fe6",
     "coulex/imports.py": "7b432d8f9cd83c5170fc24e6d11ef681488b1facf0ff4ff542b1540e3c515531",
     "coulex/input_ui.py": "3051611e94fa1ab1d85177a8d5e597ce29b57247f149550ead9b1953f991a108",
+    "coulex/joint_model.py": "9bdde938df00c6b0dd7dfb9607aa45486ab61278e6cdaa90eaf72ee95d0c945e",
+    "coulex/lab_gamma.py": "96f488a6164b57892d9d0e6799e1892abb1362d03433737d4946d5d2aafee077",
     "coulex/literature.py": "f20271dc9f4d7c2942d8f688c89b4434910d7a6af87c3853169d859341fbe730",
     "coulex/measurement_ui.py": "956262ac7a9e616b4f656bf84bfeba290374cd618a388a98f0cadd21a9d9747d",
     "coulex/measurements.py": "ebc5801e4763e2fc9a9dd25d614c9bcb947358fd3c538b6a14563453f950929c",
@@ -29,24 +32,33 @@
     "coulex/observables.py": "54d37cf08c5203ac6bb429a18ab7e32b19751e374636da676686cc5303cf7b6e",
     "coulex/plots.py": "56fc5c4cedbca1498c78b6e7fb9bb9ce8cfad409cd4ba3ff312e0ee2c9809052",
     "coulex/public_data.py": "3c3340b778ff6a160ddaff2fddc408317d4be7d1563d7b92ee916dbccef47198",
-    "coulex/research.py": "7b654be4b2fb7f6424866b5996d3bbe316d3829da6c7f65c825da654c51f2d86",
-    "coulex/research_el.py": "e95ea5048889916781a2e31f45b345027349b6ec6fec1a5ce93051d54a5e949a",
-    "coulex/research_io.py": "28b336112f537cc51cf26ad33c779cffa3fb1358038e8cc3855feb1ab497fafe",
-    "coulex/research_ui.py": "7c6dbef8b039067cac5b7696758975e4826476a8f35b4e30c30069b9b6f34a5d",
+    "coulex/research.py": "0a3ba51c10d8ee25a44559fd0be1787498f148078e7e4fae7621749c285de905",
+    "coulex/research_el.py": "4a389eaa5ab456b8974e204024942ef4e587a10e7511ec8a122ae12886d7b759",
+    "coulex/research_io.py": "e94d462108d6d324be645a8fa543f2c3aa551b71f00c5c8e252dfd6a73eeecf1",
+    "coulex/research_ui.py": "74fa232efb77742f6cf132d7b1d531120e5d63e98e773df4834e594d701fc06e",
     "coulex/results_ui.py": "73673b26bbf2ea5dac00c8a9fbc250b7763eed4eaf0ceb227af5ef1da5e8488e",
     "coulex/shapes.py": "68228734f0564c46f95e99d5e8918c317d2f362ccd984c0ea3cdd1ba112aa923",
     "coulex/solver.py": "ffbe1dc3d5f030556532273be5dead1486392efc32978e9107c61ac5c1416be8",
     "coulex/stopping.py": "b8feee360aea4f1b3a0e1317a10718524251072125b14f8bae19f8c514b615f7",
     "coulex/verification_ui.py": "21e0621b126e80ffc9a482b6b52ff64ef02f0008b0ca1673a8e7e8b6fd617cea",
     "coulex/workflow.py": "80b8d09b7a554884b83e7d295528617cc78c4efe67757e3635306d1ab87ba483",
-    "validation/qualify.py": "3f694715ea29dd7d467d3803304d77a98faf07b8d4bad384a1209b878075368a",
+    "validation/geometric_benchmark.py": "41f50e2cd1c45d8f3b3ae344a6a5435bd96ad52c45c1f341d1f7d45eefd50507",
+    "validation/gosia_precision.py": "7eaba2f0e98f0c8a490bd06431673f85e978350aaeacb946dbe3664cc2174291",
+    "validation/lab_response_convergence.py": "e7f2012d894f6f1a3e75accb65e610fc6d03e703c30f3f007682c41dc09d608c",
+    "validation/multilevel_coverage.py": "9df4a3177e1b24f5b50a577a347e17b6c5cc5fdd71d1e7a7b83aee86672d0364",
+    "validation/qualify.py": "a5ddb7cfaad07872fcabf5f7eca555e9f9ef2ec916129c5c7e41c2ec52cc4150",
+    "validation/research_qualification/bibliography-search.json": "b10ce77d2533a0fefcfca064d1b37b56baae43f77bf359d9f4257806d226aad2",
     "validation/research_qualification/cd106.json": "05b7a79993caf39c4d954b326b11aefe1c47f22fad7317b91662249baeb91952",
-    "validation/research_qualification/checks.py": "0bb3e06d248241aa6f8df4af842a22fa8b1b3fe6e275a5c3f120f576790c6dfa",
+    "validation/research_qualification/checks.py": "abe0fed08b83b6024acd800c0c6d73a87756bcc56deace70253816b109cac7df",
     "validation/research_qualification/experiments/sr96_sn120/manifest.json": "722bd7204b62ceaae795b01c814d9552077fce68754aa7c2b440deae7707cdd5",
     "validation/research_qualification/experiments/sr96_sn120/yields.csv": "78cae17fd613d69f76c6c14804007f005906fae0d8fee5dc23b92f0994f7bb5b",
+    "validation/research_qualification/geometric-reference.json": "a700dcc6a01da75745cebee99d87d5abcc3949f5b8d8b53ec4f31dc6a0cedd64",
     "validation/research_qualification/gosia-diagnostics.json": "af837801e28f8373c6cbb0343a76a2a02a69246cd240debc07ace8d01b5bb00c",
     "validation/research_qualification/gosia_expanded/results.json": "b62489c43117849c2014dbc5037cbb17654c6d40a62729aceebb135b67244159",
     "validation/research_qualification/gosia_points/results.json": "4d84f465562380892228077cb86b4fa9a4d08c3b6d9f76ab09d3d56a5c7ac6d3",
+    "validation/research_qualification/gosia_precision/results.json": "ea89c146137cab36bf94bbfe75cccc8af857ed324f9618ffd1abc3a5aa80f988",
+    "validation/research_qualification/independent_cc.py": "6026df3d1f812ea45919f9dcf9e71c3e48c91940e24940c423dc02c3fbd66bde",
+    "validation/research_qualification/lab-response-convergence.json": "4318d53dad0a8a440e03601cfa39c08575536c479ac406a11f416278ea4646c2",
     "validation/research_qualification/nonlinear.py": "8d462e10c5b247dfd14bfd751c001a94b7b99f5ec21cfa07ced17172892322f1"
   },
   "checks": {
@@ -367,6 +379,431 @@
       "passed": true,
       "scope": "Coupled E2/E4 target, E2 projectile, and polarized E2 target point populations; no gamma response; only finite reference cases are compared"
     },
+    "gosia_precision": {
+      "source_url": "https://apps.ikp.uni-koeln.de/~warr/gosia/gosia_20110524.13.f",
+      "source_sha256": "9c6790028e3418961576d5e670bd7ae1e8ea797fc0030926154b78a0a91f6298",
+      "reference_fixture_sha256": "ea89c146137cab36bf94bbfe75cccc8af857ed324f9618ffd1abc3a5aa80f988",
+      "compared_points": 9,
+      "rows": [
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 1.10347e-06,
+          "actual": 1.103488198015648e-06,
+          "absolute_difference": 1.819801564803123e-11,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 5.29726e-05,
+          "actual": 5.2973238166321974e-05,
+          "absolute_difference": 6.381663219718367e-10,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.000303778,
+          "actual": 0.0003037903322240376,
+          "absolute_difference": 1.2332224037586107e-08,
+          "passed": true
+        },
+        {
+          "case": "E1 isolated",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 0.0204767,
+          "actual": 0.02047563795221101,
+          "absolute_difference": 1.062047788991105e-06,
+          "passed": true
+        },
+        {
+          "case": "E1 isolated",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.072035,
+          "actual": 0.07203307268838088,
+          "absolute_difference": 1.9273116191181883e-06,
+          "passed": true
+        },
+        {
+          "case": "E1 isolated",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.119376,
+          "actual": 0.11937738555274825,
+          "absolute_difference": 1.385552748256469e-06,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 1.10347e-06,
+          "actual": 1.103488198015648e-06,
+          "absolute_difference": 1.819801564803123e-11,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 5.2973e-05,
+          "actual": 5.2973238166321974e-05,
+          "absolute_difference": 2.381663219709596e-10,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.000303787,
+          "actual": 0.0003037903322240376,
+          "absolute_difference": 3.33222403755282e-09,
+          "passed": true
+        }
+      ],
+      "unusable_reference_cases": [],
+      "passed": true,
+      "scope": "Isolated E1/E4 target-excitation point populations, three lab angles; polarization off; fine mesh is a modified numerical reference; only finite reference cases are compared"
+    },
+    "geometric_reference": {
+      "method": "Geometric spherical-harmonic Coulomb Hamiltonian, Wigner\u2013Eckart coupling, CODATA 2018 and unitary midpoint propagation",
+      "relative_tolerance": 0.0001,
+      "absolute_tolerance": 2e-08,
+      "rows": [
+        {
+          "case": "E1 isolated",
+          "cm_angle": 45.0,
+          "production": [
+            0.970699830279296,
+            0.02930016972068609
+          ],
+          "independent": [
+            0.9706997729831424,
+            0.029300227011255932
+          ],
+          "step_samples": [
+            [
+              0.9706997320911122,
+              0.029300267907472418
+            ],
+            [
+              0.9707001742318988,
+              0.02929982576530397
+            ],
+            [
+              0.9706997729831424,
+              0.029300227011255932
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            4.0124875644309554e-07,
+            4.0124595196075474e-07
+          ],
+          "endpoint_change": [
+            3.182888763664238e-08,
+            3.182776660282105e-08
+          ],
+          "relative_difference": [
+            5.902561759473129e-08,
+            -1.955294401583895e-06
+          ],
+          "density_max_error": [
+            5.7296153488373136e-08,
+            3.189124106262689e-08
+          ],
+          "density_matched": true,
+          "norm_error": 5.60174129304869e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        },
+        {
+          "case": "E1 isolated",
+          "cm_angle": 90.0,
+          "production": [
+            0.9034066006201646,
+            0.09659339937981246
+          ],
+          "independent": [
+            0.9034064027646821,
+            0.09659359722981077
+          ],
+          "step_samples": [
+            [
+              0.903404928346321,
+              0.09659507165228555
+            ],
+            [
+              0.9034055306727473,
+              0.09659446932447392
+            ],
+            [
+              0.9034064027646821,
+              0.09659359722981077
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            8.720919347782186e-07,
+            8.720946631513016e-07
+          ],
+          "endpoint_change": [
+            2.9922805100390804e-07,
+            2.9922696125062043e-07
+          ],
+          "relative_difference": [
+            2.190104940010938e-07,
+            -2.0482723906064438e-06
+          ],
+          "density_max_error": [
+            1.9785548255324414e-07,
+            1.2473691081427152e-07
+          ],
+          "density_matched": true,
+          "norm_error": 5.507039269048164e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        },
+        {
+          "case": "E1 isolated",
+          "cm_angle": 135.0,
+          "production": [
+            0.8483780854706602,
+            0.1516219145293188
+          ],
+          "independent": [
+            0.8483778384693523,
+            0.1516221615250604
+          ],
+          "step_samples": [
+            [
+              0.8483807622217873,
+              0.15161923777680256
+            ],
+            [
+              0.8483778131487465,
+              0.15162218684845855
+            ],
+            [
+              0.8483778384693523,
+              0.1516221615250604
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            2.5320605834266985e-08,
+            2.532339815619622e-08
+          ],
+          "endpoint_change": [
+            8.839203402555285e-07,
+            8.839192232601434e-07
+          ],
+          "relative_difference": [
+            2.91145403205171e-07,
+            -1.6290213719252358e-06
+          ],
+          "density_max_error": [
+            2.470013077404687e-07,
+            2.189350040149307e-07
+          ],
+          "density_matched": true,
+          "norm_error": 5.587308393728563e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "cm_angle": 45.0,
+          "production": [
+            0.9999968549137621,
+            3.1450862364498573e-06
+          ],
+          "independent": [
+            0.9999968547336251,
+            3.145260865285513e-06
+          ],
+          "step_samples": [
+            [
+              0.9999968547377542,
+              3.1452608653101526e-06
+            ],
+            [
+              0.9999968547363607,
+              3.1452608652989713e-06
+            ],
+            [
+              0.9999968547336251,
+              3.145260865285513e-06
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            2.7355895326763857e-12,
+            1.3458082982449951e-17
+          ],
+          "endpoint_change": [
+            1.0533796057643485e-12,
+            4.6548695616360075e-18
+          ],
+          "relative_difference": [
+            1.8013758299518818e-10,
+            -5.552125662557834e-05
+          ],
+          "density_max_error": [
+            1.8013690539220306e-10,
+            1.3123777344180076e-10
+          ],
+          "density_matched": true,
+          "norm_error": 5.509592782004802e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "cm_angle": 90.0,
+          "production": [
+            0.9998568071260117,
+            0.00014319287398832078
+          ],
+          "independent": [
+            0.9998567992729294,
+            0.00014320072151207847
+          ],
+          "step_samples": [
+            [
+              0.9998567992770966,
+              0.00014320072152200519
+            ],
+            [
+              0.999856799275706,
+              0.00014320072151415442
+            ],
+            [
+              0.9998567992729294,
+              0.00014320072151207847
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            2.7766677845875165e-12,
+            2.0759490047123075e-15
+          ],
+          "endpoint_change": [
+            1.1087797346931438e-12,
+            2.0290843658066215e-16
+          ],
+          "relative_difference": [
+            7.854207023717723e-09,
+            -5.480086744556032e-05
+          ],
+          "density_max_error": [
+            7.853082184539062e-09,
+            7.105598770560783e-09
+          ],
+          "density_matched": true,
+          "norm_error": 5.558664639693234e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        },
+        {
+          "case": "E4 isolated",
+          "cm_angle": 135.0,
+          "production": [
+            0.9992540539357794,
+            0.0007459460642191033
+          ],
+          "independent": [
+            0.9992540136263689,
+            0.0007459863681095857
+          ],
+          "step_samples": [
+            [
+              0.9992540136304116,
+              0.0007459863682059449
+            ],
+            [
+              0.999254013629091,
+              0.0007459863681295004
+            ],
+            [
+              0.9992540136263689,
+              0.0007459863681095857
+            ]
+          ],
+          "steps": [
+            4000,
+            8000,
+            16000
+          ],
+          "endpoint": 10.0,
+          "short_endpoint": 8.0,
+          "final_step_change": [
+            2.7221558340784213e-12,
+            1.9914733924430994e-14
+          ],
+          "endpoint_change": [
+            1.0579315201653117e-12,
+            6.754579534584693e-16
+          ],
+          "relative_difference": [
+            4.033950319587237e-08,
+            -5.402765010914819e-05
+          ],
+          "density_max_error": [
+            4.030941058719151e-08,
+            3.954291165743449e-08
+          ],
+          "density_matched": true,
+          "norm_error": 5.521472168368291e-12,
+          "matched": true,
+          "converged": true,
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "scope": "Isolated E1/E4 target excitation, unpolarized J=0 ground state, finite-energy channels, three CM angles; polarization off"
+    },
     "gaussian_coverage": {
       "trials": 500,
       "seed": 581,
@@ -616,72 +1053,75 @@
     "scope": "Bibliographic experimental target selected; no experimental fit is claimed"
   },
   "reference_diagnostics": {
-    "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
-    "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
-    "extended_source_sha256": "e02b50f79db65709363f0e8826d50d0d3816465787c7188b7b88f1c344837549",
-    "compile_commands": [
-      [
-        "gfortran",
-        "-std=legacy",
-        "-O0",
-        "-fcheck=bounds",
-        "-g",
-        "-o",
-        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-bounds",
-        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f"
+    "historical_legacy": {
+      "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+      "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
+      "extended_source_sha256": "e02b50f79db65709363f0e8826d50d0d3816465787c7188b7b88f1c344837549",
+      "compile_commands": [
+        [
+          "gfortran",
+          "-std=legacy",
+          "-O0",
+          "-fcheck=bounds",
+          "-g",
+          "-o",
+          "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-bounds",
+          "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f"
+        ],
+        [
+          "gfortran",
+          "-std=legacy",
+          "-O0",
+          "-o",
+          "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700",
+          "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700.f"
+        ]
       ],
-      [
-        "gfortran",
-        "-std=legacy",
-        "-O0",
-        "-o",
-        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700",
-        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700.f"
-      ]
-    ],
-    "storage_edits": {
-      "LP12 = 365": {
-        "replacement": "LP12 = 700",
-        "occurrences": 1
+      "storage_edits": {
+        "LP12 = 365": {
+          "replacement": "LP12 = 700",
+          "occurrences": 1
+        },
+        "SH(365)": {
+          "replacement": "SH(700)",
+          "occurrences": 3
+        },
+        "CH(365)": {
+          "replacement": "CH(700)",
+          "occurrences": 3
+        },
+        "ADB(365)": {
+          "replacement": "ADB(700)",
+          "occurrences": 2
+        }
       },
-      "SH(365)": {
-        "replacement": "SH(700)",
-        "occurrences": 3
+      "e1_storage": {
+        "returncode": 2,
+        "diagnostic": "At line 3762 of file /Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f\nFortran runtime error: Index '366' of dimension 1 of array 'ch' above upper bound of 365\n\nError termination.",
+        "out_of_bounds_confirmed": true
       },
-      "CH(365)": {
-        "replacement": "CH(700)",
-        "occurrences": 3
+      "e1_extended": {
+        "returncode": 0,
+        "reference_probability": 7.48404e-06,
+        "python_probability": 7.486391736224858e-06,
+        "relative_difference": 0.000314233518909246,
+        "predeclared_relative_tolerance": 0.0003,
+        "comparison_passed": false
       },
-      "ADB(365)": {
-        "replacement": "ADB(700)",
-        "occurrences": 2
-      }
+      "e1_independent_weak_limit": {
+        "first_order_probability": 7.486438683612567e-06,
+        "coupled_probability": 7.486391736224858e-06,
+        "relative_difference": -6.270990746459759e-06,
+        "passed": true
+      },
+      "e4_isolated": {
+        "returncode": 0,
+        "nonfinite_output": true,
+        "resolved": false
+      },
+      "conclusion": "E1 storage overflow diagnosed. Extending storage removes nonfinite results but leaves a discrepancy outside the unchanged tolerance. Isolated E4 remains unresolved; coupled E2/E4 has a separate passing reference."
     },
-    "e1_storage": {
-      "returncode": 2,
-      "diagnostic": "At line 3762 of file /Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f\nFortran runtime error: Index '366' of dimension 1 of array 'ch' above upper bound of 365\n\nError termination.",
-      "out_of_bounds_confirmed": true
-    },
-    "e1_extended": {
-      "returncode": 0,
-      "reference_probability": 7.48404e-06,
-      "python_probability": 7.486391736224858e-06,
-      "relative_difference": 0.000314233518909246,
-      "predeclared_relative_tolerance": 0.0003,
-      "comparison_passed": false
-    },
-    "e1_independent_weak_limit": {
-      "first_order_probability": 7.486438683612567e-06,
-      "coupled_probability": 7.486391736224858e-06,
-      "relative_difference": -6.270990746459759e-06,
-      "passed": true
-    },
-    "e4_isolated": {
-      "returncode": 0,
-      "nonfinite_output": true,
-      "resolved": false
-    },
-    "conclusion": "E1 storage overflow diagnosed. Extending storage removes nonfinite results but leaves a discrepancy outside the unchanged tolerance. Isolated E4 remains unresolved; coupled E2/E4 has a separate passing reference."
+    "resolution": "Specific isolated E1/E4 benchmark issues resolved by independently converged geometric propagation, unmodified newer E4 reference and explicitly mesh-refined E1 reference. Historical failed runs are preserved."
   },
   "requested_use_cases": {
     "experiment_planning": {
@@ -698,9 +1138,138 @@
     }
   },
   "remaining_gates": [
-    "Resolve strict E1 discrepancy and isolated E4 reference behavior; broaden energies and detector error budgets",
+    "Broaden excitation, derivative and detector error budgets beyond the independently checked E1\u2013E4 cases",
     "Experimental gamma-yield reproduction with matched geometry, multipoles and all correction inputs",
-    "General nondegenerate multilevel fit interval coverage, including fitted normalization and detector systematics",
+    "Broader multilevel fit interval coverage, including low counts and fitted detector systematics beyond the recorded Gaussian case",
     "Independent nuclear-physics review and versioned scope sign-off"
-  ]
+  ],
+  "archived_lab_response_convergence": {
+    "sha256": "4318d53dad0a8a440e03601cfa39c08575536c479ac406a11f416278ea4646c2",
+    "result": {
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "configurations": [
+        {
+          "depth_order": 4,
+          "angular_step_deg": 2.0,
+          "gamma_polar_order": 8,
+          "gamma_phi_order": 16,
+          "particle_phi_order": 8,
+          "rtol": 1e-08,
+          "counts": [
+            12.283366741040734,
+            10.811859318326999
+          ]
+        },
+        {
+          "depth_order": 8,
+          "angular_step_deg": 1.0,
+          "gamma_polar_order": 12,
+          "gamma_phi_order": 24,
+          "particle_phi_order": 16,
+          "rtol": 1e-08,
+          "counts": [
+            12.283367114067337,
+            10.81186005450011
+          ]
+        },
+        {
+          "depth_order": 12,
+          "angular_step_deg": 0.5,
+          "gamma_polar_order": 16,
+          "gamma_phi_order": 32,
+          "particle_phi_order": 32,
+          "rtol": 1e-08,
+          "counts": [
+            12.28336713503847,
+            10.811860099383509
+          ]
+        },
+        {
+          "depth_order": 12,
+          "angular_step_deg": 0.5,
+          "gamma_polar_order": 16,
+          "gamma_phi_order": 32,
+          "particle_phi_order": 32,
+          "rtol": 1e-10,
+          "counts": [
+            12.283367134552279,
+            10.811860099293822
+          ]
+        }
+      ],
+      "quadrature_absolute_tolerance": 1e-08,
+      "quadrature_relative_tolerance": 0.0005,
+      "ode_relative_tolerance": 1e-05,
+      "quadrature_change": [
+        2.0971132386193858e-08,
+        4.4883398331307944e-08
+      ],
+      "ode_change": [
+        4.86190643300688e-10,
+        8.968648046447925e-11
+      ],
+      "passed": true,
+      "scope": "Synthetic E2 0+/2+/4+ target excitation, two CM particle bins, either-particle lab acceptance, threshold, constant stopping, pure E2 feeding, intrinsic gamma sector and calibration curve; not an experimental detector error budget"
+    },
+    "rerun_in_this_command": false
+  }
 }

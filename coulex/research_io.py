@@ -17,11 +17,14 @@ def one_based(value):
 
 def load_fit(text):
     config = json.loads(text)
-    parameters = [Parameter(p['kind'],one_based(p.get('index',1))) for p in config['parameters']]
+    parameters = [Parameter(p['kind'],one_based(p.get('index',1)),p.get('model')) for p in config['parameters']]
     experiments = []
     for item in config['experiments']:
         item = dict(item)
         item['data'] = pd.DataFrame(item['data'])
+        if 'gamma_response' in item and item['gamma_response'] is not None:
+            from .gamma_yields import GammaResponse
+            item['gamma_response']=GammaResponse.from_dict(item['gamma_response'])
         if item.get('exposure'):
             item['exposure'] = Exposure(**item['exposure'])
         if item.get('stopping'):

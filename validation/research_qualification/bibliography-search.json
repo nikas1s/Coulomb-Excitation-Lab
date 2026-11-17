@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-17",
+  "purpose": "Search for experimental calibration and analysis files; no experimental fit claimed.",
+  "selected": {
+    "doi": "https://doi.org/10.1103/PhysRevC.94.054326",
+    "nuclei": "96Sr + 120Sn",
+    "result": "Published yields and conditions available; matched calibration and original fit files not located in this search."
+  },
+  "alternatives": [
+    {
+      "url": "https://github.com/lpgaff/chisqsurface/tree/master/example",
+      "nuclei": "202Rn + 109Ag",
+      "cached_input_sha256": "6ce11560adc879facdc93c54501a7522194f3e752ce6a50b789786d714942ebd",
+      "result": "Public files include detector and yield data, but the inspected projectile input explicitly has an M1 multipolarity block. Not a pure-electric matched reproduction."
+    },
+    {
+      "url": "https://github.com/UWCNuclear/Andile_Gosia-input-Files",
+      "nuclei": "60Ni + 194Pt (PR285)",
+      "cached_input_sha256": "3bc8ca9a9970800dee5fcf9d57dd6a2ed3f3146113f8a08e70b250a077db0670",
+      "repository_listing_sha256": "0e886f15a8c83fb445ee16c9ecdd99c6ca846d9699653ac00a5225654636bcf7",
+      "result": "Six public input files in root listing. Input references gdet.f8, gdet.f9, 194Pt.yld and other files absent from that listing. Complete analysis cannot be reconstructed from these files alone."
+    }
+  ],
+  "limitations": "This is a dated availability audit, not proof that files do not exist elsewhere. No author contact was made and no external source/input files are redistributed."
+}

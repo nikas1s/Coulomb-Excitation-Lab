@@ -129,3 +129,9 @@ The prediction is the populated-level particle count times the supplied branchin
 - Blank templates contain only headers. Every measurement *example file* is **synthetic**; nuclear-table example files use the supplied magnesium example. Example numbers must not be cited as experimental observations.
 
 Template files are in `examples/templates/`, and the same files are downloadable inside the UI. No extra installation is needed for these uploads.
+
+## Laboratory gamma response (new research workflow)
+
+In **Research → Gamma cascades and correlations**, enable the laboratory response and upload a CSV with `theta_deg,phi_deg,weight_sr,intrinsic_efficiency`. Download `examples/research/gamma_mesh.csv` in the research examples panel. Angles are beam-axis laboratory degrees, `weight_sr` is a quadrature weight in steradians, and efficiency is conditional on a photon arriving from that direction. A mesh must describe nonoverlapping effective detector regions; it is not a list of whole-detector absolute efficiencies.
+
+Finite-bin gamma fits use `angular_gamma_counts` in joint-fit JSON. Download `synthetic_lab_gamma.json` and `synthetic_target_normalization.json`; load `synthetic_rotor.txt` first and turn polarization off. All uploaded indices are one-based. The complete response/normalization schema and assumptions are in [RESEARCH.md](RESEARCH.md#laboratory-photon-response-and-target-normalization-new). These examples are synthetic; replace observations, calibrations and reaction structure for other measurements.

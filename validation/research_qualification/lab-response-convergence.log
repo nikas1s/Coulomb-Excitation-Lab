@@ -1,0 +1,4 @@
+{'depth_order': 4, 'angular_step_deg': 2.0, 'gamma_polar_order': 8, 'gamma_phi_order': 16, 'particle_phi_order': 8, 'rtol': 1e-08, 'counts': [12.283366741040734, 10.811859318326999]}
+{'depth_order': 8, 'angular_step_deg': 1.0, 'gamma_polar_order': 12, 'gamma_phi_order': 24, 'particle_phi_order': 16, 'rtol': 1e-08, 'counts': [12.283367114067337, 10.81186005450011]}
+{'depth_order': 12, 'angular_step_deg': 0.5, 'gamma_polar_order': 16, 'gamma_phi_order': 32, 'particle_phi_order': 32, 'rtol': 1e-08, 'counts': [12.28336713503847, 10.811860099383509]}
+{'depth_order': 12, 'angular_step_deg': 0.5, 'gamma_polar_order': 16, 'gamma_phi_order': 32, 'particle_phi_order': 32, 'rtol': 1e-10, 'counts': [12.283367134552279, 10.811860099293822]}

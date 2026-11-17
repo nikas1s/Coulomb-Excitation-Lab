@@ -51,3 +51,18 @@ def test_single_parameter_profile_upload_and_plot():
     assert len(fit['profile'])==3
     assert all(fit['profile'].success)
     assert any('Profile thresholds' in x.value for x in app.caption)
+
+
+def test_laboratory_gamma_controls_results_and_greek():
+    app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=120).run()
+    app.selectbox(key='research_mode').set_value('Gamma cascades and correlations').run()
+    next(x for x in app.checkbox if x.label=='Calculate laboratory detector response').check().run()
+    next(x for x in app.number_input if x.label=='Particle azimuth quadrature nodes').set_value(4).run()
+    app.button(key='run_research_decay').click().run()
+    assert not app.exception and not app.error
+    result=app.session_state['research_decay'][1]
+    assert all(x>=0 for x in result['lab_detected_photons'])
+    assert all(a<=b for a,b in zip(result['lab_detected_photons'],result['photons']))
+    app.get_by_key('lang').set_value('el').run()
+    assert not app.exception
+    assert any(x.label=='Υπολογισμός εργαστηριακής απόκρισης ανιχνευτή' for x in app.checkbox)

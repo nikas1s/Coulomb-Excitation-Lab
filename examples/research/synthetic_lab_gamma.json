@@ -1,0 +1,95 @@
+{
+  "description": "SYNTHETIC, not measured: upload synthetic_rotor.txt first and switch polarization OFF; pure E2 feeding with intrinsic lab gamma response.",
+  "parameters": [
+    {
+      "kind": "element",
+      "index": 1
+    }
+  ],
+  "bounds": [
+    [
+      0.1
+    ],
+    [
+      2.0
+    ]
+  ],
+  "starts": [
+    [
+      0.599243973979788
+    ]
+  ],
+  "max_nfev": 50,
+  "experiments": [
+    {
+      "kind": "angular_gamma_counts",
+      "transitions": [
+        {
+          "upper": 3,
+          "lower": 2,
+          "branch": 1.0,
+          "alpha": 0.0,
+          "multipolarity": 2
+        },
+        {
+          "upper": 2,
+          "lower": 1,
+          "branch": 1.0,
+          "alpha": 0.02,
+          "multipolarity": 2
+        }
+      ],
+      "photon_transition": 2,
+      "gamma_response": {
+        "detectors": [
+          {
+            "theta_min_deg": 35.0,
+            "theta_max_deg": 65.0,
+            "efficiency": 0.3,
+            "order": 12,
+            "phi_order": 24,
+            "energy_mev": [
+              0.05,
+              0.15,
+              0.3,
+              0.6
+            ],
+            "efficiency_curve": [
+              0.9,
+              0.8,
+              0.7,
+              0.6
+            ]
+          }
+        ],
+        "particle_phi_order": 8,
+        "boost": true
+      },
+      "angular_step": 1.0,
+      "likelihood": "gaussian",
+      "normalization_sigma": 0.03,
+      "exposure": {
+        "beam_per_second": 100000.0,
+        "days": 1.0,
+        "thickness": 2.0,
+        "azimuth_fraction": 1.0
+      },
+      "data": [
+        {
+          "angle_min_deg": 70.0,
+          "angle_max_deg": 72.0,
+          "value": 355.0970055255229,
+          "uncertainty": 17.754850276276144,
+          "efficiency": 0.8
+        },
+        {
+          "angle_min_deg": 100.0,
+          "angle_max_deg": 102.0,
+          "value": 188.29747664986567,
+          "uncertainty": 9.414873832493283,
+          "efficiency": 0.8
+        }
+      ]
+    }
+  ]
+}

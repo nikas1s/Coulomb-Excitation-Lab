@@ -1,0 +1,28 @@
+Running published_shapes…
+published_shapes: PASS
+Running angular_algebra…
+angular_algebra: PASS
+Running gosia_points_finite_cases…
+gosia_points_finite_cases: PASS
+Running gosia_expanded…
+gosia_expanded: PASS
+Running gosia_precision…
+gosia_precision: PASS
+Running geometric_reference…
+E1 isolated 45.0 PASS
+E1 isolated 90.0 PASS
+E1 isolated 135.0 PASS
+E4 isolated 45.0 PASS
+E4 isolated 90.0 PASS
+E4 isolated 135.0 PASS
+geometric_reference: PASS
+Running gaussian_coverage…
+gaussian_coverage: PASS
+Running nonlinear_coverage…
+Nonlinear Gaussian trials: 25/100
+Nonlinear Gaussian trials: 50/100
+Nonlinear Gaussian trials: 75/100
+Nonlinear Gaussian trials: 100/100
+nonlinear_coverage: PASS
+Report: /Users/nikass/Downloads/TCLX-master/coulex_streamlit/validation/research_qualification/latest.json
+Research qualification remains incomplete: see remaining_gates in the report.

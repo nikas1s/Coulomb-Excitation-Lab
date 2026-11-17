@@ -59,3 +59,21 @@ def test_independent_gosia_extended_cases():
     assert result['compared_points']==12
     assert not result['unusable_reference_cases']
     assert result['passed']
+
+
+def test_geometric_hamiltonian_matches_complex_spin_density_convention():
+    from validation.research_qualification.independent_cc import geometric_midpoint
+    from validation.gosia_points import cases
+    from coulex import CoupledChannels,SolverSettings
+    for model in (list(cases())[0],list(cases())[3]):
+        reference=geometric_midpoint(model,90.,steps=8000,endpoint=10.)
+        actual=CoupledChannels(model).solve(90.,SolverSettings(rtol=1e-10,atol=1e-13))
+        for probability,a,b in zip(reference['probabilities'],actual.density_matrices,reference['density_matrices']):
+            assert np.max(abs(a-b))<=2e-8+1e-4*probability
+        assert reference['norm_error']<1e-9
+
+
+def test_precision_reference_retains_unmodified_and_explicitly_refined_results():
+    result=gosia_replay('gosia_precision/results.json',builds=('unmodified','mesh0.0075'))
+    assert result['compared_points']==9
+    assert result['passed']

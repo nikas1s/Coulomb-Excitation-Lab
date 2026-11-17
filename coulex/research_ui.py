@@ -10,6 +10,7 @@ import streamlit as st
 from .i18n import t, error_text
 from .research import Parameter, sensitivity, systematic_ensemble, joint_fit, profile_fit, information_matrix
 from .research_io import load_fit, fit_template, export_json
+from .joint_model import configured_model
 from .shapes import invariants, invariant_ensemble
 from .decay import Transition, cascade, validate_network, decay_rates, cascade_densities, photon_map, fold_detector
 from .solver import CoupledChannels
@@ -158,6 +159,7 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
         st.download_button(t('Download joint-fit JSON template'),fit_template(model),'joint_fit_template.json','application/json')
         st.caption(t('Replace every placeholder observation. One JSON file can contain multiple energies, targets, count or cross-section datasets, covariance matrices, normalization uncertainties and external strength, lifetime or quadrupole constraints.'))
         st.caption(t('Count experiments can select projectile, recoil or either-particle acceptance, with a lab annulus and particle energy threshold in the JSON configuration.'))
+        st.caption(t('Named nuclear models can share one normalization group for projectile and target datasets. Laboratory gamma counts accept calibrated detector meshes; see the downloadable examples.'))
         upload=st.file_uploader(t('Upload joint-fit JSON'),type=['json'])
         if upload:
             try:
@@ -165,10 +167,11 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 payload['fit']=config
                 st.dataframe(pd.DataFrame([dict(experiment=i+1,kind=e.kind,observations=len(e.data),likelihood=e.likelihood) for i,e in enumerate(experiments)]),hide_index=True)
                 def run():
-                    fit=joint_fit(model,parameters,experiments,config['bounds'],config.get('starts'),settings,config.get('max_nfev',100))
+                    fit_model=configured_model(config,model)
+                    fit=joint_fit(fit_model,parameters,experiments,config['bounds'],config.get('starts'),settings,config.get('max_nfev',100))
                     if config.get('profile'):
                         p=config['profile']
-                        fit['profile']=profile_fit(model,parameters,experiments,config['bounds'],p['parameter']-1,p['grid'],settings,config.get('max_nfev',100))
+                        fit['profile']=profile_fit(fit_model,parameters,experiments,config['bounds'],p['parameter']-1,p['grid'],settings,config.get('max_nfev',100))
                     return dict(inputs=payload,fit=fit)
                 result=job('research_fit',payload,run)
                 if result:
@@ -191,7 +194,7 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                     st.caption(t('Covariance is a local linear approximation without chi-square rescaling. Inspect all starting solutions and profile scans for sign ambiguities and non-Gaussian intervals.'))
             except (ValueError,KeyError,TypeError) as error: st.error(error_text(error))
     elif mode == modes[4]:
-        st.caption(t('Branches are total decay fractions including conversion. Alpha is an evaluated input. Incomplete networks retain unassigned probability as a sink. Angular response uses pure electric transitions in the emitter rest frame and solver orbit axes; it is not a laboratory Doppler or geometry correction.'))
+        st.caption(t('Branches include conversion. Supply evaluated alpha values and branching fractions. Rest-frame curves use the orbit axes; the optional laboratory response rotates these axes and includes Doppler aberration.'))
         rates=decay_rates(model)
         st.dataframe(rates,hide_index=True)
         defaults=[]
@@ -208,7 +211,18 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
         gate=st.checkbox(t('Condition on a first photon (gamma-gamma correlation)'),value=False)
         gate_edge=st.number_input(t('First photon transition (row number)'),min_value=1,max_value=max(1,len(frame)),value=1)
         gate_theta=st.number_input(t('First photon polar angle (°)'),min_value=0.,max_value=180.,value=0.)
-        payload.update(edges=frame.to_dict('records'),angle=angle,photon_acceptance=[theta_min,theta_max],gate=gate,gate_edge=gate_edge,gate_theta=gate_theta)
+        laboratory=st.checkbox(t('Calculate laboratory detector response'),value=False,disabled=gate)
+        mesh_text=None;lab_efficiency=1.;lab_boost=True;phi_order=16
+        if laboratory and not gate:
+            st.caption(t('Lab polar angles are measured from the beam. The annulus covers all gamma azimuths. Efficiency is intrinsic per arriving photon, not the absolute efficiency of the array. Particle azimuth is averaged uniformly.'))
+            lab_efficiency=st.number_input(t('Intrinsic photon detection efficiency'),min_value=0.,max_value=1.,value=.3)
+            lab_boost=st.checkbox(t('Include Doppler aberration'),value=True)
+            phi_order=st.number_input(t('Particle azimuth quadrature nodes'),min_value=4,max_value=256,value=16,step=4)
+            mesh_upload=st.file_uploader(t('Optional calibrated laboratory gamma mesh CSV'),type=['csv'],key='lab_gamma_mesh')
+            mesh_text=mesh_upload.getvalue().decode('utf-8-sig') if mesh_upload else None
+            st.caption(t('Mesh columns: theta_deg, phi_deg, weight_sr, intrinsic_efficiency. Uploaded mesh efficiencies replace the annulus efficiency. Increase mesh and particle quadrature orders to check convergence.'))
+        payload.update(edges=frame.to_dict('records'),angle=angle,photon_acceptance=[theta_min,theta_max],gate=gate,gate_edge=gate_edge,gate_theta=gate_theta,
+                       laboratory=laboratory and not gate,lab_efficiency=lab_efficiency,lab_boost=lab_boost,particle_phi_order=phi_order,mesh_csv=mesh_text)
         def run():
             for column in ('upper','lower','multipolarity'):
                 if not np.all(np.isfinite(frame[column])) or not np.all(frame[column]==np.floor(frame[column])):
@@ -218,11 +232,16 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
             collision=CoupledChannels(model).solve(angle,settings)
             occupancy,photons=cascade(model,collision.probabilities,transitions)
             result=dict(inputs=payload,occupancy=occupancy,photons=photons,unassigned_branches=missing,rates=rates)
-            if not any(e.alpha for e in transitions):
+            try:
                 rho=cascade_densities(model,collision.density_matrices,transitions)
+            except ValueError as error:
+                if 'electron transfer tensors' not in str(error): raise
+                result['angular_unavailable']=str(error)
+                return result
+            if rho:
                 if gate:
                     edge=transitions[gate_edge-1]
-                    conditioned=edge.branch*photon_map(rho[edge.upper],model.levels[edge.upper].spin,
+                    conditioned=edge.branch/(1+edge.alpha)*photon_map(rho[edge.upper],model.levels[edge.upper].spin,
                         model.levels[edge.lower].spin,edge.multipolarity,np.deg2rad(gate_theta),0.)
                     probability=np.trace(conditioned).real
                     if probability<=0: raise ValueError('The selected first-photon direction has zero probability.')
@@ -234,9 +253,24 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 theta=np.linspace(0,np.pi,181); angular=[]; acceptance=[]
                 for edge in transitions:
                     ji,jf=model.levels[edge.upper].spin,model.levels[edge.lower].spin
-                    angular.append([edge.branch*np.trace(photon_map(rho[edge.upper],ji,jf,edge.multipolarity,x,0.)).real for x in theta])
-                    acceptance.append(edge.branch*fold_detector(rho[edge.upper],ji,jf,edge.multipolarity,np.deg2rad(theta_min),np.deg2rad(theta_max)))
+                    angular.append([edge.branch/(1+edge.alpha)*np.trace(photon_map(rho[edge.upper],ji,jf,edge.multipolarity,x,0.)).real for x in theta])
+                    acceptance.append(edge.branch/(1+edge.alpha)*fold_detector(rho[edge.upper],ji,jf,edge.multipolarity,np.deg2rad(theta_min),np.deg2rad(theta_max)))
                 result.update(theta_deg=np.degrees(theta),angular=angular,detected_photons=acceptance)
+                if laboratory and not gate:
+                    from .lab_gamma import GammaMesh,fold_lab_gamma
+                    detector=GammaMesh.from_csv(mesh_text) if mesh_text else GammaMesh.annulus(theta_min,theta_max,efficiency=lab_efficiency)
+                    detected=np.zeros(len(transitions));azimuths=(np.arange(phi_order)+.5)*2*np.pi/phi_order
+                    # Preserve the exit velocity of every initially excited level
+                    # through its later feeding, rather than using the fed energy.
+                    for initial in range(1,len(model.levels)):
+                        seeds=[np.zeros_like(x) for x in collision.density_matrices]
+                        seeds[initial]=collision.density_matrices[initial]
+                        fed=cascade_densities(model,seeds,transitions)
+                        for k,edge in enumerate(transitions):
+                            detected[k]+=sum(fold_lab_gamma(model,np.deg2rad(angle),fed[edge.upper],edge.upper,edge.lower,
+                                edge.multipolarity,detector,particle_phi=phi,exit_energy=model.levels[initial].energy,boost=lab_boost)
+                                for phi in azimuths)/phi_order*edge.branch/(1+edge.alpha)
+                    result['lab_detected_photons']=detected
             return result
         result=job('research_decay',payload,run)
         if result:
@@ -248,6 +282,10 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 for i,y in enumerate(result['angular']): fig.add_scatter(x=result['theta_deg'],y=y,name=str(i+1))
                 st.plotly_chart(style(fig,t('Photon polar angle (°), φ = 0'),t('Photons per collision per sr')))
                 st.write(t('Photons in the full-azimuth rest-frame annulus'),result['detected_photons'])
+                if 'lab_detected_photons' in result:
+                    st.dataframe(pd.DataFrame({'transition':np.arange(len(result['photons']))+1,
+                        'lab_detected_photons_per_collision':result['lab_detected_photons']}),hide_index=True)
+                    st.caption(t('Laboratory probabilities are evaluated at this single collision angle. Finite particle bins, target depth and shared normalization are available through angular_gamma_counts in joint-fit JSON. Finite decay flight distances and mixed multipoles are not modeled.'))
             else: st.info(t('Conversion is included in photon yields. Aligned cascade response with conversion requires electron transfer tensors and is not calculated.'))
     else:
         st.caption(t('Compare E3 strengths, diagonal E2 reorientation, polarization and explicit model-space truncations. These are alternative input models; E3 strength alone does not establish permanent octupole deformation.'))

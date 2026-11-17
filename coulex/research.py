@@ -18,12 +18,18 @@ class ZeroPoissonPredictionError(ValueError):
 class Parameter:
     kind: str
     index: int = 0
+    model: str | None = None
 
     def __post_init__(self):
         if self.kind not in ('element','energy_lab','dipole_strength') or not isinstance(self.index,int) or self.index < 0:
             raise ValueError('Unknown parameter kind or invalid zero-based element index.')
+        if self.model is not None and (not isinstance(self.model,str) or not self.model.strip()):
+            raise ValueError('Parameter model must be a nonempty name.')
 
     def get(self, reaction):
+        from .joint_model import JointModel
+        if isinstance(reaction,JointModel): return Parameter(self.kind,self.index).get(reaction.selected(self.model))
+        if self.model not in (None,'primary'): raise ValueError('A named parameter requires a joint nuclear model.')
         if self.kind == 'element':
             return reaction.elements[self.index].value
         if self.kind in ('energy_lab', 'dipole_strength'):
@@ -31,6 +37,10 @@ class Parameter:
         raise ValueError('Unknown research parameter.')
 
     def set(self, reaction, value):
+        from .joint_model import JointModel
+        if isinstance(reaction,JointModel):
+            return reaction.updated(self.model,Parameter(self.kind,self.index).set(reaction.selected(self.model),value))
+        if self.model not in (None,'primary'): raise ValueError('A named parameter requires a joint nuclear model.')
         if not np.isfinite(value):
             raise ValueError('Parameter values must be finite.')
         if self.kind == 'element':
@@ -43,7 +53,7 @@ class Parameter:
 
 
 def apply_parameters(reaction, parameters, values):
-    if len(parameters) != len(values) or len(set(parameters)) != len(parameters):
+    if len(parameters) != len(values) or len({(p.kind,p.index,p.model or 'primary') for p in parameters}) != len(parameters):
         raise ValueError('Use distinct parameters and one value per parameter.')
     for parameter, value in zip(parameters, values):
         reaction = parameter.set(reaction, value)
@@ -130,6 +140,9 @@ class Experiment:
     detected_particle: str = 'projectile'
     particle_acceptance: tuple | None = None
     particle_energy_min_mev: float = 0.
+    gamma_response: object = None
+    model: str | None = None
+    normalization_group: str | None = None
 
     def _compare(self,reaction,data,kind,settings):
         if self.detected_particle != 'projectile' or self.particle_acceptance is not None or self.particle_energy_min_mev:
@@ -140,6 +153,9 @@ class Experiment:
                                     self.exposure,self.order,self.angular_step)
 
     def predict(self, reaction, settings=None):
+        from .joint_model import JointModel
+        if isinstance(reaction,JointModel): reaction=reaction.selected(self.model)
+        elif self.model not in (None,'primary'): raise ValueError('A named experiment requires a joint nuclear model.')
         if self.reaction_overrides:
             allowed = {'projectile_z','projectile_a','target_z','target_a'}
             if not set(self.reaction_overrides) <= allowed:
@@ -173,6 +189,13 @@ class Experiment:
                         raise ValueError('Lifetime constraint needs an outgoing decay rate.')
                     values.append(1e12/total)
             return np.asarray(values)
+        if self.kind == 'angular_gamma_counts':
+            from .gamma_yields import predict_lab_gamma
+            if self.gamma_response is None:
+                raise ValueError('Angular gamma counts require an explicit laboratory gamma response.')
+            return predict_lab_gamma(reaction,self.data,self.transitions,self.photon_transition,self.gamma_response,
+                self.frame,settings,self.stopping,self.exposure,self.order,self.angular_step,
+                self.detected_particle,self.particle_acceptance,self.particle_energy_min_mev)
         if self.kind == 'cascade_counts':
             from .decay import cascade, validate_network
             validate_network(reaction,self.transitions)
@@ -232,26 +255,40 @@ def likelihood_residual(observed, predicted, likelihood, uncertainty=None, covar
 
 
 def _fit_objective(reaction,parameters,experiments,settings):
-    nuisances = [i for i,e in enumerate(experiments) if e.normalization_sigma is not None]
-    for e in experiments:
+    groups=[];group_index={};mapping={}
+    for i,e in enumerate(experiments):
         if e.likelihood == 'poisson' and not e.kind.endswith('counts'):
             raise ValueError('Poisson likelihood requires raw count observables.')
-        if e.normalization_sigma is not None and (not np.isfinite(e.normalization_sigma) or e.normalization_sigma <= 0):
+        if e.normalization_sigma is not None and (not np.isfinite(e.normalization_sigma) or e.normalization_sigma<=0):
             raise ValueError('Normalization log-scale uncertainty must be positive.')
-    n = len(parameters)
+        if e.normalization_group is not None and (not isinstance(e.normalization_group,str) or not e.normalization_group.strip()):
+            raise ValueError('Normalization group must be a nonempty name.')
+        if e.normalization_sigma is None and e.normalization_group is None: continue
+        key=('shared',e.normalization_group) if e.normalization_group is not None else ('experiment',i)
+        if key not in group_index:
+            group_index[key]=len(groups)
+            groups.append(dict(name=e.normalization_group,experiments=[],prior_sigma=None))
+        index=group_index[key];mapping[i]=index;group=groups[index]
+        group['experiments'].append(i)
+        if e.normalization_sigma is not None:
+            if group['prior_sigma'] is not None and not np.isclose(group['prior_sigma'],e.normalization_sigma,rtol=1e-12,atol=0.):
+                raise ValueError('A shared normalization group has conflicting prior uncertainties.')
+            group['prior_sigma']=e.normalization_sigma
+    n=len(parameters)
+    # During single-parameter profiling only nuisance scales change; nuclear
+    # predictions can then be reused exactly, without a surrogate/interpolation.
+    fixed=[e.predict(reaction,settings) for e in experiments] if not parameters else None
     def residual(values):
-        local = apply_parameters(reaction, parameters, values[:n])
-        terms = []
-        for i, experiment in enumerate(experiments):
-            prediction = experiment.predict(local, settings)
-            if i in nuisances:
-                eta = values[n+nuisances.index(i)]
-                prediction = prediction*np.exp(eta)
-                terms.append(np.array([eta/experiment.normalization_sigma]))
-            terms.append(likelihood_residual(experiment.data.value, prediction, experiment.likelihood,
-                         experiment.data.get('uncertainty'), experiment.covariance))
+        local=apply_parameters(reaction,parameters,values[:n]);terms=[]
+        for j,group in enumerate(groups):
+            if group['prior_sigma'] is not None:
+                terms.append(np.array([values[n+j]/group['prior_sigma']]))
+        for i,e in enumerate(experiments):
+            prediction=e.predict(local,settings) if fixed is None else fixed[i]
+            if i in mapping: prediction=prediction*np.exp(values[n+mapping[i]])
+            terms.append(likelihood_residual(e.data.value,prediction,e.likelihood,e.data.get('uncertainty'),e.covariance))
         return np.concatenate(terms)
-    return residual,nuisances
+    return residual,[group['experiments'][0] for group in groups],groups
 
 
 def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=None, max_nfev=100):
@@ -260,15 +297,15 @@ def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=N
     Local covariance is (JᵀJ)^-1 without reduced-chi² rescaling. Singular fits
     return no covariance. Multiple minima remain available to the caller.
     """
-    if not parameters or not experiments or len(set(parameters)) != len(parameters):
+    if not parameters or not experiments or len({(p.kind,p.index,p.model or 'primary') for p in parameters}) != len(parameters):
         raise ValueError('Specify distinct fit parameters and at least one experiment.')
-    if any(p.kind == 'energy_lab' for p in parameters) and any(e.energy_lab is not None for e in experiments):
+    if any(p.kind == 'energy_lab' and any((e.model or 'primary')==(p.model or 'primary') and e.energy_lab is not None for e in experiments) for p in parameters):
         raise ValueError('A fitted common energy cannot be overridden by experiment energies.')
     n = len(parameters)
     lo, hi = np.asarray(bounds[0], float), np.asarray(bounds[1], float)
     if lo.shape != (n,) or hi.shape != (n,) or np.any(np.isnan(lo)) or np.any(np.isnan(hi)) or np.any(lo >= hi):
         raise ValueError('Supply ordered lower and upper bounds for every parameter.')
-    residual,nuisances = _fit_objective(reaction,parameters,experiments,settings)
+    residual,nuisances,groups = _fit_objective(reaction,parameters,experiments,settings)
     starts = starts if starts is not None else [[p.get(reaction) for p in parameters]]
     solutions = []
     for start in starts:
@@ -287,7 +324,7 @@ def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=N
     return dict(values=best.x, covariance=cov, residuals=best.fun, objective=2*best.cost,
                 success=best.success, message=best.message, rank=int(rank),
                 active_bounds=best.active_mask, solutions=[dict(values=s.x.tolist(), objective=2*s.cost,
-                success=s.success) for s in solutions], nuisance_experiments=nuisances,
+                success=s.success) for s in solutions], nuisance_experiments=nuisances,normalization_groups=groups,
                 dof=len(best.fun)-len(best.x))
 
 
@@ -310,7 +347,7 @@ def profile_fit(reaction, parameters, experiments, bounds, parameter_index, grid
                                    ([bounds[0][i] for i in free],[bounds[1][i] for i in free]),settings=settings,max_nfev=max_nfev)
                 objective,success = result['objective'],result['success']
             else:
-                residual,nuisances = _fit_objective(local,[],experiments,settings)
+                residual,nuisances,_ = _fit_objective(local,[],experiments,settings)
                 if nuisances:
                     fit = least_squares(residual,np.zeros(len(nuisances)),bounds=(-20.,20.),
                                         max_nfev=max_nfev,xtol=1e-10,ftol=1e-10,gtol=1e-10)

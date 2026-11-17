@@ -1,0 +1,104 @@
+{
+  "description": "SYNTHETIC: upload synthetic_rotor.txt first and switch polarization OFF. Fixed known target structure normalizes projectile data; planted scale=1.2.",
+  "models": {
+    "target": {
+      "title": "SYNTHETIC target, not measured",
+      "projectile_z": 20,
+      "projectile_a": 40,
+      "target_z": 82,
+      "target_a": 208,
+      "energy_lab": 160.0,
+      "levels": [
+        {
+          "spin": 0,
+          "energy": 0,
+          "parity": 1,
+          "k": 0.0
+        },
+        {
+          "spin": 2,
+          "energy": 0.3,
+          "parity": 1,
+          "k": 0.0
+        }
+      ],
+      "elements": [
+        {
+          "initial": 1,
+          "final": 2,
+          "value": 0.3,
+          "multipolarity": 2
+        }
+      ],
+      "theta_min": 1.0,
+      "theta_max": 180.0,
+      "theta_step": 1.0,
+      "excitation": "target",
+      "dipole_strength": 0.0,
+      "polarization_convention": "standard"
+    }
+  },
+  "parameters": [
+    {
+      "kind": "element",
+      "index": 1
+    }
+  ],
+  "bounds": [
+    [
+      0.1
+    ],
+    [
+      2.0
+    ]
+  ],
+  "starts": [
+    [
+      0.567704817454536
+    ],
+    [
+      0.6938614435555441
+    ]
+  ],
+  "experiments": [
+    {
+      "kind": "cross_section",
+      "model": "primary",
+      "normalization_group": "same_beam",
+      "data": [
+        {
+          "angle_deg": 60.0,
+          "level": 2,
+          "value": 1.373980521842103,
+          "uncertainty": 0.04121941565526309
+        },
+        {
+          "angle_deg": 110.0,
+          "level": 2,
+          "value": 0.1944921980421234,
+          "uncertainty": 0.005834765941263702
+        }
+      ]
+    },
+    {
+      "kind": "cross_section",
+      "model": "target",
+      "normalization_group": "same_beam",
+      "data": [
+        {
+          "angle_deg": 60.0,
+          "level": 2,
+          "value": 0.025323839033115587,
+          "uncertainty": 0.0007597151709934676
+        },
+        {
+          "angle_deg": 110.0,
+          "level": 2,
+          "value": 0.017715315511719846,
+          "uncertainty": 0.0005314594653515953
+        }
+      ]
+    }
+  ],
+  "max_nfev": 50
+}

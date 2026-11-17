@@ -81,13 +81,15 @@ The template's numerical values above illustrate a format, not an experimental r
 
 Each experiment accepts:
 
-- `kind`: `cross_section`, `probability`, `particle_counts`, `gamma_counts` (the existing direct-photon model), or `cascade_counts` (population feeding).
+- `kind`: `cross_section`, `probability`, `particle_counts`, `gamma_counts` (the existing direct-photon model), `cascade_counts` (population feeding), or `angular_gamma_counts` (aligned feeding with laboratory response).
 - `frame`: `CM` or `Lab`. Both inverse-kinematic branches and finite bin acceptance use the existing measurement predictor.
 - `energy_lab`: total projectile MeV. `reaction_overrides` can set `projectile_z`, `projectile_a`, `target_z`, `target_a`. The fitted structure still belongs to the same excited nucleus; use these overrides to change the collision partner, not replace the excited nucleus with a different isotope while retaining its matrix elements.
 - `exposure`: object with `beam_per_second`, `days`, `thickness` (mg/cm²), `azimuth_fraction`.
 - `stopping`: object with arrays `energy` (MeV) and `stopping` (MeV per mg/cm²). It must cover the full depth trajectory.
 - `order`, `angular_step`: depth quadrature and detector angular spacing. Check convergence of integrated yields separately.
 - `likelihood`: `gaussian` with positive per-row `uncertainty`, or full positive-definite `covariance` in the same observation order. `poisson` requires **raw nonnegative integer counts**, without background subtraction; zero counts are supported. Unknown uncertainties are never invented.
+- `model`: optional named nuclear structure, default `primary` (the sidebar model). Root `models` contains additional full reaction objects; see the target-normalization example. Every uploaded index, including additional-model element `initial`/`final`, is **one-based**. Additional nuclei are excited separately with the single-partner solver; this does not add simultaneous product-space mutual excitation.
+- `normalization_group`: datasets with the same name share one fitted log-scale. With no prior this is a free scale, suitable for normalization to a known target. If a prior is supplied to one or more group members, it is included **once**; conflicting prior widths are rejected. External spectroscopic constraints normally have no normalization group.
 - `normalization_sigma`: optional standard deviation of the dataset's log-normalization nuisance. The scale is `exp(eta)`, with penalty `(eta/sigma)²`. It can represent a shared efficiency/exposure calibration error. A Gaussian data covariance handles correlated observation errors. Do not count the same systematic twice.
 
 External Gaussian constraints can be separate experiments:
@@ -100,7 +102,7 @@ For cascade counts, supply `transitions` records `upper,lower,branch,alpha,multi
 
 The objective is Gaussian chi-square plus Poisson deviance plus nuisance penalties. Fits use bounded SciPy least squares, multiple supplied starts and direct solver predictions. Local covariance is `(JᵀJ)^-1` without reduced-chi-square rescaling; it is withheld for failed, rank-deficient, severely ill-conditioned or boundary solutions. This is an approximation, not a coverage guarantee. Positive and negative starts help expose sign ambiguities, but cannot prove all minima have been found.
 
-For two or more fitted physical parameters, optional `"profile": {"parameter": 1, "grid": [...]}` fixes one parameter and refits the others plus nuisances. Profiles export raw objective values and convergence flags. Subtract the global minimum for a delta-objective plot; asymptotic thresholds require regularity and adequate statistics. The current profile implementation performs one remaining-parameter start per grid point; repeat with alternative starts where multiple minima occur. Bayesian sampling is not implemented.
+For one or more fitted physical parameters, optional `"profile": {"parameter": 1, "grid": [...]}` fixes one parameter and refits the others plus nuisances. Profiles export raw objective values and convergence flags. Subtract the global minimum for a delta-objective plot; asymptotic thresholds require regularity and adequate statistics. The current profile implementation performs one remaining-parameter start per grid point; repeat with alternative starts where multiple minima occur. Bayesian sampling is not implemented.
 
 The normalization and correlation treatment is motivated by [Zielińska et al. (2016)](https://arxiv.org/abs/1506.04633). No GOSIA fitting source code is incorporated.
 
@@ -119,9 +121,9 @@ After conversion to e²fm^(2L), E2 gives approximately `1.22519e9 E_gamma^5 B(E2
 
 The collision solver now retains the density matrix for each final spin: `rho_J=A_J A_J†/(2J_ground+1)`. Its trace equals the existing level population. Pure-electric emission operators are built from exact Clebsch–Gordan coefficients, and photon helicities ±1 are summed. The response uses Wigner rotations with normalization `(2L+1)/(8pi)`; integration over 4pi reproduces the parent population.
 
-The angular explorer shows photon density at phi=0 and integrates a full-azimuth polar annulus with analytic azimuth integration and Gauss–Legendre polar quadrature. Angles are in the **emitter rest frame relative to the solver orbit quantization axes**, with the same fixed scattering plane. They are not beam-axis laboratory detector coordinates. A production detector model must rotate these axes for each scattered-particle trajectory, average particle azimuth/acceptance, and handle boosts, Doppler response and finite flight distances. Arbitrary phi sectors and efficiency are supported by the Python `fold_detector` API.
+The angular explorer shows photon density at phi=0 and integrates a full-azimuth polar annulus with analytic azimuth integration and Gauss–Legendre polar quadrature. Angles are in the **emitter rest frame relative to the solver orbit quantization axes**, with the same fixed scattering plane. They are not beam-axis laboratory detector coordinates. The optional laboratory response below rotates these axes for each scattered-particle trajectory and handles boosts, Doppler response and particle-azimuth averaging. Finite decay flight distances remain outside the model. Arbitrary phi sectors and efficiency are supported by the Python `fold_detector` API.
 
-Unobserved pure-photon feeding transfers density matrices through the cascade. Conditioning on the first photon propagates its daughter density to show subsequent gamma–gamma correlations; displayed conditional distributions are per selected first photon, whereas the photon-yield table remains the ungated yield per collision. Alpha>0 population yields are supported. Aligned feeding with internal conversion is explicitly rejected because electron transfer tensors cannot be replaced by photon tensors. Mixed multipoles, magnetic emission, hyperfine deorientation and finite lifetime detector-displacement effects are not implemented.
+Unobserved pure-photon feeding transfers density matrices through the cascade. Conditioning on the first photon propagates its daughter density to show subsequent gamma–gamma correlations; displayed conditional distributions are per selected first photon, whereas the photon-yield table remains the ungated yield per collision. Alpha>0 population yields are supported. Conversion feeding is accepted when the parent is isotropic or the daughter has spin zero: rotational invariance fixes the unobserved daughter density exactly. Other aligned conversion feeding is rejected because electron transfer tensors cannot be replaced by photon tensors. Mixed multipoles, magnetic emission, hyperfine deorientation and finite lifetime detector-displacement effects are not implemented.
 
 The general density-matrix approach is discussed by [Chalil et al. (2021)](https://arxiv.org/abs/2110.00619). The implementation here uses explicit finite spin operators, tested against analytical limits, rather than copying a cascade simulation.
 
@@ -160,3 +162,39 @@ Poisson deviance residuals use a stable series near equal predicted and observed
 Single-parameter profiles are supported, including refitting normalization nuisance scales. Profiles show the objective difference and asymptotic one-parameter thresholds in the UI. These thresholds do not provide exact low-count coverage. An interval from local covariance is also an approximation; inspect bounds, alternative signs/minima and relevant coverage evidence.
 
 A configuration skeleton is available as `examples/research/recoil_count_template.json`. Its observation fields are null and must be supplied; its efficiency/exposure numbers are format examples. It is intentionally not runnable as a measured fit without completing those fields.
+
+
+## Laboratory photon response and target normalization (new)
+
+In the gamma explorer, select **Calculate laboratory detector response** to use beam-axis polar angles. The same angle limits define separate rest-frame and laboratory annuli; their results are labelled separately. An uploaded gamma mesh replaces the ideal annulus. The single-angle explorer averages the scattered-particle azimuth uniformly; it does not integrate a finite particle bin. Gated gamma–gamma curves remain rest-frame calculations.
+
+For integrated counts, upload `examples/research/synthetic_lab_gamma.json` in **Joint parameter fitting**, after loading `synthetic_rotor.txt` in the sidebar and switching polarization **off**. It uses `kind: angular_gamma_counts`, `transitions`, one-based `photon_transition`, and `gamma_response`:
+
+```json
+"gamma_response": {
+  "detectors": [{
+    "theta_min_deg": 35, "theta_max_deg": 65,
+    "phi_min_deg": 0, "phi_max_deg": 360,
+    "efficiency": 0.3, "order": 12, "phi_order": 24,
+    "energy_mev": [0.05, 0.15, 0.3, 0.6],
+    "efficiency_curve": [0.9, 0.8, 0.7, 0.6]
+  }],
+  "particle_phi_order": 16, "boost": true
+}
+```
+
+Gamma angles are in degrees from beam +z; phi is about that beam axis. `efficiency` is an **intrinsic probability conditional on arrival along a mesh direction**. Solid-angle weights are already included. The optional shape-preserving energy curve multiplies that directional efficiency, is evaluated at Doppler-shifted energy, and rejects extrapolation. It is also intrinsic: do not supply a whole-array absolute efficiency curve as though it were an intrinsic one.
+
+A detector may instead have `mesh_csv` containing CSV text with columns `theta_deg,phi_deg,weight_sr,intrinsic_efficiency`. The example `gamma_mesh.csv` is a 35–65° polar, 0–45° azimuth sector with Gauss quadrature nodes. Weights are positive steradians, efficiencies are in [0,1], and detector regions must be nonoverlapping. A total weight check cannot establish nonoverlap for arbitrary user meshes. Multiple detector meshes sum their responses. A mesh represents a calibrated effective full-energy response, including attenuation where appropriate; the app does not simulate germanium transport or electronics.
+
+Rows use finite `angle_min_deg,angle_max_deg`, `value,uncertainty` (Gaussian) and particle `efficiency`. Optional `level` must equal the chosen photon parent's one-based level; it is filled automatically when omitted. Feeding from all initially excited levels is included. Omit `gamma_efficiency`, or set it to exactly 1; another value is rejected to prevent double counting. `exposure`, stopping, lab particle annulus, recoil/either-particle acceptance and energy threshold use the documented count schema. Full particle azimuth is currently required (`azimuth_fraction=1`); a scalar azimuth fraction cannot substitute for a directional trigger mask in an anisotropic gamma calculation.
+
+Each initial excited-state block retains its own inelastic Rutherford factor, particle acceptance and exit velocity through feeding. Unobserved electric decays propagate its density matrix. For lab photon direction n and emitter velocity beta, inverse aberration gives n' and `D=E_lab/E_rest=1/[gamma(1-beta·n)]`. The photon probability density is `W_lab(n)=D² W_rest(n')`, rotated into the orbit frame before evaluating spin operators. The D² solid-angle Jacobian conserves photon number over 4pi. Nuclear velocities use the nonrelativistic two-body model; photon boosts are exact at those velocities. This does not include relativistic nuclear trajectories, recoil from previous gamma emission, lifetime-dependent displacement, stopping in the detector, hyperfine deorientation, mixed/magnetic multipoles or interference between unresolved degenerate levels.
+
+The coordinate/velocity and detector treatment follows the physical issues described in the [GOSIA manual, §§4.5–4.6 and 6.6](https://www.slcj.uw.edu.pl/wp-content/uploads/2018/08/Gosia_Manual_20120510.pdf). Explicit density operators and detector quadrature are implemented here; no reference fitting or detector source is incorporated.
+
+`synthetic_target_normalization.json` demonstrates a fixed known target structure and a projectile structure sharing `normalization_group: same_beam`. Its planted common scale is 1.2. A target matrix element can also be fitted by adding a `model: target` parameter and an independent target-strength constraint. Models have distinct level indices and signed matrix-element sets. These examples are generated by `make_response_examples.py`, contain synthetic observations, and do not reproduce the selected Sr experiment.
+
+![Laboratory photon response and Doppler energy](lab_gamma_response.png)
+
+The figure is a synthetic 16O + 58Ni calculation at 30 MeV and a 90° CM collision, with projectile excitation. Both angular curves use laboratory axes and uniform particle-azimuth averaging; the difference isolates the photon boost. The energy panel shows why an energy-dependent efficiency must be evaluated at the observed energy.

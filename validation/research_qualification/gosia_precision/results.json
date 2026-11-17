@@ -1,0 +1,865 @@
+{
+  "source_url": "https://apps.ikp.uni-koeln.de/~warr/gosia/gosia_20110524.13.f",
+  "reference": "GOSIA maintainer version 24 February 2026; explicitly separated unmodified and storage/mesh-refined runs",
+  "source_sha256": "9c6790028e3418961576d5e670bd7ae1e8ea797fc0030926154b78a0a91f6298",
+  "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
+  "builds": [
+    {
+      "name": "unmodified",
+      "mesh": 0.03,
+      "edits": [],
+      "source_sha256": "9c6790028e3418961576d5e670bd7ae1e8ea797fc0030926154b78a0a91f6298",
+      "binary_sha256": "2235115a87460b4fd0c3d076a43a5460b762fa6c822c4ee8a8f37e01012e1c52",
+      "compile_command": [
+        "gfortran",
+        "-std=legacy",
+        "-ffixed-line-length-none",
+        "-O0",
+        "-o",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-unmodified",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-unmodified.f"
+      ]
+    },
+    {
+      "name": "mesh0.015",
+      "mesh": 0.015,
+      "edits": [
+        {
+          "before": "LP12 = 365",
+          "after": "LP12 = 3000",
+          "count": 1
+        },
+        {
+          "before": "SH(365)",
+          "after": "SH(3000)",
+          "count": 3
+        },
+        {
+          "before": "CH(365)",
+          "after": "CH(3000)",
+          "count": 3
+        },
+        {
+          "before": "ADB(365)",
+          "after": "ADB(3000)",
+          "count": 2
+        },
+        {
+          "before": "icnt.EQ.365",
+          "after": "icnt.EQ.3000",
+          "count": 1
+        },
+        {
+          "before": "only do 365 steps",
+          "after": "only do 3000 steps",
+          "count": 1
+        },
+        {
+          "before": "\\.03(?![0-9])",
+          "after": "0.0150",
+          "count": 23
+        }
+      ],
+      "source_sha256": "08b475ce43a18549cd8a37b74dba68c9c72ca145b1a0d08a50e3b8f7c75536e4",
+      "binary_sha256": "3527a11a7355ac9214d97f6a5406b6997fe73dd82db414e0b7571c95ca746e81",
+      "compile_command": [
+        "gfortran",
+        "-std=legacy",
+        "-ffixed-line-length-none",
+        "-O0",
+        "-o",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-mesh0.015",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-mesh0.015.f"
+      ]
+    },
+    {
+      "name": "mesh0.0075",
+      "mesh": 0.0075,
+      "edits": [
+        {
+          "before": "LP12 = 365",
+          "after": "LP12 = 3000",
+          "count": 1
+        },
+        {
+          "before": "SH(365)",
+          "after": "SH(3000)",
+          "count": 3
+        },
+        {
+          "before": "CH(365)",
+          "after": "CH(3000)",
+          "count": 3
+        },
+        {
+          "before": "ADB(365)",
+          "after": "ADB(3000)",
+          "count": 2
+        },
+        {
+          "before": "icnt.EQ.365",
+          "after": "icnt.EQ.3000",
+          "count": 1
+        },
+        {
+          "before": "only do 365 steps",
+          "after": "only do 3000 steps",
+          "count": 1
+        },
+        {
+          "before": "\\.03(?![0-9])",
+          "after": "0.0075",
+          "count": 23
+        }
+      ],
+      "source_sha256": "3d742ccc6f4f81107489cde4064122ef7ffcbea849da21930efdab6dbf5cb492",
+      "binary_sha256": "d5fc28330ba9afd0c2db85a1480c53c7aa26c4ffe5c66c9916c67b3e8803bcf2",
+      "compile_command": [
+        "gfortran",
+        "-std=legacy",
+        "-ffixed-line-length-none",
+        "-O0",
+        "-o",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-mesh0.0075",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-precision-mesh0.0075.f"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "build": "unmodified",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "reference": 1.10347e-06,
+      "calculated": 1.103488198015648e-06,
+      "relative_difference": 1.649162700201323e-05,
+      "passed": true
+    },
+    {
+      "build": "unmodified",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "reference": 5.29726e-05,
+      "calculated": 5.2973238166321974e-05,
+      "relative_difference": 1.2047102123879938e-05,
+      "passed": true
+    },
+    {
+      "build": "unmodified",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "reference": 0.000303778,
+      "calculated": 0.0003037903322240376,
+      "relative_difference": 4.0596172328433155e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "reference": 0.0204773,
+      "calculated": 0.02047563795221101,
+      "relative_difference": -8.116537771052368e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "reference": 0.0720285,
+      "calculated": 0.07203307268838088,
+      "relative_difference": 6.34844315914318e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "reference": 0.119361,
+      "calculated": 0.11937738555274825,
+      "relative_difference": 0.00013727727438817006,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "reference": 1.10347e-06,
+      "calculated": 1.103488198015648e-06,
+      "relative_difference": 1.649162700201323e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "reference": 5.29732e-05,
+      "calculated": 5.2973238166321974e-05,
+      "relative_difference": 7.204836025564987e-07,
+      "passed": true
+    },
+    {
+      "build": "mesh0.015",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "reference": 0.000303784,
+      "calculated": 0.0003037903322240376,
+      "relative_difference": 2.0844494896365973e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "reference": 0.0204767,
+      "calculated": 0.02047563795221101,
+      "relative_difference": -5.186615953700624e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "reference": 0.072035,
+      "calculated": 0.07203307268838088,
+      "relative_difference": -2.6755210926876494e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E1 isolated",
+      "model": {
+        "title": "E1 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 1
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "reference": 0.119376,
+      "calculated": 0.11937738555274825,
+      "relative_difference": 1.1606627364324495e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "reference": 1.10347e-06,
+      "calculated": 1.103488198015648e-06,
+      "relative_difference": 1.649162700201323e-05,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "reference": 5.2973e-05,
+      "calculated": 5.2973238166321974e-05,
+      "relative_difference": 4.495994600395292e-06,
+      "passed": true
+    },
+    {
+      "build": "mesh0.0075",
+      "case": "E4 isolated",
+      "model": {
+        "title": "E4 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 4
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "reference": 0.000303787,
+      "calculated": 0.0003037903322240376,
+      "relative_difference": 1.0968948761957975e-05,
+      "passed": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "build": "unmodified",
+      "case": "E1 isolated",
+      "lab_angle": 30.0,
+      "returncode": 0,
+      "diagnostic": "OPENED point.out                                                   \n  IO-num =   22 UNKNOWN              FORMATTED           \nSTOP Sorry, I can only do 365 steps in omega. You need more!",
+      "reference_valid": false
+    },
+    {
+      "build": "unmodified",
+      "case": "E1 isolated",
+      "lab_angle": 60.0,
+      "returncode": 0,
+      "diagnostic": "OPENED point.out                                                   \n  IO-num =   22 UNKNOWN              FORMATTED           \nSTOP Sorry, I can only do 365 steps in omega. You need more!",
+      "reference_valid": false
+    },
+    {
+      "build": "unmodified",
+      "case": "E1 isolated",
+      "lab_angle": 90.0,
+      "returncode": 0,
+      "diagnostic": "OPENED point.out                                                   \n  IO-num =   22 UNKNOWN              FORMATTED           \nSTOP Sorry, I can only do 365 steps in omega. You need more!",
+      "reference_valid": false
+    }
+  ],
+  "absolute_tolerance": 1e-10,
+  "relative_tolerance": 0.0003,
+  "scope": "Isolated E1/E4 target-excitation point populations, three lab angles; polarization off; fine mesh is a modified numerical reference",
+  "passed": true
+}

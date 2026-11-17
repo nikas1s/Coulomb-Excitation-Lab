@@ -1,0 +1,116 @@
+{
+  "synthetic_target_normalization": {
+    "values": [
+      0.6307831305050446,
+      0.182321556793947
+    ],
+    "covariance": [
+      [
+        0.00012398651841355425,
+        -3.8941581510651784e-05
+      ],
+      [
+        -3.8941581510651784e-05,
+        0.00023722663699386938
+      ]
+    ],
+    "residuals": [
+      2.316364232727114e-13,
+      -3.092004774788176e-13,
+      -2.5117253102622263e-13,
+      -2.480696887899385e-13
+    ],
+    "objective": 2.738865786981592e-25,
+    "success": true,
+    "message": "`gtol` termination condition is satisfied.",
+    "rank": 2,
+    "active_bounds": [
+      0,
+      0
+    ],
+    "solutions": [
+      {
+        "values": [
+          0.6307831305050446,
+          0.182321556793947
+        ],
+        "objective": 2.738865786981592e-25,
+        "success": true
+      },
+      {
+        "values": [
+          0.6307831305048957,
+          0.18232155679418774
+        ],
+        "objective": 3.2867610599382503e-22,
+        "success": true
+      }
+    ],
+    "nuisance_experiments": [
+      0
+    ],
+    "normalization_groups": [
+      {
+        "name": "same_beam",
+        "experiments": [
+          0,
+          1
+        ],
+        "prior_sigma": null
+      }
+    ],
+    "dof": 2
+  },
+  "synthetic_lab_gamma": {
+    "values": [
+      0.6307831305046541,
+      -2.2528553313082392e-14
+    ],
+    "covariance": [
+      [
+        0.0004334118447465097,
+        0.0
+      ],
+      [
+        0.0,
+        0.0008999999999983865
+      ]
+    ],
+    "residuals": [
+      -7.509517771027464e-13,
+      -1.6977932538335564e-11,
+      -8.820961006298196e-12
+    ],
+    "objective": 3.6662347492244054e-22,
+    "success": true,
+    "message": "`gtol` termination condition is satisfied.",
+    "rank": 2,
+    "active_bounds": [
+      0,
+      0
+    ],
+    "solutions": [
+      {
+        "values": [
+          0.6307831305046541,
+          -2.2528553313082392e-14
+        ],
+        "objective": 3.6662347492244054e-22,
+        "success": true
+      }
+    ],
+    "nuisance_experiments": [
+      0
+    ],
+    "normalization_groups": [
+      {
+        "name": null,
+        "experiments": [
+          0
+        ],
+        "prior_sigma": 0.03
+      }
+    ],
+    "dof": 1
+  }
+}

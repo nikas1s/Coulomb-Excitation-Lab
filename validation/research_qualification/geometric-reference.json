@@ -1,0 +1,333 @@
+{
+  "method": "Geometric spherical-harmonic Coulomb Hamiltonian, Wigner\u2013Eckart coupling, CODATA 2018 and unitary midpoint propagation",
+  "relative_tolerance": 0.0001,
+  "absolute_tolerance": 2e-08,
+  "rows": [
+    {
+      "case": "E1 isolated",
+      "cm_angle": 45.0,
+      "production": [
+        0.970699830279296,
+        0.02930016972068609
+      ],
+      "independent": [
+        0.9706997729831424,
+        0.029300227011255932
+      ],
+      "step_samples": [
+        [
+          0.9706997320911122,
+          0.029300267907472418
+        ],
+        [
+          0.9707001742318988,
+          0.02929982576530397
+        ],
+        [
+          0.9706997729831424,
+          0.029300227011255932
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        4.0124875644309554e-07,
+        4.0124595196075474e-07
+      ],
+      "endpoint_change": [
+        3.182888763664238e-08,
+        3.182776660282105e-08
+      ],
+      "relative_difference": [
+        5.902561759473129e-08,
+        -1.955294401583895e-06
+      ],
+      "density_max_error": [
+        5.7296153488373136e-08,
+        3.189124106262689e-08
+      ],
+      "density_matched": true,
+      "norm_error": 5.60174129304869e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    },
+    {
+      "case": "E1 isolated",
+      "cm_angle": 90.0,
+      "production": [
+        0.9034066006201646,
+        0.09659339937981246
+      ],
+      "independent": [
+        0.9034064027646821,
+        0.09659359722981077
+      ],
+      "step_samples": [
+        [
+          0.903404928346321,
+          0.09659507165228555
+        ],
+        [
+          0.9034055306727473,
+          0.09659446932447392
+        ],
+        [
+          0.9034064027646821,
+          0.09659359722981077
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        8.720919347782186e-07,
+        8.720946631513016e-07
+      ],
+      "endpoint_change": [
+        2.9922805100390804e-07,
+        2.9922696125062043e-07
+      ],
+      "relative_difference": [
+        2.190104940010938e-07,
+        -2.0482723906064438e-06
+      ],
+      "density_max_error": [
+        1.9785548255324414e-07,
+        1.2473691081427152e-07
+      ],
+      "density_matched": true,
+      "norm_error": 5.507039269048164e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    },
+    {
+      "case": "E1 isolated",
+      "cm_angle": 135.0,
+      "production": [
+        0.8483780854706602,
+        0.1516219145293188
+      ],
+      "independent": [
+        0.8483778384693523,
+        0.1516221615250604
+      ],
+      "step_samples": [
+        [
+          0.8483807622217873,
+          0.15161923777680256
+        ],
+        [
+          0.8483778131487465,
+          0.15162218684845855
+        ],
+        [
+          0.8483778384693523,
+          0.1516221615250604
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        2.5320605834266985e-08,
+        2.532339815619622e-08
+      ],
+      "endpoint_change": [
+        8.839203402555285e-07,
+        8.839192232601434e-07
+      ],
+      "relative_difference": [
+        2.91145403205171e-07,
+        -1.6290213719252358e-06
+      ],
+      "density_max_error": [
+        2.470013077404687e-07,
+        2.189350040149307e-07
+      ],
+      "density_matched": true,
+      "norm_error": 5.587308393728563e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    },
+    {
+      "case": "E4 isolated",
+      "cm_angle": 45.0,
+      "production": [
+        0.9999968549137621,
+        3.1450862364498573e-06
+      ],
+      "independent": [
+        0.9999968547336251,
+        3.145260865285513e-06
+      ],
+      "step_samples": [
+        [
+          0.9999968547377542,
+          3.1452608653101526e-06
+        ],
+        [
+          0.9999968547363607,
+          3.1452608652989713e-06
+        ],
+        [
+          0.9999968547336251,
+          3.145260865285513e-06
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        2.7355895326763857e-12,
+        1.3458082982449951e-17
+      ],
+      "endpoint_change": [
+        1.0533796057643485e-12,
+        4.6548695616360075e-18
+      ],
+      "relative_difference": [
+        1.8013758299518818e-10,
+        -5.552125662557834e-05
+      ],
+      "density_max_error": [
+        1.8013690539220306e-10,
+        1.3123777344180076e-10
+      ],
+      "density_matched": true,
+      "norm_error": 5.509592782004802e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    },
+    {
+      "case": "E4 isolated",
+      "cm_angle": 90.0,
+      "production": [
+        0.9998568071260117,
+        0.00014319287398832078
+      ],
+      "independent": [
+        0.9998567992729294,
+        0.00014320072151207847
+      ],
+      "step_samples": [
+        [
+          0.9998567992770966,
+          0.00014320072152200519
+        ],
+        [
+          0.999856799275706,
+          0.00014320072151415442
+        ],
+        [
+          0.9998567992729294,
+          0.00014320072151207847
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        2.7766677845875165e-12,
+        2.0759490047123075e-15
+      ],
+      "endpoint_change": [
+        1.1087797346931438e-12,
+        2.0290843658066215e-16
+      ],
+      "relative_difference": [
+        7.854207023717723e-09,
+        -5.480086744556032e-05
+      ],
+      "density_max_error": [
+        7.853082184539062e-09,
+        7.105598770560783e-09
+      ],
+      "density_matched": true,
+      "norm_error": 5.558664639693234e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    },
+    {
+      "case": "E4 isolated",
+      "cm_angle": 135.0,
+      "production": [
+        0.9992540539357794,
+        0.0007459460642191033
+      ],
+      "independent": [
+        0.9992540136263689,
+        0.0007459863681095857
+      ],
+      "step_samples": [
+        [
+          0.9992540136304116,
+          0.0007459863682059449
+        ],
+        [
+          0.999254013629091,
+          0.0007459863681295004
+        ],
+        [
+          0.9992540136263689,
+          0.0007459863681095857
+        ]
+      ],
+      "steps": [
+        4000,
+        8000,
+        16000
+      ],
+      "endpoint": 10.0,
+      "short_endpoint": 8.0,
+      "final_step_change": [
+        2.7221558340784213e-12,
+        1.9914733924430994e-14
+      ],
+      "endpoint_change": [
+        1.0579315201653117e-12,
+        6.754579534584693e-16
+      ],
+      "relative_difference": [
+        4.033950319587237e-08,
+        -5.402765010914819e-05
+      ],
+      "density_max_error": [
+        4.030941058719151e-08,
+        3.954291165743449e-08
+      ],
+      "density_matched": true,
+      "norm_error": 5.521472168368291e-12,
+      "matched": true,
+      "converged": true,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "scope": "Isolated E1/E4 target excitation, unpolarized J=0 ground state, finite-energy channels, three CM angles; polarization off"
+}

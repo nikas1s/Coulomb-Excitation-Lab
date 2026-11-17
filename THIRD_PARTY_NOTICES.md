@@ -36,3 +36,8 @@ Component-level comparison of TCLX and Cygnus (function names and roles, checked
 The only TCLX-specific element is the reaction text layout, which `coulex/model.py` reads with newly written code (an input format, not copied code). TCLX's detector-specific code (TIGRESS, BAMBINO, SPICE) was not adapted. Measurement comparisons, uploads, the interface, translations, literature benchmarks and examples are new.
 
 Physics expressions, conventions and numerical constants are traced in `docs/NUMERICS.md`. Verification runs entirely in Python against saved numerical outputs.
+
+
+## Research validation references
+
+The independent geometric propagator, laboratory photon response and shared-normalization implementation are new Python work. Their physical conventions and primary sources are cited in `docs/RESEARCH.md` and `docs/RESEARCH_QUALIFICATION.md`. Optional numerical comparisons use the separately downloaded GOSIA March-2008 and maintainer 24-February-2026 sources in an ignored cache. External Fortran source and executables are not redistributed. Stored generated inputs and numerical outputs identify the reference version and distinguish unmodified results from explicitly storage/mesh-refined numerical runs. Public experimental-input candidates are linked in the bibliography audit; their source/input files are not distributed.
