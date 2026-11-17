@@ -44,18 +44,18 @@ def load_inputs(manifest, inputs=INPUTS):
         path = inputs/filename
         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             raise ValueError(f'Comparison input changed: {filename}')
-        models[path.stem] = parse_input(path.read_text())
+        models[path.stem] = parse_input(path.read_text(encoding='utf-8'))
     return models
 
 
 def load_reference(root=ROOT):
     """Validate the archived evidence (hashes, completeness, finite values) before comparing numbers."""
     archive = root/'validation/results'
-    checksums = json.loads((archive/'checksums.json').read_text())
+    checksums = json.loads((archive/'checksums.json').read_text(encoding='utf-8'))
     for filename, expected in checksums.items():
         if hashlib.sha256((archive/filename).read_bytes()).hexdigest() != expected:
             raise ValueError(f'Archived reference file changed: {filename}')
-    manifest = json.loads((archive/'manifest.json').read_text())
+    manifest = json.loads((archive/'manifest.json').read_text(encoding='utf-8'))
     frame = pd.read_csv(archive/'comparison.csv')
     # Every level of every case at every angle, exactly once; level counts are checked against the
     # inputs themselves when those are available (load_inputs and tests/test_reference.py).
@@ -124,10 +124,10 @@ def main():
                     reference='archived numerical outputs in validation/results', settings=asdict(settings), angles=angles,
                     polarization_convention='reference',
                     elapsed_seconds=time.perf_counter()-start,
-                    reference_files_sha256=json.loads((ROOT/'validation/results/checksums.json').read_text()),
+                    reference_files_sha256=json.loads((ROOT/'validation/results/checksums.json').read_text(encoding='utf-8')),
                     examples_sha256={name: hashlib.sha256((args.inputs/name).read_bytes()).hexdigest()
                                      for name in sorted(reference_manifest['examples_sha256'])})
-    (output/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+    (output/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8', newline='\n')
     maximum = data.absolute_probability_error.max()
     passing = np.allclose(data.python_probability, data.original_probability, atol=1e-6, rtol=2e-5)
     convergence_pass = all(max(c['tighter_ode_max_abs'],c['extended_tail_max_abs'],c['rk45_max_abs']) < 1e-7 for c in convergence)
@@ -175,7 +175,7 @@ def main():
                'It covers E2 projectile excitation from J=0. Other multipoles have independent literature checks.\n',
                'The CSV files contain every comparison, including tiny populations and unnormalized norm diagnostics. '
                'The JSON manifest records input hashes, archived-evidence hashes, dependency versions and solver settings.\n']
-    (output/'REPORT.md').write_text('\n'.join(report))
+    (output/'REPORT.md').write_text('\n'.join(report), encoding='utf-8', newline='\n')
     print(f'Max |ΔP| = {maximum:.6g}; archived-reference agreement={passing}; convergence={convergence_pass}',flush=True)
     return 0 if passing and convergence_pass else 1
 

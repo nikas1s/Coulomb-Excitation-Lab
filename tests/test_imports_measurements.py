@@ -110,9 +110,9 @@ def test_probability_and_invalid_count_inputs(magnesium):
     with pytest.raises(ValueError,match='CM'):
         compare_measurements(magnesium,data,'probability','Lab')
     for filename in ('cross_section','probability','particle_counts','gamma_counts'):
-        validate_measurements(read_table((ROOT/'examples/templates'/f'{filename}.csv').read_text()),filename,3)
+        validate_measurements(read_table((ROOT/'examples/templates'/f'{filename}.csv').read_text(encoding='utf-8')),filename,3)
     with pytest.raises(ValueError): Exposure(thickness=-1)
-    counts=read_table((ROOT/'examples/templates/particle_counts.csv').read_text())
+    counts=read_table((ROOT/'examples/templates/particle_counts.csv').read_text(encoding='utf-8'))
     counts['efficiency']=90
     with pytest.raises(ValueError,match='efficiency'):
         validate_measurements(counts,'particle_counts',3)

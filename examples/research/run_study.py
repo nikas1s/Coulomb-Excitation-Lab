@@ -14,7 +14,7 @@ from coulex.model import parse_input
 from coulex.research import Parameter,sensitivity
 from coulex.shapes import invariants
 OUT=Path(__file__).resolve().parent
-r=parse_input((OUT/'synthetic_rotor.txt').read_text())
+r=parse_input((OUT/'synthetic_rotor.txt').read_text(encoding='utf-8'))
 angles=np.linspace(30,180,16)
 base,jac,error=sensitivity(r,angles,[Parameter('element',0)],[.001])
 fig,axes=plt.subplots(1,2,figsize=(10,4),constrained_layout=True)

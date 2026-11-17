@@ -22,7 +22,7 @@ HERE=Path(__file__).resolve().parent
 
 
 def published_shapes():
-    fixture=json.loads((HERE/'cd106.json').read_text())
+    fixture=json.loads((HERE/'cd106.json').read_text(encoding='utf-8'))
     r=Reaction('106Cd invariant benchmark',48,106,82,208,408.,
                tuple(Level(**x) for x in fixture['levels']),
                tuple(MatrixElement(**x) for x in fixture['elements']),dipole_strength=0.)
@@ -124,7 +124,7 @@ def gaussian_coverage(trials=500,seed=581):
 def gosia_replay(fixture='gosia_points/results.json',builds=None):
     """Replay only finite reference cases; unusable reference runs stay explicit."""
     path=HERE/fixture
-    reference=json.loads(path.read_text())
+    reference=json.loads(path.read_text(encoding='utf-8'))
     rows=[];unusable=[];cache={}
     from coulex.solver import CoupledChannels,SolverSettings
     for row in reference['rows']:
@@ -153,7 +153,7 @@ def gosia_replay(fixture='gosia_points/results.json',builds=None):
 
 def experimental_inputs():
     folder=HERE/'experiments/sr96_sn120'
-    manifest=json.loads((folder/'manifest.json').read_text())
+    manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8'))
     data=pd.read_csv(folder/'yields.csv')
     missing=[key for key,value in manifest['required_inputs'].items() if value is None or (isinstance(value,dict) and value.get('status')!='complete')]
     valid=bool(len(data)==7 and data.value.notna().all() and (data.uncertainty>0).all()

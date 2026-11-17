@@ -38,7 +38,7 @@ def main():
     (out/'synthetic_target_normalization.json').write_text(json.dumps(dict(
         description='SYNTHETIC: upload synthetic_rotor.txt first and switch polarization OFF. Fixed known target structure normalizes projectile data; planted scale=1.2.',
         models={'target':definition},parameters=[dict(kind='element',index=1)],
-        bounds=[[.1],[2.]],starts=[[elements[0].value*.9],[elements[0].value*1.1]],experiments=experiments,max_nfev=50),indent=2)+'\n')
+        bounds=[[.1],[2.]],starts=[[elements[0].value*.9],[elements[0].value*1.1]],experiments=experiments,max_nfev=50),indent=2)+'\n', encoding='utf-8', newline='\n')
     response=dict(detectors=[dict(theta_min_deg=35.,theta_max_deg=65.,efficiency=.3,order=12,phi_order=24,
         energy_mev=[.05,.15,.3,.6],efficiency_curve=[.9,.8,.7,.6])],particle_phi_order=8,boost=True)
     transitions=[dict(upper=3,lower=2,branch=1.,alpha=0.,multipolarity=2),dict(upper=2,lower=1,branch=1.,alpha=.02,multipolarity=2)]
@@ -51,7 +51,7 @@ def main():
         description='SYNTHETIC, not measured: upload synthetic_rotor.txt first and switch polarization OFF; pure E2 feeding with intrinsic lab gamma response.',
         parameters=[dict(kind='element',index=1)],bounds=[[.1],[2.]],starts=[[elements[0].value*.95]],max_nfev=50,
         experiments=[dict(kind='angular_gamma_counts',transitions=transitions,photon_transition=2,gamma_response=response,
-            angular_step=1.,likelihood='gaussian',normalization_sigma=.03,exposure=asdict(exposure),data=data.to_dict('records'))]),indent=2)+'\n')
+            angular_step=1.,likelihood='gaussian',normalization_sigma=.03,exposure=asdict(exposure),data=data.to_dict('records'))]),indent=2)+'\n', encoding='utf-8', newline='\n')
     mesh=GammaMesh.annulus(35.,65.,phi_min_deg=0.,phi_max_deg=45.,efficiency=.3,order=4,phi_order=4)
     pd.DataFrame(dict(theta_deg=np.rad2deg(np.arccos(mesh.directions[:,2])),
         phi_deg=np.mod(np.rad2deg(np.arctan2(mesh.directions[:,1],mesh.directions[:,0])),360),

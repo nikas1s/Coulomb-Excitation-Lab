@@ -92,7 +92,7 @@ class Example:
     generator: Callable[[], str] | None = field(default=None, repr=False)
 
     def text(self):
-        return self.generator() if self.generator else (ROOT/'examples'/self.filename).read_text()
+        return self.generator() if self.generator else (ROOT/'examples'/self.filename).read_text(encoding='utf-8')
 
     def reaction(self):
         return parse_input(self.text())
@@ -276,7 +276,7 @@ def write_example_files(directory=ROOT/'examples'):
     """Export the examples and the filled table examples so they can be used outside the app."""
     for example in EXAMPLES:
         if example.generator:
-            (directory/example.filename).write_text(example.text())
+            (directory/example.filename).write_text(example.text(), encoding='utf-8', newline='\n')
     levels, elements = table_texts(BY_KEY[TABLE_EXAMPLE].reaction())
-    (directory/'templates/levels.csv').write_text(levels)
-    (directory/'templates/matrix_elements.csv').write_text(elements)
+    (directory/'templates/levels.csv').write_text(levels, encoding='utf-8', newline='\n')
+    (directory/'templates/matrix_elements.csv').write_text(elements, encoding='utf-8', newline='\n')

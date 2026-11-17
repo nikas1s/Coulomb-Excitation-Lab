@@ -27,4 +27,4 @@ for ax in axes:
 fig.suptitle('96Sr + 120Sn, 275.5 MeV, excitation 0.815 MeV: nominal geometry only')
 out=Path(__file__).resolve().parent
 fig.savefig(out/'acceptance.png',dpi=180);fig.savefig(out/'acceptance.svg')
-p=out/'acceptance.svg';p.write_text('\n'.join(line.rstrip() for line in p.read_text().splitlines()).rstrip()+'\n')
+p=out/'acceptance.svg';p.write_text('\n'.join(line.rstrip() for line in p.read_text(encoding='utf-8').splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')

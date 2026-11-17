@@ -30,6 +30,8 @@ def create_environment(environment):
 
 
 def main():
+    # Child interpreters (Streamlit, pip and checks) use UTF-8 on Windows too.
+    os.environ.setdefault('PYTHONUTF8','1')
     if not (3, 12) <= sys.version_info[:2] < (3, 15):
         raise SystemExit("Please install Python 3.12, 3.13, or 3.14, then run this command again.")
     environment = ROOT / ".venv"
@@ -40,11 +42,11 @@ def main():
     # A half-created environment (python without pip) from an earlier failed attempt is rebuilt.
     if not python.exists() or (not marker.exists() and not has_pip(python)):
         create_environment(environment)
-    if not marker.exists() or marker.read_text().strip() != digest:
+    if not marker.exists() or marker.read_text(encoding='utf-8').strip() != digest:
         print("Installing the pinned open-source dependencies (internet needed on first run)…", flush=True)
         subprocess.run([str(python), "-m", "pip", "install", "--disable-pip-version-check",
                         "--no-cache-dir", "-r", str(requirements)], check=True, cwd=ROOT)
-        marker.write_text(digest)
+        marker.write_text(digest, encoding='utf-8', newline='\n')
     arguments = sys.argv[1:]
     if arguments and arguments[0] == "--test":
         command = [str(python), "-m", "pytest", "-q", *arguments[1:]]

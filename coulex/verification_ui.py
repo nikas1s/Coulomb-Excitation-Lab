@@ -147,7 +147,7 @@ def original_code(root):
         return
     st.markdown(doc('original_summary'))
     with st.expander(t('Full report (English)'), icon=':material/article:'):
-        st.markdown(report.read_text().split('![Original comparison]')[0])
+        st.markdown(report.read_text(encoding='utf-8').split('![Original comparison]')[0])
     st.image(str(root/'validation/results/original_comparison.png'),
              alt=t('Original C++ and Python populations versus angle, with residuals'))
     st.download_button(t('Download all original comparisons'), (root/'validation/results/comparison.csv').read_bytes(),

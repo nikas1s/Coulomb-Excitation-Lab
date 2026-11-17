@@ -72,11 +72,11 @@ def main():
     relative_tolerance=3e-4; absolute_tolerance=1e-10
     for index,r in enumerate(cases() if args.suite=='baseline' else expanded_cases()):
         text=gosia_input(r,labs)
-        (out/f'case_{index+1}.inp').write_text(text)
+        (out/f'case_{index+1}.inp').write_text(text, encoding='utf-8', newline='\n')
         with tempfile.TemporaryDirectory(prefix='gosia-point-') as work:
             subprocess.run([str(binary)],input=text,text=True,cwd=work,capture_output=True,check=True,timeout=60)
-            output=(Path(work)/'point.out').read_text()
-        (out/f'case_{index+1}.out').write_text('\n'.join(line.rstrip() for line in output.splitlines()).rstrip()+'\n')
+            output=(Path(work)/'point.out').read_text(encoding='utf-8')
+        (out/f'case_{index+1}.out').write_text('\n'.join(line.rstrip() for line in output.splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')
         entries=re.findall(r'LEVEL\s+(\d+)\s+POPULATION\s+([+\-.\dEe]+)',output)
         if len(entries)!=len(labs)*len(r.levels):
             rows.append(dict(case=r.title,passed=False,reference_valid=False,reason='GOSIA incomplete output'))
@@ -102,7 +102,7 @@ def main():
                 relative_tolerance=relative_tolerance,absolute_tolerance=absolute_tolerance,rows=rows,
                 scope=('Unpolarized target excitation, isolated electric E1-E4, multistep and half-integer cases; polarization off' if args.suite=='baseline' else 'Coupled E2/E4 target, E2 projectile, and polarized E2 target point populations; no gamma response'),
                 passed=all(row['passed'] for row in rows))
-    (out/'results.json').write_text(json.dumps(report,indent=2)+'\n')
+    (out/'results.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8', newline='\n')
     for row in rows: print(row['case'],row.get('lab_angle'),row.get('level'),row.get('relative_difference'),row['passed'])
     return 0 if report['passed'] else 1
 

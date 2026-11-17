@@ -13,7 +13,7 @@ LITERATURE = [e for e in EXAMPLES if e.kind == 'literature']
 
 @pytest.mark.parametrize('example', EXAMPLES, ids=lambda e: e.key)
 def test_example_files_are_in_sync_and_parse(example):
-    assert (ROOT/'examples'/example.filename).read_text() == example.text()
+    assert (ROOT/'examples'/example.filename).read_text(encoding='utf-8') == example.text()
     reaction = example.reaction()
     assert all(source in SOURCES for source in example.sources)
     assert all(datum.source in SOURCES for datum in example.data)
@@ -29,8 +29,8 @@ def test_literature_examples_reproduce_cited_values(example):
 
 def test_filled_table_examples_match_their_example_reaction():
     levels, elements = table_texts(BY_KEY[TABLE_EXAMPLE].reaction())
-    assert (ROOT/'examples/templates/levels.csv').read_text() == levels
-    assert (ROOT/'examples/templates/matrix_elements.csv').read_text() == elements
+    assert (ROOT/'examples/templates/levels.csv').read_text(encoding='utf-8') == levels
+    assert (ROOT/'examples/templates/matrix_elements.csv').read_text(encoding='utf-8') == elements
     reaction = BY_KEY[TABLE_EXAMPLE].reaction()
     assert nuclear_tables(read_table(levels), read_table(elements)) == (reaction.levels, reaction.elements)
 

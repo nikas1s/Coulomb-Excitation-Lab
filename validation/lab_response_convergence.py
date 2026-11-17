@@ -46,5 +46,5 @@ def run():
 
 if __name__=='__main__':
     report=run()
-    (ROOT/'validation/research_qualification/lab-response-convergence.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    (ROOT/'validation/research_qualification/lab-response-convergence.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     raise SystemExit(0 if report['passed'] else 1)

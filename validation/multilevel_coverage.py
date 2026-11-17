@@ -77,6 +77,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--trials',type=int,default=100)
     args=parser.parse_args();report=run(args.trials)
     destination=ROOT/'validation/research_qualification/multilevel-coverage.json'
-    destination.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    destination.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     print('Coverage:',report['intervals'],flush=True)
     raise SystemExit(0 if report['passed'] else 1)

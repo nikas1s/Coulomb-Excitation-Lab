@@ -1,4 +1,6 @@
-# Keep launcher line endings correct on every system.
+# Keep all text, especially checksummed reference evidence, byte-stable.
+* text=auto eol=lf
+# Windows batch files deliberately use native line endings.
 *.bat text eol=crlf
 *.command text eol=lf
 *.sh text eol=lf

@@ -42,7 +42,7 @@ def main():
     out=ROOT/'docs'
     fig.savefig(out/'lab_gamma_response.png',dpi=180)
     fig.savefig(out/'lab_gamma_response.svg')
-    svg=out/'lab_gamma_response.svg';svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()).rstrip()+'\n')
+    svg=out/'lab_gamma_response.svg';svg.write_text('\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')
     plt.close(fig)
 
 

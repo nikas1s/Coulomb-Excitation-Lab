@@ -49,7 +49,7 @@ def format_body(key, root: Path, context):
         st.table(_columns_frame(fmt), hide_index=True, alt=t('Required and optional columns'))
     rules = list(fmt.notes) if key in ('tclx', 'stopping') else [*CSV_RULES, *fmt.notes]
     st.markdown('\n'.join(f'- {t(rule)}' for rule in rules))
-    example = (root/fmt.example).read_text()
+    example = (root/fmt.example).read_text(encoding='utf-8')
     st.caption(t('{label} — for orientation only; it is never used in your own calculation:', label=t(fmt.example_label)))
     st.code('\n'.join(example.splitlines()[:8])+('\n…' if len(example.splitlines()) > 8 else ''),
             language='text' if key == 'tclx' else 'csv')

@@ -8,4 +8,4 @@ from coulex import parse_input
 @pytest.fixture
 def magnesium():
     """The built-in 22Mg + 104Pd example (literature data); many tests use only its kinematics."""
-    return parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+    return parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))

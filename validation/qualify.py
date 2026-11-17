@@ -41,7 +41,7 @@ def save_figure(report, destination):
     fig.savefig(destination/'summary.png',dpi=180)
     fig.savefig(destination/'summary.svg')
     svg=destination/'summary.svg'
-    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()).rstrip()+'\n')
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')
     plt.close(fig)
 
 
@@ -62,11 +62,11 @@ def main():
         print(f'Running {name}…',flush=True)
         checks[name]=function()
         print(f"{name}: {'PASS' if checks[name]['passed'] else 'FAIL'}",flush=True)
-    (ROOT/'validation/research_qualification/geometric-reference.json').write_text(json.dumps(checks['geometric_reference'],indent=2,allow_nan=False)+'\n')
+    (ROOT/'validation/research_qualification/geometric-reference.json').write_text(json.dumps(checks['geometric_reference'],indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     if args.extended:
         from validation.multilevel_coverage import run
         checks['multilevel_coverage']=run()
-        (args.output.parent/'multilevel-coverage.json').write_text(json.dumps(checks['multilevel_coverage'],indent=2,allow_nan=False)+'\n')
+        (args.output.parent/'multilevel-coverage.json').write_text(json.dumps(checks['multilevel_coverage'],indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     files=sorted({str(path.relative_to(ROOT)) for path in (ROOT/'coulex').glob('*.py')} | {
         'validation/qualify.py','validation/geometric_benchmark.py','validation/gosia_precision.py','validation/multilevel_coverage.py',
         'validation/research_qualification/independent_cc.py','validation/research_qualification/geometric-reference.json',
@@ -83,7 +83,7 @@ def main():
                 hashes={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in files},checks=checks,
                 computational_checks_passed=all(c['passed'] for c in checks.values()),
                 research_qualified=False,experimental_target=experimental,
-                reference_diagnostics=dict(historical_legacy=json.loads((ROOT/'validation/research_qualification/gosia-diagnostics.json').read_text()),
+                reference_diagnostics=dict(historical_legacy=json.loads((ROOT/'validation/research_qualification/gosia-diagnostics.json').read_text(encoding='utf-8')),
                     resolution='Specific isolated E1/E4 benchmark issues resolved by independently converged geometric propagation, unmodified newer E4 reference and explicitly mesh-refined E1 reference. Historical failed runs are preserved.'),
                 requested_use_cases={
                   'experiment_planning': {'qualified':False,'remaining':'Broader excitation, derivative and integration error budgets'},
@@ -96,13 +96,13 @@ def main():
     multilevel=ROOT/'validation/research_qualification/multilevel-coverage.json'
     if multilevel.exists():
         report['archived_multilevel_coverage']=dict(sha256=hashlib.sha256(multilevel.read_bytes()).hexdigest(),
-            result=json.loads(multilevel.read_text()),rerun_in_this_command=args.extended)
+            result=json.loads(multilevel.read_text(encoding='utf-8')),rerun_in_this_command=args.extended)
     convergence=ROOT/'validation/research_qualification/lab-response-convergence.json'
     report['archived_lab_response_convergence']=dict(sha256=hashlib.sha256(convergence.read_bytes()).hexdigest(),
-        result=json.loads(convergence.read_text()),rerun_in_this_command=False)
+        result=json.loads(convergence.read_text(encoding='utf-8')),rerun_in_this_command=False)
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    args.output.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
-    (args.output.parent/'nonlinear-coverage.json').write_text(json.dumps(checks['nonlinear_coverage'],indent=2,allow_nan=False)+'\n')
+    args.output.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
+    (args.output.parent/'nonlinear-coverage.json').write_text(json.dumps(checks['nonlinear_coverage'],indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     save_figure(report,args.output.parent)
     print('Report:',args.output)
     print('Research qualification remains incomplete: see remaining_gates in the report.')

@@ -44,5 +44,5 @@ def run():
 
 if __name__=='__main__':
     report=run();path=ROOT/'validation/research_qualification/geometric-reference.json'
-    path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    path.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     raise SystemExit(0 if report['passed'] else 1)

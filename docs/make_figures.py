@@ -12,7 +12,7 @@ import numpy as np
 from coulex import parse_input,CoupledChannels
 from coulex.workflow import calculate, results_frame
 
-model=parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+model=parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
 scan=calculate(model,np.arange(1.,181.,2.))
 data=results_frame(model,scan)
 trajectory=CoupledChannels(model).solve(90,history_points=501)

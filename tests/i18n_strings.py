@@ -9,7 +9,7 @@ UI_FILES = ['app.py', *[f'coulex/{n}.py' for n in ('help_ui', 'input_ui', 'measu
 def literal_t_calls():
     found = set()
     for name in UI_FILES:
-        tree = ast.parse((ROOT/name).read_text())
+        tree = ast.parse((ROOT/name).read_text(encoding='utf-8'))
         for node in ast.walk(tree):
             if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 't'
                     and node.args and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str)):

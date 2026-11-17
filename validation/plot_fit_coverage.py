@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    report=json.loads((ROOT/'validation/research_qualification/multilevel-coverage.json').read_text())
+    report=json.loads((ROOT/'validation/research_qualification/multilevel-coverage.json').read_text(encoding='utf-8'))
     labels=['Transition E2 element','Diagonal E2 element','Log normalization']
     fig,axes=plt.subplots(1,2,figsize=(11,4.3),constrained_layout=True)
     colors=['tab:blue','tab:orange','tab:green']
@@ -40,7 +40,7 @@ def main():
     for ax in axes: ax.grid(alpha=.2)
     fig.suptitle('Synthetic nondegenerate E2 network + Q and normalization calibration')
     for extension in ('png','svg'): fig.savefig(ROOT/f'docs/multilevel_coverage.{extension}',dpi=180)
-    svg=ROOT/'docs/multilevel_coverage.svg';svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()).rstrip()+'\n')
+    svg=ROOT/'docs/multilevel_coverage.svg';svg.write_text('\n'.join(line.rstrip() for line in svg.read_text(encoding='utf-8').splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')
     plt.close(fig)
 
 

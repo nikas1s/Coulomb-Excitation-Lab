@@ -42,7 +42,7 @@ def test_missing_inputs_explain_where_to_get_them(tmp_path):
 
 def test_unlicensed_inputs_are_not_shipped_with_the_examples():
     assert not list((ROOT/'examples').glob('*_example.txt'))
-    ignored = (ROOT/'.gitignore').read_text().split('\n')
+    ignored = (ROOT/'.gitignore').read_text(encoding='utf-8').split('\n')
     assert 'validation/tclx_inputs/*' in ignored and '!validation/tclx_inputs/README.md' in ignored
 
 

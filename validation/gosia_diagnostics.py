@@ -23,25 +23,25 @@ from coulex.literature import first_order_probability
 def execute(binary,text):
     with tempfile.TemporaryDirectory(prefix='gosia-diagnostic-') as work:
         run=subprocess.run([str(binary)],input=text,text=True,cwd=work,capture_output=True,timeout=60)
-        path=Path(work)/'point.out';output=path.read_text() if path.exists() else ''
+        path=Path(work)/'point.out';output=path.read_text(encoding='utf-8') if path.exists() else ''
     populations=re.findall(r'LEVEL\s+(\d+)\s+POPULATION\s+(\S+)',output)
     return run,output,populations
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',type=Path,required=True)
-    args=p.parse_args();source=args.source.read_text();cache=ROOT/'.cache/research-qualification';cache.mkdir(parents=True,exist_ok=True)
+    args=p.parse_args();source=args.source.read_text(encoding='utf-8');cache=ROOT/'.cache/research-qualification';cache.mkdir(parents=True,exist_ok=True)
     extended=source;patches={}
     for before,after in [('LP12 = 365','LP12 = 700'),('SH(365)','SH(700)'),('CH(365)','CH(700)'),('ADB(365)','ADB(700)')]:
         patches[before]=dict(replacement=after,occurrences=source.count(before));extended=extended.replace(before,after)
-    extended_path=cache/'gosia-storage700.f';extended_path.write_text(extended)
+    extended_path=cache/'gosia-storage700.f';extended_path.write_text(extended, encoding='utf-8', newline='\n')
     compiler=subprocess.run(['gfortran','--version'],capture_output=True,text=True,check=True).stdout.splitlines()[0]
     commands=[]
     for path,name,flags in [(args.source.resolve(),'gosia-bounds',['-fcheck=bounds','-g']),
                             (extended_path,'gosia-storage700',[])]:
         cmd=['gfortran','-std=legacy','-O0',*flags,'-o',str(cache/name),str(path)]
         build=subprocess.run(cmd,capture_output=True,text=True,check=True);commands.append(cmd)
-        (cache/(name+'-compile.log')).write_text(build.stderr)
+        (cache/(name+'-compile.log')).write_text(build.stderr, encoding='utf-8', newline='\n')
     e1=next(cases());text=gosia_input(e1,[60.])
     checked,_,_=execute(cache/'gosia-bounds',text)
     weak=replace(e1,elements=tuple(replace(m,value=.002) for m in e1.elements))
@@ -62,7 +62,7 @@ def main():
         e4_isolated=dict(returncode=e4run.returncode,nonfinite_output='NaN' in output or 'Infinity' in output,
             resolved=False),
         conclusion='E1 storage overflow diagnosed. Extending storage removes nonfinite results but leaves a discrepancy outside the unchanged tolerance. Isolated E4 remains unresolved; coupled E2/E4 has a separate passing reference.')
-    out=ROOT/'validation/research_qualification/gosia-diagnostics.json';out.write_text(json.dumps(report,indent=2)+'\n')
+    out=ROOT/'validation/research_qualification/gosia-diagnostics.json';out.write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8', newline='\n')
     print(report['conclusion'])
     return 0
 

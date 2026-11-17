@@ -22,7 +22,7 @@ from coulex.measurements import cm_branches
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source',type=Path,required=True)
-    args=parser.parse_args();original=args.source.read_text()
+    args=parser.parse_args();original=args.source.read_text(encoding='utf-8')
     if 'DATA fct/0./' not in original or 'LP12 = 365' not in original:
         raise ValueError('Use the specified maintainer version; unexpected source layout.')
     cache=ROOT/'.cache/research-qualification';cache.mkdir(parents=True,exist_ok=True)
@@ -39,11 +39,11 @@ def main():
                 source=source.replace(before,after);edits.append(dict(before=before,after=after,count=count))
             source,count=re.subn(r'\.03(?![0-9])',f'{mesh:.4f}',source)
             edits.append(dict(before=r'\.03(?![0-9])',after=f'{mesh:.4f}',count=count))
-        path=cache/f'gosia-precision-{name}.f';path.write_text(source)
+        path=cache/f'gosia-precision-{name}.f';path.write_text(source, encoding='utf-8', newline='\n')
         binary=cache/f'gosia-precision-{name}'
         command=['gfortran','-std=legacy','-ffixed-line-length-none','-O0','-o',str(binary),str(path)]
         build=subprocess.run(command,capture_output=True,text=True,check=True)
-        (cache/f'gosia-precision-{name}-build.log').write_text(build.stderr)
+        (cache/f'gosia-precision-{name}-build.log').write_text(build.stderr, encoding='utf-8', newline='\n')
         builds.append(dict(name=name,mesh=.03 if mesh is None else mesh,edits=edits,
             source_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
             binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),compile_command=command))
@@ -51,8 +51,8 @@ def main():
             for lab in (30.,60.,90.):
                 text=gosia_input(reaction,[lab]);run,output,populations=execute(binary,text)
                 stem=f'{name}-E{reaction.levels[1].spin:g}-{lab:g}'
-                (out/(stem+'.inp')).write_text(text)
-                (out/(stem+'.out')).write_text('\n'.join(line.rstrip() for line in output.splitlines()).rstrip()+'\n')
+                (out/(stem+'.inp')).write_text(text, encoding='utf-8', newline='\n')
+                (out/(stem+'.out')).write_text('\n'.join(line.rstrip() for line in output.splitlines()).rstrip()+'\n', encoding='utf-8', newline='\n')
                 if len(populations)!=len(reaction.levels):
                     diagnostics.append(dict(build=name,case=reaction.title,lab_angle=lab,returncode=run.returncode,
                         diagnostic=(run.stdout+run.stderr).strip(),reference_valid=False))
@@ -72,7 +72,7 @@ def main():
         absolute_tolerance=1e-10,relative_tolerance=3e-4,
         scope='Isolated E1/E4 target-excitation point populations, three lab angles; polarization off; fine mesh is a modified numerical reference',
         passed=bool(len(fine)==6 and len(untouched_e4)==3 and all(r['passed'] for r in fine+untouched_e4)))
-    (out/'results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    (out/'results.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     return 0 if report['passed'] else 1
 
 

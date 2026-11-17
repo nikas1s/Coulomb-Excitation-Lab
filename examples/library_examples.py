@@ -26,7 +26,7 @@ from coulex.workflow import calculate, results_frame  # noqa: E402
 
 def example_1_single_angle():
     """Solve one collision of a built-in example and inspect the populations."""
-    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
     result = CoupledChannels(reaction).solve(90.)
     print('1) 22Mg + 104Pd at 90°: populations', np.round(result.probabilities, 5),
           f'(probability drift {result.norm_error:.1e})')
@@ -57,7 +57,7 @@ def example_3_reaction_from_literature_numbers():
 
 def example_4_first_order_theory():
     """For a weak coupling the solver approaches Alder–Winther first-order theory."""
-    base = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+    base = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
     weak = replace(base, dipole_strength=0., levels=base.levels[:2], elements=(MatrixElement(0, 1, 0.001, 2),))
     exact = CoupledChannels(weak).solve(120., SolverSettings(rtol=1e-11, atol=1e-15)).probabilities[1]
     print(f'4) weak E2 at 120°: coupled channels {exact:.6e}, first order {first_order_probability(weak, 120., 1):.6e}')
@@ -65,7 +65,7 @@ def example_4_first_order_theory():
 
 def example_5_detector_yield():
     """Counts in a 25°–55° lab annulus: integrate dσ/dΩ, then multiply by target atoms and beam."""
-    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
     angles = np.arange(20., 181., 5.)  # halve the step to check angular convergence
     scan = calculate(reaction, angles)
     level = 1
@@ -76,8 +76,8 @@ def example_5_detector_yield():
 
 def example_6_thick_target():
     """Average over the energy loss in a thick target with a stopping-power table."""
-    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
-    table = StoppingTable.from_csv((ROOT/'examples/synthetic_stopping.csv').read_text())  # synthetic test data
+    reaction = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
+    table = StoppingTable.from_csv((ROOT/'examples/synthetic_stopping.csv').read_text(encoding='utf-8'))  # synthetic test data
     scan = calculate(reaction, np.array([90.]), stopping=table, thickness=2., order=6)
     print('6) thick target: beam energies sampled', np.round(scan.energies, 2), 'MeV; P(2+) =',
           round(float(scan.probabilities[0, 1]), 5))
@@ -85,7 +85,7 @@ def example_6_thick_target():
 
 def example_7_literature_benchmarks():
     """The same benchmarks as the app's Verification tab."""
-    reference = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text())
+    reference = parse_input((ROOT/'examples/22Mg_104Pd_literature.txt').read_text(encoding='utf-8'))
     rows = benchmark_suite(reference)
     print(f'7) literature benchmarks: {sum(r.passed for r in rows)} of {len(rows)} passed')
     for row in rows:
