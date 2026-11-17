@@ -1,8 +1,8 @@
 {
-  "created_utc": "2026-11-17T08:04:30.771378+00:00",
+  "created_utc": "2026-11-17T08:06:07.523000+00:00",
   "python": "3.14.0",
   "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
-  "git_commit": "7da9033a97925b1f258a79ffd2763a0efa28fe58",
+  "git_commit": "12b5d2916a88ce4fca257f151ef8fff6253293e1",
   "working_tree_dirty": true,
   "dependencies": {
     "numpy": "2.5.4",
@@ -38,7 +38,7 @@
     "coulex/stopping.py": "b8feee360aea4f1b3a0e1317a10718524251072125b14f8bae19f8c514b615f7",
     "coulex/verification_ui.py": "21e0621b126e80ffc9a482b6b52ff64ef02f0008b0ca1673a8e7e8b6fd617cea",
     "coulex/workflow.py": "80b8d09b7a554884b83e7d295528617cc78c4efe67757e3635306d1ab87ba483",
-    "validation/qualify.py": "2c84acafc2e6bc4cef9d58442192f8deaa38dcfaafac334a255a00108b12be21",
+    "validation/qualify.py": "b1af2c03e01c8652d64889e5cdb89fa3fc433c628a8e9a5d4b2e0ab054e3d105",
     "validation/research_qualification/cd106.json": "05b7a79993caf39c4d954b326b11aefe1c47f22fad7317b91662249baeb91952",
     "validation/research_qualification/checks.py": "618d2efe775a831ae8cfdb890747484969ca0103427b5de96b647e99c367011b",
     "validation/research_qualification/experiments/sr96_sn120/manifest.json": "f69c67c8e2b8dba7d797aeaf569556a535414be8f007850860a866a859cec12d",

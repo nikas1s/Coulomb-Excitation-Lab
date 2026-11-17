@@ -62,7 +62,7 @@ def main():
         with tempfile.TemporaryDirectory(prefix='gosia-point-') as work:
             subprocess.run([str(binary)],input=text,text=True,cwd=work,capture_output=True,check=True,timeout=60)
             output=(Path(work)/'point.out').read_text()
-        (out/f'case_{index+1}.out').write_text(output)
+        (out/f'case_{index+1}.out').write_text('\n'.join(line.rstrip() for line in output.splitlines()).rstrip()+'\n')
         entries=re.findall(r'LEVEL\s+(\d+)\s+POPULATION\s+([+\-.\dEe]+)',output)
         if len(entries)!=len(labs)*len(r.levels):
             rows.append(dict(case=r.title,passed=False,reference_valid=False,reason='GOSIA incomplete output'))

@@ -38,6 +38,8 @@ def save_figure(report, destination):
     for ax in axes: ax.grid(alpha=.25)
     fig.savefig(destination/'summary.png',dpi=180)
     fig.savefig(destination/'summary.svg')
+    svg=destination/'summary.svg'
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()).rstrip()+'\n')
     plt.close(fig)
 
 
