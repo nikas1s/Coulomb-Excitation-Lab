@@ -194,6 +194,8 @@ No C++, ROOT or compiler is required. The original source and build tools have b
 
 ## Research tools and validation
 
+For the research qualification evidence and outstanding release gates, see [RESEARCH_QUALIFICATION.md](docs/RESEARCH_QUALIFICATION.md). Run `python run.py --qualify` to reproduce the published invariant benchmark, independent finite GOSIA point comparisons, angular algebra checks and the scoped coverage experiment. The generated report explicitly records that research qualification remains incomplete.
+
 The **Research** tab adds sensitivity scans and experimental-design information, correlated input uncertainty bands, 0+ quadrupole shape invariants, joint multi-experiment fitting, gamma feeding and pure-electric angular correlations, and E3/polarization/model-space comparisons. It includes English/Greek controls, CSV decay/covariance uploads, portable JSON fit configurations and downloadable results tied to their inputs.
 
 Start with the [research guide](docs/RESEARCH.md), its equations and stated physical scope. The [synthetic examples](examples/research/) include two-energy fit data, a covariance matrix, a decay network, an opposite-parity model and a [standalone sensitivity plot](examples/research/sensitivity.png). These fixtures are teaching models, not experimental measurements. Research extensions have analytical and synthetic tests; fitting and gamma response are not claimed to be validated replacements for a full experimental analysis package.
@@ -205,11 +207,11 @@ These features extend the same Coulomb-excitation calculation: sensitivity asks 
 | Sensitivity and design | Finite-difference step comparison; normalization-degenerate information test | Local derivatives and an assumed observation-error model do not prove unique parameter determination |
 | Uncertainty bands | Zero-covariance limit; covariance validation; reproducible ensemble/UI checks | Assumed input distributions; no uncertainty-coverage validation or bound on omitted physics |
 | 0+ shape invariants | Prolate/oblate rotor limits; basis-phase invariance; missing-element reporting | Finite E2 network; effective beta/gamma interpretation; no full shape distribution |
-| Joint fitting | Synthetic multi-energy recovery; normalization/lifetime constraints; profile test; Gaussian covariance and Poisson residual checks | No published raw-data benchmark, demonstrated confidence-interval coverage or exhaustive minimum search |
+| Joint fitting | Synthetic multi-energy recovery; normalization/lifetime constraints; profile test; Gaussian covariance and Poisson residual checks | No published raw-data fit benchmark, general nonlinear confidence-interval coverage or exhaustive minimum search |
 | Gamma feeding and angular response | Branch/conversion bookkeeping; analytic E1/E2 patterns and gamma–gamma correlation; density trace/positivity; full-solid-angle E4 regression | Pure electric transitions and rest-frame axes; no complete laboratory detector response or mixed-multipole calculation |
 | Octupole/model comparisons | Explicit solver recalculation for altered E3, reorientation, polarization and retained levels | Alternative input models are not a unique inference of permanent octupole shape |
 
-**Validation status:** the recorded full regression run passed 132 tests, followed by focused checks and an additional profile test. The new inference and gamma extensions have not undergone independent expert review or end-to-end validation against a published experimental analysis. The archived excitation-code comparison does not validate these new extensions. See [QA.md](validation/QA.md) and [RESEARCH.md](docs/RESEARCH.md) for the evidence and assumptions.
+**Validation status:** the recorded full regression run passed 132 tests, followed by focused checks and an additional profile test. An independent GOSIA point comparison and published invariant benchmark now supplement the synthetic tests. The new inference and gamma extensions have not undergone independent expert review or end-to-end validation against a published experimental analysis. The archived excitation-code comparison does not validate these new extensions. See [QA.md](validation/QA.md) and [RESEARCH.md](docs/RESEARCH.md) for the evidence and assumptions.
 
 ## Energy loss, yields and scope
 

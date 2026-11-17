@@ -91,7 +91,7 @@ def decay_rates(reaction, alphas=None):
             raise ValueError('Conversion coefficients must be nonnegative.')
         rows.append(dict(upper=upper+1,lower=lower+1,E_mev=energy,lam=edge.multipolarity,
                          B_down=strength,photon_rate_s=photon_rate,total_rate_s=photon_rate*(1+alpha)))
-    frame = pd.DataFrame(rows)
+    frame = pd.DataFrame(rows,columns=['upper','lower','E_mev','lam','B_down','photon_rate_s','total_rate_s'])
     if not frame.empty:
         totals = frame.groupby('upper').total_rate_s.transform('sum')
         frame['total_branch'] = frame.total_rate_s/totals

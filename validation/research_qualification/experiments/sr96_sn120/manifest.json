@@ -1,0 +1,28 @@
+{
+  "title": "96Sr + 120Sn experimental gamma-yield validation target",
+  "citation": "E. Clement et al., Low-energy Coulomb excitation of 96,98Sr beams, Phys. Rev. C 94, 054326 (2016)",
+  "doi": "https://doi.org/10.1103/PhysRevC.94.054326",
+  "table": "Table I: 120Sn target subset only",
+  "beam_energy_mev": 275.5,
+  "projectile_z": 38,
+  "projectile_a": 96,
+  "target_z": 50,
+  "target_a": 120,
+  "target_thickness_mg_cm2": 2.0,
+  "gamma_detector": "MINIBALL HPGe",
+  "particle_detector": "annular DSSSD, nominal laboratory 20 to 55 degrees",
+  "angle_frame": "CM",
+  "efficiency_corrected": false,
+  "observation_model": "Gaussian peak-intensity estimates with the reported errors; not asserted to be raw Poisson event counts",
+  "validation_status": "inputs_incomplete",
+  "required_inputs": {
+    "gamma_response": null,
+    "particle_response_and_bin_mapping": null,
+    "stopping_and_beam_energy_distribution": null,
+    "complete_projectile_and_target_structure": null,
+    "branching_and_conversion": null,
+    "normalization_and_covariance": null,
+    "reference_fit_configuration": null
+  },
+  "note": "No detector efficiencies, unreported covariances or missing physical corrections are fabricated. This file is a validation target, not a ready-to-fit example."
+}

@@ -1,0 +1,106 @@
+1
+ *****************************************************************************************************************************
+ *****************************************************************************************************************************
+ **************************************************                         **************************************************
+ **************************************************          GOSIA          **************************************************
+ **************************************************                         **************************************************
+ *****************************************************************************************************************************
+ *****************************************************************************************************************************
+
+
+
+
+
+                    ROCHESTER COULOMB EXCITATION DATA ANALYSIS CODE BY T.CZOSNYKA, D.CLINE AND C.Y.WU
+                                            LATEST REVISION - MARCH 2008 BY N. WARR
+
+
+
+
+
+
+              E4 isolated                                                                 
+          ----------------------------------------------------------------------------------------------------
+
+                                        LEVELS
+
+     INDEX     PARITY         SPIN           ENERGY(MEV)
+       1           +           0.0            0.0000
+       2           +           4.0            0.3000
+
+                                        MATRIX ELEMENTS
+
+
+     MULTIPOLARITY=4
+    INDEX   NF     NS          ME
+       1      1      2        0.20000
+
+
+                                        EXCITATION AMPLITUDES
+
+          M=  0.0     EXPERIMENT  1
+
+     LEVEL  SPIN  M     REAL AMPLITUDE  IMAGINARY AMPLITUDE
+
+
+        1    0.0    0.0             NaN             NaN
+        2    4.0   -4.0             NaN             NaN
+        2    4.0   -3.0             NaN             NaN
+        2    4.0   -2.0             NaN             NaN
+        2    4.0   -1.0             NaN             NaN
+        2    4.0    0.0             NaN             NaN
+        2    4.0    1.0             NaN             NaN
+        2    4.0    2.0             NaN             NaN
+        2    4.0    3.0             NaN             NaN
+        2    4.0    4.0             NaN             NaN
+
+     SUM OF PROBABILITIES=           NaN
+  LEVEL  1          POPULATION            NaN
+  LEVEL  2          POPULATION            NaN
+
+
+                                        EXCITATION AMPLITUDES
+
+          M=  0.0     EXPERIMENT  2
+
+     LEVEL  SPIN  M     REAL AMPLITUDE  IMAGINARY AMPLITUDE
+
+
+        1    0.0    0.0             NaN             NaN
+        2    4.0   -4.0             NaN             NaN
+        2    4.0   -3.0             NaN             NaN
+        2    4.0   -2.0             NaN             NaN
+        2    4.0   -1.0             NaN             NaN
+        2    4.0    0.0             NaN             NaN
+        2    4.0    1.0             NaN             NaN
+        2    4.0    2.0             NaN             NaN
+        2    4.0    3.0             NaN             NaN
+        2    4.0    4.0             NaN             NaN
+
+     SUM OF PROBABILITIES=           NaN
+  LEVEL  1          POPULATION            NaN
+  LEVEL  2          POPULATION            NaN
+
+
+                                        EXCITATION AMPLITUDES
+
+          M=  0.0     EXPERIMENT  3
+
+     LEVEL  SPIN  M     REAL AMPLITUDE  IMAGINARY AMPLITUDE
+
+
+        1    0.0    0.0             NaN             NaN
+        2    4.0   -4.0             NaN             NaN
+        2    4.0   -3.0             NaN             NaN
+        2    4.0   -2.0             NaN             NaN
+        2    4.0   -1.0             NaN             NaN
+        2    4.0    0.0             NaN             NaN
+        2    4.0    1.0             NaN             NaN
+        2    4.0    2.0             NaN             NaN
+        2    4.0    3.0             NaN             NaN
+        2    4.0    4.0             NaN             NaN
+
+     SUM OF PROBABILITIES=           NaN
+  LEVEL  1          POPULATION            NaN
+  LEVEL  2          POPULATION            NaN
+               ********* END OF EXECUTION **********

@@ -1,0 +1,17 @@
+E1 isolated None None None False
+E2 isolated 30.0 2 3.699940282387795e-06 True
+E2 isolated 60.0 2 3.1882385085315633e-06 True
+E2 isolated 90.0 2 5.31661934664603e-06 True
+E3 isolated 30.0 2 2.1298767970759705e-06 True
+E3 isolated 60.0 2 6.804757044223036e-07 True
+E3 isolated 90.0 2 3.7744623993747313e-06 True
+E4 isolated None None None False
+E2 multistep and reorientation 30.0 2 1.5917463212700919e-06 True
+E2 multistep and reorientation 30.0 3 3.0397260375252733e-06 True
+E2 multistep and reorientation 60.0 2 3.31934327869935e-08 True
+E2 multistep and reorientation 60.0 3 1.923627312358496e-06 True
+E2 multistep and reorientation 90.0 2 8.410819892309272e-07 True
+E2 multistep and reorientation 90.0 3 2.8045575743285855e-06 True
+E2 half-integer unpolarized 30.0 2 3.425963544379594e-06 True
+E2 half-integer unpolarized 60.0 2 4.0767489545842255e-06 True
+E2 half-integer unpolarized 90.0 2 2.5462727608928235e-06 True

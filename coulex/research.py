@@ -68,10 +68,24 @@ def sensitivity(reaction, angles, parameters, steps, settings=None, **workflow):
 
 
 def covariance_matrix(covariance, size):
+    """Validate symmetry and PSD in dimensionless correlation coordinates.
+
+    An absolute matrix tolerance is unsafe for tiny variances or parameters
+    with very different units. Zero-variance rows must have zero covariance.
+    """
     cov = np.asarray(covariance, float)
-    if cov.shape != (size, size) or not np.all(np.isfinite(cov)) or not np.allclose(cov, cov.T, atol=1e-14, rtol=1e-10):
+    if size < 1 or cov.shape != (size, size) or not np.all(np.isfinite(cov)):
         raise ValueError('Covariance must be finite, symmetric and match the parameters.')
-    if np.min(np.linalg.eigvalsh(cov)) < -1e-12*max(np.max(abs(cov)), 1e-30):
+    if not np.allclose(cov,cov.T,atol=0.,rtol=1e-10):
+        raise ValueError('Covariance must be finite, symmetric and match the parameters.')
+    diagonal = np.diag(cov)
+    if np.any(diagonal < 0) or np.any(cov[diagonal == 0] != 0):
+        raise ValueError('Covariance must be positive semidefinite.')
+    cov = cov/2+cov.T/2
+    sigma = np.sqrt(diagonal)
+    sigma = np.where(sigma > 0,sigma,1.)
+    correlation = cov/sigma[:,None]/sigma[None,:]
+    if np.min(np.linalg.eigvalsh(correlation)) < -1e-12:
         raise ValueError('Covariance must be positive semidefinite.')
     return cov
 
@@ -234,7 +248,11 @@ def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=N
                          max_nfev=max_nfev, diff_step=1e-4, xtol=1e-8, ftol=1e-8, gtol=1e-8))
     best = min(solutions, key=lambda s: s.cost)
     rank = np.linalg.matrix_rank(best.jac)
-    cov = np.linalg.inv(best.jac.T@best.jac) if best.success and rank == len(best.x) and np.linalg.cond(best.jac) < 1e8 and not np.any(best.active_mask) else None
+    cov = None
+    if best.success and rank == len(best.x) and np.linalg.cond(best.jac) < 1e8 and not np.any(best.active_mask):
+        # Avoid squaring the condition number by forming/inverting J.T@J.
+        _, singular_values, vh = np.linalg.svd(best.jac,full_matrices=False)
+        cov = (vh.T/singular_values**2)@vh
     return dict(values=best.x, covariance=cov, residuals=best.fun, objective=2*best.cost,
                 success=best.success, message=best.message, rank=int(rank),
                 active_bounds=best.active_mask, solutions=[dict(values=s.x.tolist(), objective=2*s.cost,

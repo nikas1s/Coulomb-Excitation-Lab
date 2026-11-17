@@ -48,6 +48,8 @@ def main():
     arguments = sys.argv[1:]
     if arguments and arguments[0] == "--test":
         command = [str(python), "-m", "pytest", "-q", *arguments[1:]]
+    elif arguments and arguments[0] == "--qualify":
+        command = [str(python), "validation/qualify.py", *arguments[1:]]
     elif arguments and arguments[0] == "--verify":
         command = [str(python), "validation/verify.py", *arguments[1:]]
     else:

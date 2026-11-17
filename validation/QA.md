@@ -83,3 +83,17 @@ Branch: `feature/research-analysis`. Six research workflows, Greek labels, repro
 - Analytical limits and synthetic inference are validated. Published raw gamma datasets, mixed/magnetic transitions and full laboratory gamma geometry remain outside the validation claim.
 - Additional final checks: 10 physics/translation checks passed (`research-physics-final.log`), the profile/JSON/parameter validation test passed, and the final research interaction check passed (`research-interaction-final.log`).
 - The downloadable two-energy, two-parameter synthetic fit converged from multiple starts and recovered the input elements, with objective approximately 5.94e-22 (`research-synthetic-fit.json`).
+
+## Independent research qualification evidence
+
+See `docs/RESEARCH_QUALIFICATION.md` and `validation/research_qualification/latest.json`.
+
+- Published 106Cd ground-state q2/q3/gamma reproduced within printed-input/output rounding.
+- Separately compiled official GOSIA March-2008 code: 15 finite E2/E3 target-excitation reference points agree within 6 ppm, covering multistep/reorientation and half-integer spins. Isolated E1/E4 reference runs were nonfinite and remain explicitly unresolved, rather than passing benchmarks.
+- Independent matrix-exponential rotations and 60 photon spin/multipolarity cases pass normalization, isotropy and transfer checks.
+- 500 regular Gaussian external-Q pseudoexperiments: observed 68%/95% interval coverage 67.0%/95.6%, consistent with exact 99% binomial intervals. This does not qualify general nonlinear or low-count intervals.
+- Full regression: **138 passed**, 132.74 s (`research_qualification/full-tests.log`). Follow-up final physics/qualification checks: **16 passed**, 31.11 s. Follow-up UI, launcher and translation checks: **11 passed**, 23.57 s.
+- Fixed covariance symmetry/PSD checks for tiny and mixed-unit variances; use SVD for local fit covariance; missing decay rates produce a clear lifetime-constraint error.
+- Bibliographic experimental target: 96Sr + 120Sn, Clement et al., PRC 94, 054326 (2016). Seven published peak intensities recorded with source and original errors; missing calibration/response inputs are explicit. No reproduced experimental fit is claimed.
+- Cross-platform CI workflow added but not executed remotely in this session. External GOSIA source/executable remain in ignored cache, not in the repository.
+- Research qualification remains incomplete for all three requested use cases. Outstanding experimental matching, nonlinear coverage and independent scientific review are recorded in the generated report.

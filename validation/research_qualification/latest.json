@@ -1,0 +1,320 @@
+{
+  "created_utc": "2026-11-17T08:04:30.771378+00:00",
+  "python": "3.14.0",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "git_commit": "7da9033a97925b1f258a79ffd2763a0efa28fe58",
+  "working_tree_dirty": true,
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "sympy": "1.14.0",
+    "pandas": "3.1.1"
+  },
+  "hashes": {
+    "coulex/__init__.py": "d1d0a70df425f60b4772d566b0b819a7e1a1c6bb3e420e7b99af8f3ed3c66e1e",
+    "coulex/decay.py": "c3ed6f2a087d3cac05a839aa9c84ae3679c392c18cdc12b19901a5bcbf2ee004",
+    "coulex/examples.py": "9556d17da60ba4edd85a05a710f0cbeeea38378a486eefaf68936aa9487b5110",
+    "coulex/formats.py": "cb933c248c7adaa7eebabaa391cdc99940c8db2d5085f920b323b900259bed52",
+    "coulex/help_ui.py": "a02018916b80a77de5b19d4be5b19b7e138d1ce447895e44d4f7d3e7b7847906",
+    "coulex/i18n.py": "2cfd44a4233bc5ddb8b094829404d8c199d4df716a5fef0575ca67d60b746ce8",
+    "coulex/i18n_docs.py": "02b13a4435ead9ab15245af87337077493d41f78ad25e0f1c410cad88db250c4",
+    "coulex/i18n_el.py": "81a96c8ad16e1a403b417e627f9af3d005e2026adc6d0821fd20ef608b833fe6",
+    "coulex/imports.py": "7b432d8f9cd83c5170fc24e6d11ef681488b1facf0ff4ff542b1540e3c515531",
+    "coulex/input_ui.py": "3051611e94fa1ab1d85177a8d5e597ce29b57247f149550ead9b1953f991a108",
+    "coulex/literature.py": "f20271dc9f4d7c2942d8f688c89b4434910d7a6af87c3853169d859341fbe730",
+    "coulex/measurement_ui.py": "956262ac7a9e616b4f656bf84bfeba290374cd618a388a98f0cadd21a9d9747d",
+    "coulex/measurements.py": "ebc5801e4763e2fc9a9dd25d614c9bcb947358fd3c538b6a14563453f950929c",
+    "coulex/model.py": "48022c418e3df9bb70f30b3a5a3915c4b2fe3c7b8be21d0570b41f4cfb87a73e",
+    "coulex/observables.py": "54d37cf08c5203ac6bb429a18ab7e32b19751e374636da676686cc5303cf7b6e",
+    "coulex/plots.py": "56fc5c4cedbca1498c78b6e7fb9bb9ce8cfad409cd4ba3ff312e0ee2c9809052",
+    "coulex/public_data.py": "3c3340b778ff6a160ddaff2fddc408317d4be7d1563d7b92ee916dbccef47198",
+    "coulex/research.py": "f74127b982a9a0278ce83c7c7b20673d2ccf443f3680401ba6785775d87ffdc1",
+    "coulex/research_el.py": "ac00006084478d4dc4d7dad6f82187f534a69b0170f82ce1789f30f0a77f8f03",
+    "coulex/research_io.py": "28b336112f537cc51cf26ad33c779cffa3fb1358038e8cc3855feb1ab497fafe",
+    "coulex/research_ui.py": "5ba6a36e6c6fcde94e3aa5274f411326373f5cc943dcfa4247feba2f1ac16743",
+    "coulex/results_ui.py": "73673b26bbf2ea5dac00c8a9fbc250b7763eed4eaf0ceb227af5ef1da5e8488e",
+    "coulex/shapes.py": "68228734f0564c46f95e99d5e8918c317d2f362ccd984c0ea3cdd1ba112aa923",
+    "coulex/solver.py": "ffbe1dc3d5f030556532273be5dead1486392efc32978e9107c61ac5c1416be8",
+    "coulex/stopping.py": "b8feee360aea4f1b3a0e1317a10718524251072125b14f8bae19f8c514b615f7",
+    "coulex/verification_ui.py": "21e0621b126e80ffc9a482b6b52ff64ef02f0008b0ca1673a8e7e8b6fd617cea",
+    "coulex/workflow.py": "80b8d09b7a554884b83e7d295528617cc78c4efe67757e3635306d1ab87ba483",
+    "validation/qualify.py": "2c84acafc2e6bc4cef9d58442192f8deaa38dcfaafac334a255a00108b12be21",
+    "validation/research_qualification/cd106.json": "05b7a79993caf39c4d954b326b11aefe1c47f22fad7317b91662249baeb91952",
+    "validation/research_qualification/checks.py": "618d2efe775a831ae8cfdb890747484969ca0103427b5de96b647e99c367011b",
+    "validation/research_qualification/experiments/sr96_sn120/manifest.json": "f69c67c8e2b8dba7d797aeaf569556a535414be8f007850860a866a859cec12d",
+    "validation/research_qualification/experiments/sr96_sn120/yields.csv": "78cae17fd613d69f76c6c14804007f005906fae0d8fee5dc23b92f0994f7bb5b",
+    "validation/research_qualification/gosia_points/results.json": "4d84f465562380892228077cb86b4fa9a4d08c3b6d9f76ab09d3d56a5c7ac6d3"
+  },
+  "checks": {
+    "published_shapes": {
+      "source": "https://arxiv.org/abs/2209.06298",
+      "fixture_sha256": "05b7a79993caf39c4d954b326b11aefe1c47f22fad7317b91662249baeb91952",
+      "checks": {
+        "q2": {
+          "calculated": 0.44252100000000005,
+          "published": 0.443,
+          "rounding_envelope": [
+            0.4411905000000001,
+            0.4438524999999999
+          ],
+          "passed": true
+        },
+        "q3": {
+          "calculated": 0.011521335661190941,
+          "published": 0.01,
+          "rounding_envelope": [
+            0.003135905904574468,
+            0.01990695366631337
+          ],
+          "passed": true
+        },
+        "gamma_effective_deg": {
+          "calculated": 29.252322489409398,
+          "published": 29,
+          "rounding_envelope": [
+            28.533893354377344,
+            29.97129827513837
+          ],
+          "passed": true
+        }
+      },
+      "passed": true,
+      "scope": "Ground-state E2 invariant calculation only; not a reproduction of excitation or gamma yields"
+    },
+    "angular_algebra": {
+      "cases": 60,
+      "wigner_d_max_error": 1.0547118733938987e-15,
+      "normalization_max_error": 6.661338147750939e-16,
+      "transfer_max_error": 2.220446049250313e-16,
+      "isotropy_max_error": 4.163336342344337e-17,
+      "passed": true
+    },
+    "gosia_points_finite_cases": {
+      "source_url": "https://www.pas.rochester.edu/~cline/Research/GOSIAcodes/gosia.f",
+      "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+      "reference_fixture_sha256": "4d84f465562380892228077cb86b4fa9a4d08c3b6d9f76ab09d3d56a5c7ac6d3",
+      "compared_points": 15,
+      "rows": [
+        {
+          "case": "E2 isolated",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 0.000630341,
+          "actual": 0.0006303433322240575,
+          "absolute_difference": 2.332224057540605e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 isolated",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.0049473,
+          "actual": 0.004947315773172373,
+          "absolute_difference": 1.5773172373258204e-08,
+          "passed": true
+        },
+        {
+          "case": "E2 isolated",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.0124148,
+          "actual": 0.012414866004765865,
+          "absolute_difference": 6.600476586474113e-08,
+          "passed": true
+        },
+        {
+          "case": "E3 isolated",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 2.32436e-05,
+          "actual": 2.324355049399568e-05,
+          "absolute_difference": 4.9506004320515025e-11,
+          "passed": true
+        },
+        {
+          "case": "E3 isolated",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.000452419,
+          "actual": 0.00045241930786013774,
+          "absolute_difference": 3.0786013771903417e-10,
+          "passed": true
+        },
+        {
+          "case": "E3 isolated",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.00173148,
+          "actual": 0.0017314865354061554,
+          "absolute_difference": 6.5354061552693604e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 2,
+          "cm_angle": 37.953715660824294,
+          "expected": 0.002615,
+          "actual": 0.0026150041624166303,
+          "absolute_difference": 4.162416630121291e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 3,
+          "cm_angle": 37.953715660824294,
+          "expected": 1.77172e-06,
+          "actual": 1.7717146144565848e-06,
+          "absolute_difference": 5.385543415204277e-12,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 2,
+          "cm_angle": 73.86701976415367,
+          "expected": 0.0212942,
+          "actual": 0.021294199293172403,
+          "absolute_difference": 7.06827596452797e-10,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 3,
+          "cm_angle": 73.86701976415367,
+          "expected": 0.000105471,
+          "actual": 0.00010547120288689626,
+          "absolute_difference": 2.0288689626176293e-10,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 2,
+          "cm_angle": 106.06610372006924,
+          "expected": 0.054944,
+          "actual": 0.054944046212408816,
+          "absolute_difference": 4.621240881630406e-08,
+          "passed": true
+        },
+        {
+          "case": "E2 multistep and reorientation",
+          "level": 3,
+          "cm_angle": 106.06610372006924,
+          "expected": 0.000668645,
+          "actual": 0.0006686468752533993,
+          "absolute_difference": 1.875253399286937e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 half-integer unpolarized",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 0.000314932,
+          "actual": 0.000314933078945551,
+          "absolute_difference": 1.0789455509585544e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 half-integer unpolarized",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.00246766,
+          "actual": 0.0024676700600303253,
+          "absolute_difference": 1.0060030325269309e-08,
+          "passed": true
+        },
+        {
+          "case": "E2 half-integer unpolarized",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.00617987,
+          "actual": 0.0061798857356346465,
+          "absolute_difference": 1.573563464685873e-08,
+          "passed": true
+        }
+      ],
+      "unusable_reference_cases": [
+        {
+          "case": "E1 isolated",
+          "reason": "GOSIA incomplete output"
+        },
+        {
+          "case": "E4 isolated",
+          "reason": "GOSIA incomplete output"
+        }
+      ],
+      "passed": true,
+      "scope": "Finite GOSIA cases only: target E2/E3 populations, E2 multistep/reorientation and unpolarized half-integer spins, polarization off. E1/E4 reference runs were nonfinite and do not qualify those multipoles."
+    },
+    "gaussian_coverage": {
+      "trials": 500,
+      "seed": 581,
+      "failed": 0,
+      "intervals": {
+        "0.68": {
+          "hits": 335,
+          "trials": 500,
+          "observed": 0.67,
+          "binomial_99_interval": [
+            0.6133857290481582,
+            0.7233134740381071
+          ],
+          "passed": true
+        },
+        "0.95": {
+          "hits": 478,
+          "trials": 500,
+          "observed": 0.956,
+          "binomial_99_interval": [
+            0.9266967981403406,
+            0.9761952750923011
+          ],
+          "passed": true
+        }
+      },
+      "estimator_max_error": 7.382316979942516e-12,
+      "variance_max_error": 1.0387957855018115e-14,
+      "mean_estimate": -0.3994483926359114,
+      "truth": -0.4,
+      "passed": true,
+      "scope": "Interior linear Gaussian external-Q constraints only; not nonlinear/Poisson/normalization coverage"
+    }
+  },
+  "computational_checks_passed": true,
+  "research_qualified": false,
+  "experimental_target": {
+    "source": "https://doi.org/10.1103/PhysRevC.94.054326",
+    "data_integrity_passed": true,
+    "observation_count": 7,
+    "missing_inputs": [
+      "gamma_response",
+      "particle_response_and_bin_mapping",
+      "stopping_and_beam_energy_distribution",
+      "complete_projectile_and_target_structure",
+      "branching_and_conversion",
+      "normalization_and_covariance",
+      "reference_fit_configuration"
+    ],
+    "ready_for_experimental_validation": false,
+    "data_sha256": "78cae17fd613d69f76c6c14804007f005906fae0d8fee5dc23b92f0994f7bb5b",
+    "scope": "Bibliographic experimental target selected; no experimental fit is claimed"
+  },
+  "requested_use_cases": {
+    "experiment_planning": {
+      "qualified": false,
+      "remaining": "Broader excitation, derivative and integration error budgets"
+    },
+    "nuclear_shape_studies": {
+      "qualified": false,
+      "remaining": "Additional networks, propagated experimental covariance and independent review"
+    },
+    "experimental_gamma_yield_analysis": {
+      "qualified": false,
+      "remaining": "Matched experiment response, normalization, fit reproduction and nonlinear coverage"
+    }
+  },
+  "remaining_gates": [
+    "Broader independent point-excitation coverage: projectile excitation, polarization and usable E1/E4 references",
+    "Experimental gamma-yield reproduction with matched geometry, multipoles and all correction inputs",
+    "Nonlinear coupled-channel fit interval coverage, including low counts and normalization systematics",
+    "Independent nuclear-physics review and versioned scope sign-off"
+  ]
+}

@@ -1,5 +1,6 @@
 """Greek labels and explanations for the research workbench."""
 EL = {
+'Research qualification is incomplete. Independent numerical checks cover specific cases; matched experimental-yield validation and independent review remain open.':'Η ερευνητική επικύρωση είναι ελλιπής. Ανεξάρτητοι αριθμητικοί έλεγχοι καλύπτουν συγκεκριμένες περιπτώσεις· εκκρεμούν η επικύρωση με αντίστοιχες πειραματικές αποδόσεις και η ανεξάρτητη αξιολόγηση.',
 'Download design information (JSON)':'Λήψη πληροφορίας σχεδιασμού (JSON)',
 'Angular curves and detector acceptance are conditional on the first photon. The yield table remains ungated.':'Οι γωνιακές καμπύλες και η αποδοχή ανιχνευτή είναι υπό τη συνθήκη του πρώτου φωτονίου. Ο πίνακας αποδόσεων παραμένει χωρίς αυτή τη συνθήκη.',
 'Upload decay network CSV':'Μεταφόρτωση CSV δικτύου διάσπασης',

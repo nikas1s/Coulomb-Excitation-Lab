@@ -1,0 +1,908 @@
+{
+  "reference": "GOSIA March 2008, official Rochester source",
+  "source_url": "https://www.pas.rochester.edu/~cline/Research/GOSIAcodes/gosia.f",
+  "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+  "binary_sha256": "4aee8153efa48361564e9f6e25033230238fe2ce4ca85e87fe99c4dc86b67d2f",
+  "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
+  "compile_command": "gfortran -std=legacy -O0 -o gosia gosia.f",
+  "relative_tolerance": 0.0003,
+  "absolute_tolerance": 1e-10,
+  "rows": [
+    {
+      "case": "E1 isolated",
+      "passed": false,
+      "reference_valid": false,
+      "reason": "GOSIA incomplete output"
+    },
+    {
+      "case": "E2 isolated",
+      "model": {
+        "title": "E2 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "surface_separation_fm": 19.949070552785365,
+      "reference": 0.000630341,
+      "calculated": 0.0006303433322240575,
+      "absolute_difference": 2.332224057540605e-09,
+      "relative_difference": 3.699940282387795e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 isolated",
+      "model": {
+        "title": "E2 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "surface_separation_fm": 10.279173587132622,
+      "reference": 0.0049473,
+      "calculated": 0.004947315773172373,
+      "absolute_difference": 1.5773172373258204e-08,
+      "relative_difference": 3.1882385085315633e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 isolated",
+      "model": {
+        "title": "E2 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "surface_separation_fm": 7.452133314406325,
+      "reference": 0.0124148,
+      "calculated": 0.012414866004765865,
+      "absolute_difference": 6.600476586474113e-08,
+      "relative_difference": 5.31661934664603e-06,
+      "passed": true
+    },
+    {
+      "case": "E3 isolated",
+      "model": {
+        "title": "E3 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 3,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 3
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "surface_separation_fm": 19.949070552785365,
+      "reference": 2.32436e-05,
+      "calculated": 2.324355049399568e-05,
+      "absolute_difference": 4.9506004320515025e-11,
+      "relative_difference": 2.1298767970759705e-06,
+      "passed": true
+    },
+    {
+      "case": "E3 isolated",
+      "model": {
+        "title": "E3 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 3,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 3
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "surface_separation_fm": 10.279173587132622,
+      "reference": 0.000452419,
+      "calculated": 0.00045241930786013774,
+      "absolute_difference": 3.0786013771903417e-10,
+      "relative_difference": 6.804757044223036e-07,
+      "passed": true
+    },
+    {
+      "case": "E3 isolated",
+      "model": {
+        "title": "E3 isolated",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 3,
+            "energy": 0.3,
+            "parity": -1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 3
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "surface_separation_fm": 7.452133314406325,
+      "reference": 0.00173148,
+      "calculated": 0.0017314865354061554,
+      "absolute_difference": 6.5354061552693604e-09,
+      "relative_difference": 3.7744623993747313e-06,
+      "passed": true
+    },
+    {
+      "case": "E4 isolated",
+      "passed": false,
+      "reference_valid": false,
+      "reason": "GOSIA incomplete output"
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.953715660824294,
+      "level": 2,
+      "surface_separation_fm": 19.96288316143651,
+      "reference": 0.002615,
+      "calculated": 0.0026150041624166303,
+      "absolute_difference": 4.162416630121291e-09,
+      "relative_difference": 1.5917463212700919e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.953715660824294,
+      "level": 3,
+      "surface_separation_fm": 19.96288316143651,
+      "reference": 1.77172e-06,
+      "calculated": 1.7717146144565848e-06,
+      "absolute_difference": 5.385543415204277e-12,
+      "relative_difference": 3.0397260375252733e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.86701976415367,
+      "level": 2,
+      "surface_separation_fm": 10.285215778584998,
+      "reference": 0.0212942,
+      "calculated": 0.021294199293172403,
+      "absolute_difference": 7.06827596452797e-10,
+      "relative_difference": 3.31934327869935e-08,
+      "passed": true
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.86701976415367,
+      "level": 3,
+      "surface_separation_fm": 10.285215778584998,
+      "reference": 0.000105471,
+      "calculated": 0.00010547120288689626,
+      "absolute_difference": 2.0288689626176293e-10,
+      "relative_difference": 1.923627312358496e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.06610372006924,
+      "level": 2,
+      "surface_separation_fm": 7.455132888555411,
+      "reference": 0.054944,
+      "calculated": 0.054944046212408816,
+      "absolute_difference": 4.621240881630406e-08,
+      "relative_difference": 8.410819892309272e-07,
+      "passed": true
+    },
+    {
+      "case": "E2 multistep and reorientation",
+      "model": {
+        "title": "E2 multistep and reorientation",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 2,
+            "energy": 0.15,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 4,
+            "energy": 0.4,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.4,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 2,
+            "value": 0.7,
+            "multipolarity": 2
+          },
+          {
+            "initial": 2,
+            "final": 2,
+            "value": -0.3,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.06610372006924,
+      "level": 3,
+      "surface_separation_fm": 7.455132888555411,
+      "reference": 0.000668645,
+      "calculated": 0.0006686468752533993,
+      "absolute_difference": 1.875253399286937e-09,
+      "relative_difference": 2.8045575743285855e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 half-integer unpolarized",
+      "model": {
+        "title": "E2 half-integer unpolarized",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0.5,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1.5,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.1,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 30.0,
+      "cm_angle": 37.97953865322615,
+      "level": 2,
+      "surface_separation_fm": 19.949070552785365,
+      "reference": 0.000314932,
+      "calculated": 0.000314933078945551,
+      "absolute_difference": 1.0789455509585544e-09,
+      "relative_difference": 3.425963544379594e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 half-integer unpolarized",
+      "model": {
+        "title": "E2 half-integer unpolarized",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0.5,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1.5,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.1,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 60.0,
+      "cm_angle": 73.9126490833782,
+      "level": 2,
+      "surface_separation_fm": 10.279173587132622,
+      "reference": 0.00246766,
+      "calculated": 0.0024676700600303253,
+      "absolute_difference": 1.0060030325269309e-08,
+      "relative_difference": 4.0767489545842255e-06,
+      "passed": true
+    },
+    {
+      "case": "E2 half-integer unpolarized",
+      "model": {
+        "title": "E2 half-integer unpolarized",
+        "projectile_z": 8,
+        "projectile_a": 16,
+        "target_z": 28,
+        "target_a": 58,
+        "energy_lab": 30.0,
+        "levels": [
+          {
+            "spin": 0.5,
+            "energy": 0,
+            "parity": 1,
+            "k": 0.0
+          },
+          {
+            "spin": 1.5,
+            "energy": 0.3,
+            "parity": 1,
+            "k": 0.0
+          }
+        ],
+        "elements": [
+          {
+            "initial": 0,
+            "final": 1,
+            "value": 0.2,
+            "multipolarity": 2
+          },
+          {
+            "initial": 1,
+            "final": 1,
+            "value": -0.1,
+            "multipolarity": 2
+          }
+        ],
+        "theta_min": 1.0,
+        "theta_max": 180.0,
+        "theta_step": 1.0,
+        "excitation": "target",
+        "dipole_strength": 0.0,
+        "polarization_convention": "standard"
+      },
+      "lab_angle": 90.0,
+      "cm_angle": 106.11933725825793,
+      "level": 2,
+      "surface_separation_fm": 7.452133314406325,
+      "reference": 0.00617987,
+      "calculated": 0.0061798857356346465,
+      "absolute_difference": 1.573563464685873e-08,
+      "relative_difference": 2.5462727608928235e-06,
+      "passed": true
+    }
+  ],
+  "scope": "Unpolarized target excitation, electric E1-E4, isolated/multistep/half-integer point populations, polarization off; no gamma response",
+  "passed": false
+}

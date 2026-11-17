@@ -50,6 +50,7 @@ def job(key, payload, action):
 
 def render(model,settings,stopping=None,thickness=0.,order=6):
     st.subheader(t('Research workbench'))
+    st.caption(t('Research qualification is incomplete. Independent numerical checks cover specific cases; matched experimental-yield validation and independent review remain open.'))
     if model is None:
         st.info(t('Define a reaction in the sidebar to see its level scheme.'))
         return
