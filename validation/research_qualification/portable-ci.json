@@ -1,0 +1,54 @@
+{
+  "run": {
+    "conclusion": "success",
+    "created_at": "2026-11-17T13:19:27Z",
+    "head_sha": "f89bbeee5100dd3f23f2b33b68378517f1b947b0",
+    "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855",
+    "id": 44091575855,
+    "status": "completed",
+    "updated_at": "2026-11-17T13:28:22Z"
+  },
+  "jobs": [
+    {
+      "completed_at": "2026-11-17T13:23:43Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855/job/134067758352",
+      "name": "tests (ubuntu-latest, 3.14)",
+      "started_at": "2026-11-17T13:19:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-17T13:28:21Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855/job/134067758584",
+      "name": "tests (windows-latest, 3.12)",
+      "started_at": "2026-11-17T13:19:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-17T13:25:37Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855/job/134067758613",
+      "name": "tests (macos-latest, 3.12)",
+      "started_at": "2026-11-17T13:19:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-17T13:24:23Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855/job/134067758798",
+      "name": "tests (ubuntu-latest, 3.12)",
+      "started_at": "2026-11-17T13:19:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-17T13:25:28Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855/job/134067759021",
+      "name": "tests (ubuntu-latest, 3.13)",
+      "started_at": "2026-11-17T13:19:31Z",
+      "status": "completed"
+    }
+  ],
+  "scope": "Hosted tests and default computational qualification on the software revision shown; not experimental or independent scientific qualification."
+}

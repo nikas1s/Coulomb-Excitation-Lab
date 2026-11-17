@@ -98,8 +98,14 @@ A public-input search also inspected the [202Rn/109Ag example](https://github.co
 | Laboratory gamma response | Analytic patterns, rotations/boosts, feeding and numerical convergence | Matched calibrated detector/trigger response; additional multipoles where required |
 | Experimental reproduction | Published yields, reaction conditions and input manifest | Missing measured response/analysis files and reproduced matrix-element intervals |
 | Independent review | Reproducible evidence available | Nuclear-physics review of conventions, scope and a versioned sign-off |
-| Reproducibility | Pinned dependencies, local tests/hashes and cross-platform CI workflow | Remote CI results and a tagged reviewed release |
+| Reproducibility | Pinned dependencies, source/fixture hashes and passing five-job Linux/macOS/Windows CI | Tagged reviewed release |
 
 The remaining experimental inputs and independent review cannot be established by adding more self-tests. Before a research-validated release, close the applicable gates for each declared measurement class and retain the approved report with that version.
 
 ![Scoped computational evidence](../validation/research_qualification/summary.png)
+
+## Hosted portability verification
+
+[CI run 44091575855](https://github.com/nikas1s/Coulomb-Excitation-Lab/actions/runs/44091575855) passed all five jobs for software revision `f89bbeee5100dd3f23f2b33b68378517f1b947b0`: Linux with Python 3.12/3.13/3.14, macOS with Python 3.12, and Windows with Python 3.12. Each job ran the tests and default qualification command. `portable-ci.json` records the run and job URLs. Optional comparison-input tests remain conditional on the separately obtained inputs. This closes the missing hosted-CI evidence, not the experimental/review gates.
+
+The Windows audit fixed locale-dependent text decoding, checkout line endings that invalidated archived hashes, and a POSIX-shell check being applied to a Windows path. Text reads now specify UTF-8, generated text uses LF, and Git preserves LF for checksummed artifacts while retaining CRLF for Windows batch files. All five archived artifact hashes also survive Git smudge filtering with `core.autocrlf=true` (`windows-checkout.json`); production checksum verification was not weakened.
