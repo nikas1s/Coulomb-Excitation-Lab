@@ -34,3 +34,20 @@ def test_research_gaussian_ensemble_ui():
     app.button(key='run_research_uncertainty').click().run()
     assert not app.exception and not app.error
     assert len(app.session_state['research_uncertainty'][1]['draws'])==10
+
+
+def test_single_parameter_profile_upload_and_plot():
+    import json
+    app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=120).run()
+    app.selectbox(key='research_mode').set_value('Joint parameter fitting').run()
+    config=dict(parameters=[dict(kind='element',index=1)],bounds=[[.1],[1.]],starts=[[.4]],
+        experiments=[dict(kind='strength',data=[dict(level=1,lower=2,lam=2,value=.25,uncertainty=.02)])],
+        profile=dict(parameter=1,grid=[.4,.5,.6]))
+    next(x for x in app.file_uploader if x.label=='Upload joint-fit JSON').set_value(('profile.json',json.dumps(config).encode(),'application/json')).run()
+    app.button(key='run_research_fit').click().run()
+    assert not app.exception and not app.error
+    fit=app.session_state['research_fit'][1]['fit']
+    assert fit['success']
+    assert len(fit['profile'])==3
+    assert all(fit['profile'].success)
+    assert any('Profile thresholds' in x.value for x in app.caption)

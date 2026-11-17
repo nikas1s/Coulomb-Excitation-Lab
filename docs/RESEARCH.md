@@ -136,3 +136,27 @@ The app does not infer a permanent pear shape from one B(E3). Testing vibrationa
 `tests/test_research.py` checks axial prolate/oblate rotor invariant limits and phase invariance; cascade feeding and conversion bookkeeping; normalized E1 and E2 angular patterns; the 0→1→0 angular correlation; full-solid-angle response of coherent E2 and E4 spin states (including an E4 azimuth-aliasing regression); density positivity and trace; electric decay rates; finite-difference convergence; zero-covariance propagation; Gaussian multi-energy synthetic parameter recovery with normalization and lifetime constraints; Poisson zero-count behavior; correlated Gaussian residuals; normalization-degenerate information; JSON import and fed count prediction.
 
 `tests/test_research_ui.py` exercises calculations, stale-result protection, task selection, Greek switching and ensemble results. Existing physics and archived-reference tests remain applicable to the excitation solver. Finite angular/depth grids, finite orbit range, derivative steps, ensemble Monte Carlo error and omitted physical model space are separate convergence questions.
+
+## Recoil-aware particle acceptance
+
+Joint-fit count experiments now accept `detected_particle` as `projectile` (default), `recoil`, or `either`. For lab-bin data, the row's angular limits describe the detected particle annulus. For CM-bin data, optional `particle_acceptance: [lab_min_deg, lab_max_deg]` intersects that CM bin with the lab acceptance. Optional `particle_energy_min_mev` applies a common minimum kinetic energy to each selected partner before forming the event union.
+
+`either` counts an accepted collision once, including overlap where both particles reach the annulus. It assumes a common full-azimuth selection and the row's common detection efficiency; different strip efficiencies, azimuth masks or hardware coincidence conditions require a more detailed response. A recoil energy threshold matters because inelastic recoil kinematics can have two CM roots, one involving very slow recoils. No unspecified threshold is invented.
+
+For an exit-speed ratio `f = sqrt(1-E_exc/E_cm)`, the recoil angle is
+
+```
+phi_recoil = atan2(f sin(theta_cm), 1-f cos(theta_cm)).
+```
+
+The elastic limit is `phi_recoil = (pi-theta_cm)/2`. The finite-bin implementation integrates in CM solid angle and avoids the recoil Jacobian singularity. It recalculates acceptance at every target depth. Tests compare the mapping and kinetic energies with independently constructed momentum vectors, test conservation of total kinetic plus excitation energy, and verify event overlap is counted once.
+
+This extends the model needed for the selected 96Sr + 120Sn validation target, whose published CM range extends beyond scattered-projectile-only acceptance. It does not establish the actual experiment's trigger, particle identification, energy thresholds or strip efficiencies.
+
+## Poisson and profile safeguards
+
+Poisson deviance residuals use a stable series near equal predicted and observed counts; large nearly equal counts no longer lose their objective through subtractive cancellation. Positive counts with an exactly zero predicted mean have zero likelihood and raise an explicit error at a fit's starting point. At a fixed single-parameter profile point, the same situation is recorded as infinite objective with `compatible=false`, distinguishing it from a numerical failure.
+
+Single-parameter profiles are supported, including refitting normalization nuisance scales. Profiles show the objective difference and asymptotic one-parameter thresholds in the UI. These thresholds do not provide exact low-count coverage. An interval from local covariance is also an approximation; inspect bounds, alternative signs/minima and relevant coverage evidence.
+
+A configuration skeleton is available as `examples/research/recoil_count_template.json`. Its observation fields are null and must be supplied; its efficiency/exposure numbers are format examples. It is intentionally not runnable as a measured fit without completing those fields.

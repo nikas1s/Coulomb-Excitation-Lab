@@ -52,3 +52,10 @@ def test_experimental_fixture_is_not_presented_as_a_validated_fit():
     assert report['observation_count']==7
     assert not report['ready_for_experimental_validation']
     assert 'gamma_response' in report['missing_inputs']
+
+
+def test_independent_gosia_extended_cases():
+    result=gosia_replay('gosia_expanded/results.json')
+    assert result['compared_points']==12
+    assert not result['unusable_reference_cases']
+    assert result['passed']

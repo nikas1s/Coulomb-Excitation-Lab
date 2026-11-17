@@ -1,0 +1,7 @@
+Nonlinear Gaussian trials: 25/100
+Nonlinear Gaussian trials: 50/100
+Nonlinear Gaussian trials: 75/100
+Nonlinear Gaussian trials: 100/100
+Passed: True
+Gaussian: {'intervals': {'0.68': {'hits': 71, 'trials': 100, 'observed': 0.71, 'nominal': 0.68, 'binomial_99_interval': [np.float64(0.5800033176932302), np.float64(0.8193775340368301)], 'consistent': True, 'not_significantly_below_nominal': True}, '0.95': {'hits': 96, 'trials': 100, 'observed': 0.96, 'nominal': 0.95, 'binomial_99_interval': [np.float64(0.8793673007031012), np.float64(0.9931983062396853)], 'consistent': True, 'not_significantly_below_nominal': True}}, 'failed': 0, 'max_estimator_error': 8.077010687945751e-06, 'max_variance_relative_error': np.float64(5.2480192594073216e-05)}
+Counts: {'mean': 3.0, 'known_exposure': 12.0, 'failed': 0, 'exact_transformed_interval_coverage': {'hits': 492, 'trials': 500, 'observed': 0.984, 'nominal': 0.95, 'binomial_99_interval': [np.float64(0.963235305520615), np.float64(0.9948348599240876)], 'consistent': False, 'not_significantly_below_nominal': True}, 'wald_interval_hits': 476, 'wald_covariance_available': 500, 'wald_coverage_over_all_trials': 0.952, 'profile_max_difference': 0.0003631084272015528}

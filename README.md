@@ -194,7 +194,9 @@ No C++, ROOT or compiler is required. The original source and build tools have b
 
 ## Research tools and validation
 
-For the research qualification evidence and outstanding release gates, see [RESEARCH_QUALIFICATION.md](docs/RESEARCH_QUALIFICATION.md). Run `python run.py --qualify` to reproduce the published invariant benchmark, independent finite GOSIA point comparisons, angular algebra checks and the scoped coverage experiment. The generated report explicitly records that research qualification remains incomplete.
+For the research qualification evidence and outstanding release gates, see [RESEARCH_QUALIFICATION.md](docs/RESEARCH_QUALIFICATION.md). Run `python run.py --qualify` to reproduce the published invariant benchmark, independent finite GOSIA point comparisons, angular algebra checks and the scoped linear/nonlinear coverage experiments. The generated report explicitly records that research qualification remains incomplete.
+
+Joint-fit count inputs can additionally select projectile, recoil or either-particle event acceptance with a lab annulus and energy threshold. Profiles support a single parameter and show objective curves. The Poisson objective is checked against high-precision arithmetic. These additions and their limits are described in the research guide.
 
 The **Research** tab adds sensitivity scans and experimental-design information, correlated input uncertainty bands, 0+ quadrupole shape invariants, joint multi-experiment fitting, gamma feeding and pure-electric angular correlations, and E3/polarization/model-space comparisons. It includes English/Greek controls, CSV decay/covariance uploads, portable JSON fit configurations and downloadable results tied to their inputs.
 
@@ -236,7 +238,7 @@ Read [NUMERICS.md](docs/NUMERICS.md) for equations and error controls, [LESSON.m
 | `coulex/i18n*.py` | English/Greek text |
 | `coulex/examples.py`, `literature.py` | Example provenance and independent scientific benchmarks |
 | `coulex/research.py`, `research_io.py`, `research_ui.py` | Sensitivity, ensembles, joint inference and research inputs/UI |
-| `coulex/shapes.py`, `decay.py` | 0+ quadrupole invariants, decay networks and photon angular response |
+| `coulex/shapes.py`, `decay.py`, `acceptance.py` | 0+ invariants, decay/photon response and recoil-aware particle acceptance |
 | `docs/RESEARCH.md`, `examples/research/` | Scientific scope, upload schemas, synthetic fixtures and plots |
 | `examples/library_examples.py` | Seven worked Python API examples |
 | `tests/`, `validation/` | Automated tests and reproducible comparison artifacts |

@@ -31,6 +31,15 @@ def cases():
                    (MatrixElement(0,1,.2),MatrixElement(1,1,-.1)),excitation='target',dipole_strength=0.)
 
 
+def expanded_cases():
+    yield Reaction('E4 and E2 coupled',8,16,28,58,30.,(Level(0,0),Level(2,.15),Level(4,.3)),
+                   (MatrixElement(0,1,.2),MatrixElement(0,2,.2,4)),excitation='target',dipole_strength=0.)
+    yield Reaction('E2 projectile excitation',8,16,28,58,30.,(Level(0,0),Level(2,.3)),
+                   (MatrixElement(0,1,.2),MatrixElement(1,1,-.1)),excitation='projectile',dipole_strength=0.)
+    yield Reaction('E2 target with polarization',8,16,28,58,30.,(Level(0,0),Level(2,.3)),
+                   (MatrixElement(0,1,.2),MatrixElement(1,1,-.1)),excitation='target',dipole_strength=.005)
+
+
 def gosia_input(r,labs):
     lines=['OP,FILE','22,3,1','point.out','0,0,0','OP,TITL','    '+r.title,'OP,COUL','LEVE']
     lines += [f'{i+1},{level.parity},{level.spin},{level.energy}' for i,level in enumerate(r.levels)]
@@ -38,9 +47,13 @@ def gosia_input(r,labs):
     for lam in sorted({m.multipolarity for m in r.elements}):
         lines.append(f'{lam},0,0,0,0')
         lines += [f'{m.initial+1},{m.final+1},{m.value:.16g},1,1' for m in r.elements if m.multipolarity==lam]
-    lines += ['0,0,0,0,0','EXPT',f'{len(labs)},{r.target_z},{r.target_a}']
-    lines += [f'{r.projectile_z},{r.projectile_a},{r.energy_lab},{angle},20,0,0,0,360,1,1' for angle in labs]
-    lines += ['CONT','DIP,0.','ACC,8.0',f'INT,{len(labs)}.']
+    investigated_z,investigated_a=(r.target_z,r.target_a) if r.excitation=='target' else (r.projectile_z,r.projectile_a)
+    partner_z,partner_a=(r.projectile_z,r.projectile_a) if r.excitation=='target' else (-r.target_z,r.target_a)
+    lines += ['0,0,0,0,0','EXPT',f'{len(labs)},{investigated_z},{investigated_a}']
+    lines += [f'{partner_z},{partner_a},{r.energy_lab},{angle},20,0,0,0,360,1,1' for angle in labs]
+    if r.excitation=='projectile' and r.dipole_strength:
+        raise ValueError('Projectile polarization conventions require an explicit matched-coefficient benchmark.')
+    lines += ['CONT',f'DIP,{r.dipole_strength*1000:.1f}','ACC,8.0',f'INT,{len(labs)}.']
     lines += [f'{i+1},1000' for i in range(len(labs))]
     lines += ['PRT,0.','1,-1','0,0','END,','','OP,STAR','OP,EXIT','']
     return '\n'.join(lines)
@@ -49,14 +62,15 @@ def gosia_input(r,labs):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--binary',type=Path,required=True);p.add_argument('--source',type=Path,required=True)
+    p.add_argument('--suite',choices=['baseline','expanded'],default='baseline')
     args=p.parse_args(); binary=args.binary.resolve()
     source_sha=hashlib.sha256(args.source.read_bytes()).hexdigest()
-    out=ROOT/'validation/research_qualification/gosia_points';out.mkdir(parents=True,exist_ok=True)
+    out=ROOT/('validation/research_qualification/gosia_points' if args.suite=='baseline' else 'validation/research_qualification/gosia_expanded');out.mkdir(parents=True,exist_ok=True)
     labs=[30.,60.,90.];rows=[]
     # Acceptance chosen before running: printed GOSIA populations have seven
     # significant figures; independent constants/algorithms differ slightly.
     relative_tolerance=3e-4; absolute_tolerance=1e-10
-    for index,r in enumerate(cases()):
+    for index,r in enumerate(cases() if args.suite=='baseline' else expanded_cases()):
         text=gosia_input(r,labs)
         (out/f'case_{index+1}.inp').write_text(text)
         with tempfile.TemporaryDirectory(prefix='gosia-point-') as work:
@@ -86,7 +100,7 @@ def main():
                 compiler=subprocess.run(['gfortran','--version'],text=True,capture_output=True).stdout.splitlines()[0],
                 compile_command='gfortran -std=legacy -O0 -o gosia gosia.f',
                 relative_tolerance=relative_tolerance,absolute_tolerance=absolute_tolerance,rows=rows,
-                scope='Unpolarized target excitation, electric E1-E4, isolated/multistep/half-integer point populations, polarization off; no gamma response',
+                scope=('Unpolarized target excitation, isolated electric E1-E4, multistep and half-integer cases; polarization off' if args.suite=='baseline' else 'Coupled E2/E4 target, E2 projectile, and polarized E2 target point populations; no gamma response'),
                 passed=all(row['passed'] for row in rows))
     (out/'results.json').write_text(json.dumps(report,indent=2)+'\n')
     for row in rows: print(row['case'],row.get('lab_angle'),row.get('level'),row.get('relative_difference'),row['passed'])

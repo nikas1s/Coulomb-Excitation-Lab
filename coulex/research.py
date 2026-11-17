@@ -6,9 +6,12 @@ from dataclasses import dataclass, replace
 import numpy as np
 import pandas as pd
 from scipy.optimize import least_squares
-from scipy.special import xlogy
 from .workflow import calculate
 from .measurements import compare_measurements, Exposure
+
+
+class ZeroPoissonPredictionError(ValueError):
+    """Positive observed count has a model mean exactly zero."""
 
 
 @dataclass(frozen=True)
@@ -124,6 +127,17 @@ class Experiment:
     reaction_overrides: dict | None = None
     transitions: tuple = ()
     photon_transition: int = 0
+    detected_particle: str = 'projectile'
+    particle_acceptance: tuple | None = None
+    particle_energy_min_mev: float = 0.
+
+    def _compare(self,reaction,data,kind,settings):
+        if self.detected_particle != 'projectile' or self.particle_acceptance is not None or self.particle_energy_min_mev:
+            from .acceptance import compare_particle_acceptance
+            return compare_particle_acceptance(reaction,data,kind,self.frame,settings,self.stopping,
+                self.exposure,self.order,self.angular_step,self.detected_particle,self.particle_acceptance,self.particle_energy_min_mev)
+        return compare_measurements(reaction,data,kind,self.frame,settings,self.stopping,
+                                    self.exposure,self.order,self.angular_step)
 
     def predict(self, reaction, settings=None):
         if self.reaction_overrides:
@@ -173,12 +187,10 @@ class Experiment:
                 if weight:
                     data = self.data.copy()
                     data['level'] = level+1
-                    partial = compare_measurements(reaction,data,'particle_counts',self.frame,settings,
-                              self.stopping,self.exposure,self.order,self.angular_step).predicted.to_numpy()
+                    partial = self._compare(reaction,data,'particle_counts',settings).predicted.to_numpy()
                     prediction += weight*partial*self.data.gamma_efficiency.to_numpy()
             return prediction
-        return compare_measurements(reaction, self.data, self.kind, self.frame, settings,
-                                    self.stopping, self.exposure, self.order, self.angular_step).predicted.to_numpy()
+        return self._compare(reaction,self.data,self.kind,settings).predicted.to_numpy()
 
 
 def likelihood_residual(observed, predicted, likelihood, uncertainty=None, covariance=None):
@@ -188,10 +200,23 @@ def likelihood_residual(observed, predicted, likelihood, uncertainty=None, covar
     if likelihood == 'poisson':
         if np.any(y < 0) or np.any(y != np.floor(y)):
             raise ValueError('Poisson data must be raw nonnegative integer counts.')
-        # xlogy(0, 0)=0; a positive observation at mu=0 has infinite deviance.
-        safe = np.maximum(mu, np.finfo(float).tiny)
-        deviance = 2*(xlogy(y, y)-xlogy(y, safe)-y+mu)
-        return np.sign(mu-y)*np.sqrt(np.maximum(deviance, 0))
+        if np.any((y > 0) & (mu == 0)):
+            raise ZeroPoissonPredictionError('Positive counts have zero predicted mean; the Poisson likelihood is zero. Choose a nonzero starting prediction.')
+        residual = np.asarray(np.sqrt(2.)*np.sqrt(mu))
+        positive = y > 0
+        yp, mp = y[positive], mu[positive]
+        delta = (mp-yp)/yp
+        close = abs(delta) < 1e-3
+        core = np.empty_like(yp)
+        # delta-log1p(delta) loses its leading digits close to zero.
+        d = delta[close]
+        core[close] = yp[close]*d*d*(.5+d*(-1/3+d*(.25+d*(-.2+d/6))))
+        middle = (~close) & (delta > -.99)
+        core[middle] = yp[middle]*(delta[middle]-np.log1p(delta[middle]))
+        far = (~close) & (~middle)
+        core[far] = mp[far]-yp[far]+yp[far]*(np.log(yp[far])-np.log(mp[far]))
+        residual[positive] = np.sign(delta)*np.sqrt(2.)*np.sqrt(np.maximum(core,0.))
+        return residual
     if likelihood != 'gaussian':
         raise ValueError('Choose gaussian or poisson likelihood.')
     if covariance is not None:
@@ -204,6 +229,29 @@ def likelihood_residual(observed, predicted, likelihood, uncertainty=None, covar
     if sigma.shape != y.shape or np.any(~np.isfinite(sigma)) or np.any(sigma <= 0):
         raise ValueError('Every Gaussian observation requires a positive uncertainty.')
     return (mu-y)/sigma
+
+
+def _fit_objective(reaction,parameters,experiments,settings):
+    nuisances = [i for i,e in enumerate(experiments) if e.normalization_sigma is not None]
+    for e in experiments:
+        if e.likelihood == 'poisson' and not e.kind.endswith('counts'):
+            raise ValueError('Poisson likelihood requires raw count observables.')
+        if e.normalization_sigma is not None and (not np.isfinite(e.normalization_sigma) or e.normalization_sigma <= 0):
+            raise ValueError('Normalization log-scale uncertainty must be positive.')
+    n = len(parameters)
+    def residual(values):
+        local = apply_parameters(reaction, parameters, values[:n])
+        terms = []
+        for i, experiment in enumerate(experiments):
+            prediction = experiment.predict(local, settings)
+            if i in nuisances:
+                eta = values[n+nuisances.index(i)]
+                prediction = prediction*np.exp(eta)
+                terms.append(np.array([eta/experiment.normalization_sigma]))
+            terms.append(likelihood_residual(experiment.data.value, prediction, experiment.likelihood,
+                         experiment.data.get('uncertainty'), experiment.covariance))
+        return np.concatenate(terms)
+    return residual,nuisances
 
 
 def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=None, max_nfev=100):
@@ -220,24 +268,7 @@ def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=N
     lo, hi = np.asarray(bounds[0], float), np.asarray(bounds[1], float)
     if lo.shape != (n,) or hi.shape != (n,) or np.any(np.isnan(lo)) or np.any(np.isnan(hi)) or np.any(lo >= hi):
         raise ValueError('Supply ordered lower and upper bounds for every parameter.')
-    nuisances = [i for i,e in enumerate(experiments) if e.normalization_sigma is not None]
-    for e in experiments:
-        if e.likelihood == 'poisson' and not e.kind.endswith('counts'):
-            raise ValueError('Poisson likelihood requires raw count observables.')
-        if e.normalization_sigma is not None and (not np.isfinite(e.normalization_sigma) or e.normalization_sigma <= 0):
-            raise ValueError('Normalization log-scale uncertainty must be positive.')
-    def residual(values):
-        local = apply_parameters(reaction, parameters, values[:n])
-        terms = []
-        for i, experiment in enumerate(experiments):
-            prediction = experiment.predict(local, settings)
-            if i in nuisances:
-                eta = values[n+nuisances.index(i)]
-                prediction = prediction*np.exp(eta)
-                terms.append(np.array([eta/experiment.normalization_sigma]))
-            terms.append(likelihood_residual(experiment.data.value, prediction, experiment.likelihood,
-                         experiment.data.get('uncertainty'), experiment.covariance))
-        return np.concatenate(terms)
+    residual,nuisances = _fit_objective(reaction,parameters,experiments,settings)
     starts = starts if starts is not None else [[p.get(reaction) for p in parameters]]
     solutions = []
     for start in starts:
@@ -261,18 +292,37 @@ def joint_fit(reaction, parameters, experiments, bounds, starts=None, settings=N
 
 
 def profile_fit(reaction, parameters, experiments, bounds, parameter_index, grid, settings=None, max_nfev=100):
-    """Refit all other parameters and nuisance scales at each fixed grid value."""
+    """Refit remaining parameters and nuisance scales; also supports one parameter."""
     if not 0 <= parameter_index < len(parameters):
         raise ValueError('Invalid profile parameter.')
+    if len(bounds) != 2 or any(len(row)!=len(parameters) for row in bounds):
+        raise ValueError('Profile bounds must match the parameters.')
     rows = []
     free = [i for i in range(len(parameters)) if i != parameter_index]
-    if not free:
-        raise ValueError('Profile refitting requires at least two parameters.')
     for value in grid:
+        if not np.isfinite(value) or not bounds[0][parameter_index] <= value <= bounds[1][parameter_index]:
+            raise ValueError('Profile grid values must lie inside the parameter bounds.')
         local = parameters[parameter_index].set(reaction,value)
-        result = joint_fit(local,[parameters[i] for i in free],experiments,
-                           ([bounds[0][i] for i in free],[bounds[1][i] for i in free]),settings=settings,max_nfev=max_nfev)
-        rows.append(dict(value=value,objective=result['objective'],success=result['success']))
+        compatible=True
+        try:
+            if free:
+                result = joint_fit(local,[parameters[i] for i in free],experiments,
+                                   ([bounds[0][i] for i in free],[bounds[1][i] for i in free]),settings=settings,max_nfev=max_nfev)
+                objective,success = result['objective'],result['success']
+            else:
+                residual,nuisances = _fit_objective(local,[],experiments,settings)
+                if nuisances:
+                    fit = least_squares(residual,np.zeros(len(nuisances)),bounds=(-20.,20.),
+                                        max_nfev=max_nfev,xtol=1e-10,ftol=1e-10,gtol=1e-10)
+                    objective,success = 2*fit.cost,bool(fit.success and not np.any(fit.active_mask))
+                else:
+                    values=residual(np.empty(0))
+                    objective,success = float(values@values),True
+        except ZeroPoissonPredictionError:
+            if free:
+                raise
+            objective,success,compatible=float('inf'),True,False
+        rows.append(dict(value=value,objective=objective,success=success,compatible=compatible))
     return pd.DataFrame(rows)
 
 

@@ -157,6 +157,7 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
     elif mode == modes[3]:
         st.download_button(t('Download joint-fit JSON template'),fit_template(model),'joint_fit_template.json','application/json')
         st.caption(t('Replace every placeholder observation. One JSON file can contain multiple energies, targets, count or cross-section datasets, covariance matrices, normalization uncertainties and external strength, lifetime or quadrupole constraints.'))
+        st.caption(t('Count experiments can select projectile, recoil or either-particle acceptance, with a lab annulus and particle energy threshold in the JSON configuration.'))
         upload=st.file_uploader(t('Upload joint-fit JSON'),type=['json'])
         if upload:
             try:
@@ -172,6 +173,16 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 result=job('research_fit',payload,run)
                 if result:
                     fit=result['fit']; st.json(json.loads(export_json(fit)),expanded=False)
+                    if 'profile' in fit:
+                        profile=pd.DataFrame(fit['profile'])
+                        delta=profile.objective-fit['objective']
+                        fig=go.Figure(go.Scatter(x=profile.value,y=delta.where(np.isfinite(delta)),mode='lines+markers'))
+                        fig.add_hline(y=1.,line_dash='dot')
+                        fig.add_hline(y=3.841458820694124,line_dash='dash',annotation_text=t('Asymptotic 95% (one parameter)'))
+                        st.plotly_chart(style(fig,t('Parameter value'),t('Profile objective difference')))
+                        st.caption(t('Profile thresholds are asymptotic approximations. Small counts, boundaries and multiple minima require separate coverage checks.'))
+                        if (delta < -1e-6).any():
+                            st.warning(t('The profile found a lower objective than the main fit. Repeat the fit with additional starting points before interpreting intervals.'))
                     if not fit['success']: st.warning(t('The optimizer did not converge. Treat these values as an unfinished fit.'))
                     if fit['covariance'] is None: st.warning(t('Local covariance is unavailable because the solution is singular or touches a bound.'))
                     else:

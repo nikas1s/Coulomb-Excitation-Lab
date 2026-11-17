@@ -1,0 +1,68 @@
+{
+  "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+  "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
+  "extended_source_sha256": "e02b50f79db65709363f0e8826d50d0d3816465787c7188b7b88f1c344837549",
+  "compile_commands": [
+    [
+      "gfortran",
+      "-std=legacy",
+      "-O0",
+      "-fcheck=bounds",
+      "-g",
+      "-o",
+      "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-bounds",
+      "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f"
+    ],
+    [
+      "gfortran",
+      "-std=legacy",
+      "-O0",
+      "-o",
+      "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700",
+      "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700.f"
+    ]
+  ],
+  "storage_edits": {
+    "LP12 = 365": {
+      "replacement": "LP12 = 700",
+      "occurrences": 1
+    },
+    "SH(365)": {
+      "replacement": "SH(700)",
+      "occurrences": 3
+    },
+    "CH(365)": {
+      "replacement": "CH(700)",
+      "occurrences": 3
+    },
+    "ADB(365)": {
+      "replacement": "ADB(700)",
+      "occurrences": 2
+    }
+  },
+  "e1_storage": {
+    "returncode": 2,
+    "diagnostic": "At line 3762 of file /Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f\nFortran runtime error: Index '366' of dimension 1 of array 'ch' above upper bound of 365\n\nError termination.",
+    "out_of_bounds_confirmed": true
+  },
+  "e1_extended": {
+    "returncode": 0,
+    "reference_probability": 7.48404e-06,
+    "python_probability": 7.486391736224858e-06,
+    "relative_difference": 0.000314233518909246,
+    "predeclared_relative_tolerance": 0.0003,
+    "comparison_passed": false
+  },
+  "e1_independent_weak_limit": {
+    "first_order_probability": 7.486438683612567e-06,
+    "coupled_probability": 7.486391736224858e-06,
+    "relative_difference": -6.270990746459759e-06,
+    "passed": true
+  },
+  "e4_isolated": {
+    "returncode": 0,
+    "nonfinite_output": true,
+    "resolved": false
+  },
+  "conclusion": "E1 storage overflow diagnosed. Extending storage removes nonfinite results but leaves a discrepancy outside the unchanged tolerance. Isolated E4 remains unresolved; coupled E2/E4 has a separate passing reference."
+}

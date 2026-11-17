@@ -1,0 +1,21 @@
+{
+  "instructions": "Load synthetic_rotor.txt with polarization off. Replace every null value/uncertainty with your measurements. These rows illustrate an input format, not experimental observations or a validated fit.",
+  "parameters": [{"kind": "element", "index": 1}],
+  "bounds": [[0.1], [2.0]],
+  "starts": [[0.6], [0.8]],
+  "experiments": [{
+    "kind": "cascade_counts", "frame": "CM", "energy_lab": 160.0,
+    "detected_particle": "either", "particle_acceptance": [20.0, 55.0], "particle_energy_min_mev": 1.0,
+    "exposure": {"beam_per_second": 1000.0, "days": 1.0, "thickness": 1.0, "azimuth_fraction": 1.0},
+    "likelihood": "gaussian", "normalization_sigma": 0.05, "angular_step": 2.0,
+    "transitions": [
+      {"upper": 3, "lower": 2, "branch": 1.0, "alpha": 0.0, "multipolarity": 2},
+      {"upper": 2, "lower": 1, "branch": 1.0, "alpha": 0.0, "multipolarity": 2}
+    ],
+    "photon_transition": 2,
+    "data": [
+      {"angle_min_deg": 40.0, "angle_max_deg": 60.0, "level": 2, "value": null, "uncertainty": null, "efficiency": 0.8, "gamma_efficiency": 0.01},
+      {"angle_min_deg": 80.0, "angle_max_deg": 100.0, "level": 2, "value": null, "uncertainty": null, "efficiency": 0.8, "gamma_efficiency": 0.01}
+    ]
+  }]
+}

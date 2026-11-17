@@ -121,9 +121,9 @@ def gaussian_coverage(trials=500,seed=581):
                 scope='Interior linear Gaussian external-Q constraints only; not nonlinear/Poisson/normalization coverage')
 
 
-def gosia_replay():
+def gosia_replay(fixture='gosia_points/results.json'):
     """Replay only finite reference cases; unusable reference runs stay explicit."""
-    path=HERE/'gosia_points/results.json'
+    path=HERE/fixture
     reference=json.loads(path.read_text())
     rows=[];unusable=[];cache={}
     from coulex.solver import CoupledChannels,SolverSettings
@@ -146,14 +146,14 @@ def gosia_replay():
                 reference_fixture_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                 compared_points=len(rows),rows=rows,unusable_reference_cases=unusable,
                 passed=bool(rows and all(r['passed'] for r in rows)),
-                scope='Finite GOSIA cases only: target E2/E3 populations, E2 multistep/reorientation and unpolarized half-integer spins, polarization off. E1/E4 reference runs were nonfinite and do not qualify those multipoles.')
+                scope=reference['scope']+'; only finite reference cases are compared')
 
 
 def experimental_inputs():
     folder=HERE/'experiments/sr96_sn120'
     manifest=json.loads((folder/'manifest.json').read_text())
     data=pd.read_csv(folder/'yields.csv')
-    missing=[key for key,value in manifest['required_inputs'].items() if value is None]
+    missing=[key for key,value in manifest['required_inputs'].items() if value is None or (isinstance(value,dict) and value.get('status')!='complete')]
     valid=bool(len(data)==7 and data.value.notna().all() and (data.uncertainty>0).all()
                and (data.angle_max_deg>data.angle_min_deg).all())
     return dict(source=manifest['doi'],data_integrity_passed=valid,observation_count=len(data),

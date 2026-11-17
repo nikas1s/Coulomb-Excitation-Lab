@@ -119,7 +119,7 @@ def test_joint_fit_recovers_matrix_element_and_normalization():
 def test_likelihood_zero_counts_covariance_and_information():
     assert likelihood_residual([0,2],[1,2],'poisson')==pytest.approx([np.sqrt(2),0])
     with pytest.raises(ValueError): likelihood_residual([1.2],[2],'poisson')
-    assert np.all(np.isfinite(likelihood_residual([1],[0],'poisson')))
+    with pytest.raises(ValueError,match='zero predicted mean'): likelihood_residual([1],[0],'poisson')
     assert likelihood_residual([0,0],[1,2],'gaussian',covariance=[[1,0],[0,4]])==pytest.approx([1,1])
     info=information_matrix([[1],[1]],[1,1],normalization_prediction=[1,1])
     assert info[0,0]==pytest.approx(0,abs=1e-14)

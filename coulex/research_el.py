@@ -1,5 +1,11 @@
 """Greek labels and explanations for the research workbench."""
 EL = {
+'Asymptotic 95% (one parameter)':'Ασυμπτωτικό 95% (μία παράμετρος)',
+'Parameter value':'Τιμή παραμέτρου',
+'Profile objective difference':'Διαφορά αντικειμενικής συνάρτησης προφίλ',
+'Profile thresholds are asymptotic approximations. Small counts, boundaries and multiple minima require separate coverage checks.':'Τα όρια προφίλ είναι ασυμπτωτικές προσεγγίσεις. Μικρές καταμετρήσεις, όρια και πολλαπλά ελάχιστα απαιτούν ξεχωριστούς ελέγχους κάλυψης.',
+'The profile found a lower objective than the main fit. Repeat the fit with additional starting points before interpreting intervals.':'Το προφίλ βρήκε χαμηλότερη τιμή από την κύρια προσαρμογή. Επαναλάβετε με πρόσθετες αρχικές τιμές πριν ερμηνεύσετε τα διαστήματα.',
+'Count experiments can select projectile, recoil or either-particle acceptance, with a lab annulus and particle energy threshold in the JSON configuration.':'Οι καταμετρήσεις μπορούν να χρησιμοποιούν αποδοχή βλήματος, ανακρουόμενου πυρήνα ή ενός από τα δύο, με εργαστηριακό δακτύλιο και ενεργειακό κατώφλι στη ρύθμιση JSON.',
 'Research qualification is incomplete. Independent numerical checks cover specific cases; matched experimental-yield validation and independent review remain open.':'Η ερευνητική επικύρωση είναι ελλιπής. Ανεξάρτητοι αριθμητικοί έλεγχοι καλύπτουν συγκεκριμένες περιπτώσεις· εκκρεμούν η επικύρωση με αντίστοιχες πειραματικές αποδόσεις και η ανεξάρτητη αξιολόγηση.',
 'Download design information (JSON)':'Λήψη πληροφορίας σχεδιασμού (JSON)',
 'Angular curves and detector acceptance are conditional on the first photon. The yield table remains ungated.':'Οι γωνιακές καμπύλες και η αποδοχή ανιχνευτή είναι υπό τη συνθήκη του πρώτου φωτονίου. Ο πίνακας αποδόσεων παραμένει χωρίς αυτή τη συνθήκη.',

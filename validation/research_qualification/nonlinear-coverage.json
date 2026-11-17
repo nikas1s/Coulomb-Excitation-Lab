@@ -1,0 +1,195 @@
+{
+  "seed": 447,
+  "gaussian_trials": 100,
+  "count_trials": 500,
+  "gaussian": {
+    "intervals": {
+      "0.68": {
+        "hits": 71,
+        "trials": 100,
+        "observed": 0.71,
+        "nominal": 0.68,
+        "binomial_99_interval": [
+          0.5800033176932302,
+          0.8193775340368301
+        ],
+        "consistent": true,
+        "not_significantly_below_nominal": true
+      },
+      "0.95": {
+        "hits": 96,
+        "trials": 100,
+        "observed": 0.96,
+        "nominal": 0.95,
+        "binomial_99_interval": [
+          0.8793673007031012,
+          0.9931983062396853
+        ],
+        "consistent": true,
+        "not_significantly_below_nominal": true
+      }
+    },
+    "failed": 0,
+    "max_estimator_error": 8.077010687945751e-06,
+    "max_variance_relative_error": 5.2480192594073216e-05
+  },
+  "counts": {
+    "mean": 3.0,
+    "known_exposure": 12.0,
+    "rows": [
+      {
+        "count": 0,
+        "frequency": 24,
+        "estimate": 1.6214020429760254e-05,
+        "analytic_mle": 0.0,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.0,
+          0.6357432401781229
+        ],
+        "profile_max_difference": 0.00022532199285052457
+      },
+      {
+        "count": 1,
+        "frequency": 79,
+        "estimate": 0.316789575347532,
+        "analytic_mle": 0.31678578853969547,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.04970572827361145,
+          0.8109650094017617
+        ],
+        "profile_max_difference": 0.00018776797480324348
+      },
+      {
+        "count": 2,
+        "frequency": 111,
+        "estimate": 0.45492293597203304,
+        "analytic_mle": 0.4549174979617504,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.15420833754102814,
+          0.9607957548023649
+        ],
+        "profile_max_difference": 0.00015021395675418603
+      },
+      {
+        "count": 3,
+        "frequency": 109,
+        "estimate": 0.5664153253175637,
+        "analytic_mle": 0.5664085544172602,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.2477851071859779,
+          1.108889697242398
+        ],
+        "profile_max_difference": 0.00011265993870401836
+      },
+      {
+        "count": 4,
+        "frequency": 79,
+        "estimate": 0.6658096916477344,
+        "analytic_mle": 0.665801732753867,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.3311551299502816,
+          1.2742851465427423
+        ],
+        "profile_max_difference": 0.00013195035434421243
+      },
+      {
+        "count": 5,
+        "frequency": 50,
+        "estimate": 0.7590525334763251,
+        "analytic_mle": 0.7590434597032804,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.4074582335127933,
+          1.518544258422996
+        ],
+        "profile_max_difference": 0.00017818196891550286
+      },
+      {
+        "count": 6,
+        "frequency": 25,
+        "estimate": 0.8496229877695723,
+        "analytic_mle": 0.8496128316258905,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.47886907428474057,
+          1.6992256632517808
+        ],
+        "profile_max_difference": 0.00022441358347613516
+      },
+      {
+        "count": 7,
+        "frequency": 15,
+        "estimate": 0.9401934425191153,
+        "analytic_mle": 0.9401822035485005,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.5468773291699072,
+          1.6992256632517808
+        ],
+        "profile_max_difference": 0.00027064519805719556
+      },
+      {
+        "count": 8,
+        "frequency": 7,
+        "estimate": 1.0334362838885858,
+        "analytic_mle": 1.0334239304979138,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.6125685602252202,
+          1.6992256632517808
+        ],
+        "profile_max_difference": 0.00031687681262582146
+      },
+      {
+        "count": 9,
+        "frequency": 1,
+        "estimate": 1.13283065046248,
+        "analytic_mle": 1.1328171088345205,
+        "success": true,
+        "covariance_available": true,
+        "exact_interval": [
+          0.6767943999131633,
+          1.6992256632517808
+        ],
+        "profile_max_difference": 0.0003631084272015528
+      }
+    ],
+    "failed": 0,
+    "exact_transformed_interval_coverage": {
+      "hits": 492,
+      "trials": 500,
+      "observed": 0.984,
+      "nominal": 0.95,
+      "binomial_99_interval": [
+        0.963235305520615,
+        0.9948348599240876
+      ],
+      "consistent": false,
+      "not_significantly_below_nominal": true,
+      "analytic_discrete_coverage": 0.9880954961436427,
+      "matches_analytic_coverage": true
+    },
+    "max_estimator_error": 1.6214020429760254e-05,
+    "wald_interval_hits": 476,
+    "wald_covariance_available": 500,
+    "wald_coverage_over_all_trials": 0.952,
+    "profile_max_difference": 0.0003631084272015528
+  },
+  "direct_solver_evaluations": 820,
+  "passed": true,
+  "scope": "Actual coupled-channel ODE in degenerate sudden limit, first monotone Rabi branch; no fitted normalization or finite detector response. Exact Poisson intervals are a qualification reference, not a general UI interval method."
+}

@@ -17,7 +17,20 @@
   "validation_status": "inputs_incomplete",
   "required_inputs": {
     "gamma_response": null,
-    "particle_response_and_bin_mapping": null,
+    "particle_response_and_bin_mapping": {
+      "status": "partial",
+      "nominal_lab_annulus_deg": [
+        20,
+        55
+      ],
+      "model_support": "CM-bin intersection with projectile/recoil event union and an optional energy threshold",
+      "still_required": [
+        "experiment-specific particle identification and trigger selection",
+        "energy thresholds and strip efficiencies",
+        "azimuth masks",
+        "treatment of events with both particles detected"
+      ]
+    },
     "stopping_and_beam_energy_distribution": null,
     "complete_projectile_and_target_structure": null,
     "branching_and_conversion": null,

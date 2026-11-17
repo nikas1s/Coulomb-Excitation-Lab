@@ -1,8 +1,8 @@
 {
-  "created_utc": "2026-11-17T08:06:07.523000+00:00",
+  "created_utc": "2026-11-17T08:34:49.924195+00:00",
   "python": "3.14.0",
   "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
-  "git_commit": "12b5d2916a88ce4fca257f151ef8fff6253293e1",
+  "git_commit": "0b85ebff66e352471a401baea7ca0271d07549ea",
   "working_tree_dirty": true,
   "dependencies": {
     "numpy": "2.5.4",
@@ -12,6 +12,7 @@
   },
   "hashes": {
     "coulex/__init__.py": "d1d0a70df425f60b4772d566b0b819a7e1a1c6bb3e420e7b99af8f3ed3c66e1e",
+    "coulex/acceptance.py": "771aa8ad3e207ffc1c91ad1698ee17d340e552abb98f89d87198abd660c0454a",
     "coulex/decay.py": "c3ed6f2a087d3cac05a839aa9c84ae3679c392c18cdc12b19901a5bcbf2ee004",
     "coulex/examples.py": "9556d17da60ba4edd85a05a710f0cbeeea38378a486eefaf68936aa9487b5110",
     "coulex/formats.py": "cb933c248c7adaa7eebabaa391cdc99940c8db2d5085f920b323b900259bed52",
@@ -28,22 +29,25 @@
     "coulex/observables.py": "54d37cf08c5203ac6bb429a18ab7e32b19751e374636da676686cc5303cf7b6e",
     "coulex/plots.py": "56fc5c4cedbca1498c78b6e7fb9bb9ce8cfad409cd4ba3ff312e0ee2c9809052",
     "coulex/public_data.py": "3c3340b778ff6a160ddaff2fddc408317d4be7d1563d7b92ee916dbccef47198",
-    "coulex/research.py": "f74127b982a9a0278ce83c7c7b20673d2ccf443f3680401ba6785775d87ffdc1",
-    "coulex/research_el.py": "ac00006084478d4dc4d7dad6f82187f534a69b0170f82ce1789f30f0a77f8f03",
+    "coulex/research.py": "7b654be4b2fb7f6424866b5996d3bbe316d3829da6c7f65c825da654c51f2d86",
+    "coulex/research_el.py": "e95ea5048889916781a2e31f45b345027349b6ec6fec1a5ce93051d54a5e949a",
     "coulex/research_io.py": "28b336112f537cc51cf26ad33c779cffa3fb1358038e8cc3855feb1ab497fafe",
-    "coulex/research_ui.py": "5ba6a36e6c6fcde94e3aa5274f411326373f5cc943dcfa4247feba2f1ac16743",
+    "coulex/research_ui.py": "7c6dbef8b039067cac5b7696758975e4826476a8f35b4e30c30069b9b6f34a5d",
     "coulex/results_ui.py": "73673b26bbf2ea5dac00c8a9fbc250b7763eed4eaf0ceb227af5ef1da5e8488e",
     "coulex/shapes.py": "68228734f0564c46f95e99d5e8918c317d2f362ccd984c0ea3cdd1ba112aa923",
     "coulex/solver.py": "ffbe1dc3d5f030556532273be5dead1486392efc32978e9107c61ac5c1416be8",
     "coulex/stopping.py": "b8feee360aea4f1b3a0e1317a10718524251072125b14f8bae19f8c514b615f7",
     "coulex/verification_ui.py": "21e0621b126e80ffc9a482b6b52ff64ef02f0008b0ca1673a8e7e8b6fd617cea",
     "coulex/workflow.py": "80b8d09b7a554884b83e7d295528617cc78c4efe67757e3635306d1ab87ba483",
-    "validation/qualify.py": "b1af2c03e01c8652d64889e5cdb89fa3fc433c628a8e9a5d4b2e0ab054e3d105",
+    "validation/qualify.py": "3f694715ea29dd7d467d3803304d77a98faf07b8d4bad384a1209b878075368a",
     "validation/research_qualification/cd106.json": "05b7a79993caf39c4d954b326b11aefe1c47f22fad7317b91662249baeb91952",
-    "validation/research_qualification/checks.py": "618d2efe775a831ae8cfdb890747484969ca0103427b5de96b647e99c367011b",
-    "validation/research_qualification/experiments/sr96_sn120/manifest.json": "f69c67c8e2b8dba7d797aeaf569556a535414be8f007850860a866a859cec12d",
+    "validation/research_qualification/checks.py": "0bb3e06d248241aa6f8df4af842a22fa8b1b3fe6e275a5c3f120f576790c6dfa",
+    "validation/research_qualification/experiments/sr96_sn120/manifest.json": "722bd7204b62ceaae795b01c814d9552077fce68754aa7c2b440deae7707cdd5",
     "validation/research_qualification/experiments/sr96_sn120/yields.csv": "78cae17fd613d69f76c6c14804007f005906fae0d8fee5dc23b92f0994f7bb5b",
-    "validation/research_qualification/gosia_points/results.json": "4d84f465562380892228077cb86b4fa9a4d08c3b6d9f76ab09d3d56a5c7ac6d3"
+    "validation/research_qualification/gosia-diagnostics.json": "af837801e28f8373c6cbb0343a76a2a02a69246cd240debc07ace8d01b5bb00c",
+    "validation/research_qualification/gosia_expanded/results.json": "b62489c43117849c2014dbc5037cbb17654c6d40a62729aceebb135b67244159",
+    "validation/research_qualification/gosia_points/results.json": "4d84f465562380892228077cb86b4fa9a4d08c3b6d9f76ab09d3d56a5c7ac6d3",
+    "validation/research_qualification/nonlinear.py": "8d462e10c5b247dfd14bfd751c001a94b7b99f5ec21cfa07ced17172892322f1"
   },
   "checks": {
     "published_shapes": {
@@ -242,7 +246,126 @@
         }
       ],
       "passed": true,
-      "scope": "Finite GOSIA cases only: target E2/E3 populations, E2 multistep/reorientation and unpolarized half-integer spins, polarization off. E1/E4 reference runs were nonfinite and do not qualify those multipoles."
+      "scope": "Unpolarized target excitation, electric E1-E4, isolated/multistep/half-integer point populations, polarization off; no gamma response; only finite reference cases are compared"
+    },
+    "gosia_expanded": {
+      "source_url": "https://www.pas.rochester.edu/~cline/Research/GOSIAcodes/gosia.f",
+      "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+      "reference_fixture_sha256": "b62489c43117849c2014dbc5037cbb17654c6d40a62729aceebb135b67244159",
+      "compared_points": 12,
+      "rows": [
+        {
+          "case": "E4 and E2 coupled",
+          "level": 2,
+          "cm_angle": 37.953715660824294,
+          "expected": 0.000654775,
+          "actual": 0.0006547744972322894,
+          "absolute_difference": 5.02767710602002e-10,
+          "passed": true
+        },
+        {
+          "case": "E4 and E2 coupled",
+          "level": 3,
+          "cm_angle": 37.953715660824294,
+          "expected": 1.0985e-06,
+          "actual": 1.0984985699139553e-06,
+          "absolute_difference": 1.4300860446765158e-12,
+          "passed": true
+        },
+        {
+          "case": "E4 and E2 coupled",
+          "level": 2,
+          "cm_angle": 73.86701976415367,
+          "expected": 0.00540385,
+          "actual": 0.005403848682650638,
+          "absolute_difference": 1.3173493615403764e-09,
+          "passed": true
+        },
+        {
+          "case": "E4 and E2 coupled",
+          "level": 3,
+          "cm_angle": 73.86701976415367,
+          "expected": 5.26976e-05,
+          "actual": 5.2697616820320725e-05,
+          "absolute_difference": 1.6820320723547836e-11,
+          "passed": true
+        },
+        {
+          "case": "E4 and E2 coupled",
+          "level": 2,
+          "cm_angle": 106.06610372006924,
+          "expected": 0.0142691,
+          "actual": 0.014269091838560228,
+          "absolute_difference": 8.161439772266799e-09,
+          "passed": true
+        },
+        {
+          "case": "E4 and E2 coupled",
+          "level": 3,
+          "cm_angle": 106.06610372006924,
+          "expected": 0.000301671,
+          "actual": 0.0003016708886346269,
+          "absolute_difference": 1.1136537308650829e-10,
+          "passed": true
+        },
+        {
+          "case": "E2 projectile excitation",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 0.00767579,
+          "actual": 0.007675817171228263,
+          "absolute_difference": 2.7171228263005165e-08,
+          "passed": true
+        },
+        {
+          "case": "E2 projectile excitation",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.0585588,
+          "actual": 0.058558996866637354,
+          "absolute_difference": 1.9686663735307697e-07,
+          "passed": true
+        },
+        {
+          "case": "E2 projectile excitation",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.140044,
+          "actual": 0.140044799272056,
+          "absolute_difference": 7.992720559846234e-07,
+          "passed": true
+        },
+        {
+          "case": "E2 target with polarization",
+          "level": 2,
+          "cm_angle": 37.97953865322615,
+          "expected": 0.000627476,
+          "actual": 0.0006274774730597405,
+          "absolute_difference": 1.4730597404843601e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 target with polarization",
+          "level": 2,
+          "cm_angle": 73.9126490833782,
+          "expected": 0.00490324,
+          "actual": 0.004903247685214235,
+          "absolute_difference": 7.685214234963433e-09,
+          "passed": true
+        },
+        {
+          "case": "E2 target with polarization",
+          "level": 2,
+          "cm_angle": 106.11933725825793,
+          "expected": 0.0122467,
+          "actual": 0.012246757370165264,
+          "absolute_difference": 5.737016526424776e-08,
+          "passed": true
+        }
+      ],
+      "unusable_reference_cases": [],
+      "passed": true,
+      "scope": "Coupled E2/E4 target, E2 projectile, and polarized E2 target point populations; no gamma response; only finite reference cases are compared"
     },
     "gaussian_coverage": {
       "trials": 500,
@@ -276,6 +399,201 @@
       "truth": -0.4,
       "passed": true,
       "scope": "Interior linear Gaussian external-Q constraints only; not nonlinear/Poisson/normalization coverage"
+    },
+    "nonlinear_coverage": {
+      "seed": 447,
+      "gaussian_trials": 100,
+      "count_trials": 500,
+      "gaussian": {
+        "intervals": {
+          "0.68": {
+            "hits": 71,
+            "trials": 100,
+            "observed": 0.71,
+            "nominal": 0.68,
+            "binomial_99_interval": [
+              0.5800033176932302,
+              0.8193775340368301
+            ],
+            "consistent": true,
+            "not_significantly_below_nominal": true
+          },
+          "0.95": {
+            "hits": 96,
+            "trials": 100,
+            "observed": 0.96,
+            "nominal": 0.95,
+            "binomial_99_interval": [
+              0.8793673007031012,
+              0.9931983062396853
+            ],
+            "consistent": true,
+            "not_significantly_below_nominal": true
+          }
+        },
+        "failed": 0,
+        "max_estimator_error": 8.077010687945751e-06,
+        "max_variance_relative_error": 5.2480192594073216e-05
+      },
+      "counts": {
+        "mean": 3.0,
+        "known_exposure": 12.0,
+        "rows": [
+          {
+            "count": 0,
+            "frequency": 24,
+            "estimate": 1.6214020429760254e-05,
+            "analytic_mle": 0.0,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.0,
+              0.6357432401781229
+            ],
+            "profile_max_difference": 0.00022532199285052457
+          },
+          {
+            "count": 1,
+            "frequency": 79,
+            "estimate": 0.316789575347532,
+            "analytic_mle": 0.31678578853969547,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.04970572827361145,
+              0.8109650094017617
+            ],
+            "profile_max_difference": 0.00018776797480324348
+          },
+          {
+            "count": 2,
+            "frequency": 111,
+            "estimate": 0.45492293597203304,
+            "analytic_mle": 0.4549174979617504,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.15420833754102814,
+              0.9607957548023649
+            ],
+            "profile_max_difference": 0.00015021395675418603
+          },
+          {
+            "count": 3,
+            "frequency": 109,
+            "estimate": 0.5664153253175637,
+            "analytic_mle": 0.5664085544172602,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.2477851071859779,
+              1.108889697242398
+            ],
+            "profile_max_difference": 0.00011265993870401836
+          },
+          {
+            "count": 4,
+            "frequency": 79,
+            "estimate": 0.6658096916477344,
+            "analytic_mle": 0.665801732753867,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.3311551299502816,
+              1.2742851465427423
+            ],
+            "profile_max_difference": 0.00013195035434421243
+          },
+          {
+            "count": 5,
+            "frequency": 50,
+            "estimate": 0.7590525334763251,
+            "analytic_mle": 0.7590434597032804,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.4074582335127933,
+              1.518544258422996
+            ],
+            "profile_max_difference": 0.00017818196891550286
+          },
+          {
+            "count": 6,
+            "frequency": 25,
+            "estimate": 0.8496229877695723,
+            "analytic_mle": 0.8496128316258905,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.47886907428474057,
+              1.6992256632517808
+            ],
+            "profile_max_difference": 0.00022441358347613516
+          },
+          {
+            "count": 7,
+            "frequency": 15,
+            "estimate": 0.9401934425191153,
+            "analytic_mle": 0.9401822035485005,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.5468773291699072,
+              1.6992256632517808
+            ],
+            "profile_max_difference": 0.00027064519805719556
+          },
+          {
+            "count": 8,
+            "frequency": 7,
+            "estimate": 1.0334362838885858,
+            "analytic_mle": 1.0334239304979138,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.6125685602252202,
+              1.6992256632517808
+            ],
+            "profile_max_difference": 0.00031687681262582146
+          },
+          {
+            "count": 9,
+            "frequency": 1,
+            "estimate": 1.13283065046248,
+            "analytic_mle": 1.1328171088345205,
+            "success": true,
+            "covariance_available": true,
+            "exact_interval": [
+              0.6767943999131633,
+              1.6992256632517808
+            ],
+            "profile_max_difference": 0.0003631084272015528
+          }
+        ],
+        "failed": 0,
+        "exact_transformed_interval_coverage": {
+          "hits": 492,
+          "trials": 500,
+          "observed": 0.984,
+          "nominal": 0.95,
+          "binomial_99_interval": [
+            0.963235305520615,
+            0.9948348599240876
+          ],
+          "consistent": false,
+          "not_significantly_below_nominal": true,
+          "analytic_discrete_coverage": 0.9880954961436427,
+          "matches_analytic_coverage": true
+        },
+        "max_estimator_error": 1.6214020429760254e-05,
+        "wald_interval_hits": 476,
+        "wald_covariance_available": 500,
+        "wald_coverage_over_all_trials": 0.952,
+        "profile_max_difference": 0.0003631084272015528
+      },
+      "direct_solver_evaluations": 820,
+      "passed": true,
+      "scope": "Actual coupled-channel ODE in degenerate sudden limit, first monotone Rabi branch; no fitted normalization or finite detector response. Exact Poisson intervals are a qualification reference, not a general UI interval method."
     }
   },
   "computational_checks_passed": true,
@@ -297,6 +615,74 @@
     "data_sha256": "78cae17fd613d69f76c6c14804007f005906fae0d8fee5dc23b92f0994f7bb5b",
     "scope": "Bibliographic experimental target selected; no experimental fit is claimed"
   },
+  "reference_diagnostics": {
+    "source_sha256": "30afe1352fad63dcc3327becb1d622c0757aa16219df9f609e9b090d402669e2",
+    "compiler": "GNU Fortran (Homebrew GCC 15.1.0) 15.1.0",
+    "extended_source_sha256": "e02b50f79db65709363f0e8826d50d0d3816465787c7188b7b88f1c344837549",
+    "compile_commands": [
+      [
+        "gfortran",
+        "-std=legacy",
+        "-O0",
+        "-fcheck=bounds",
+        "-g",
+        "-o",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-bounds",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f"
+      ],
+      [
+        "gfortran",
+        "-std=legacy",
+        "-O0",
+        "-o",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700",
+        "/Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia-storage700.f"
+      ]
+    ],
+    "storage_edits": {
+      "LP12 = 365": {
+        "replacement": "LP12 = 700",
+        "occurrences": 1
+      },
+      "SH(365)": {
+        "replacement": "SH(700)",
+        "occurrences": 3
+      },
+      "CH(365)": {
+        "replacement": "CH(700)",
+        "occurrences": 3
+      },
+      "ADB(365)": {
+        "replacement": "ADB(700)",
+        "occurrences": 2
+      }
+    },
+    "e1_storage": {
+      "returncode": 2,
+      "diagnostic": "At line 3762 of file /Users/nikass/Downloads/TCLX-master/coulex_streamlit/.cache/research-qualification/gosia.f\nFortran runtime error: Index '366' of dimension 1 of array 'ch' above upper bound of 365\n\nError termination.",
+      "out_of_bounds_confirmed": true
+    },
+    "e1_extended": {
+      "returncode": 0,
+      "reference_probability": 7.48404e-06,
+      "python_probability": 7.486391736224858e-06,
+      "relative_difference": 0.000314233518909246,
+      "predeclared_relative_tolerance": 0.0003,
+      "comparison_passed": false
+    },
+    "e1_independent_weak_limit": {
+      "first_order_probability": 7.486438683612567e-06,
+      "coupled_probability": 7.486391736224858e-06,
+      "relative_difference": -6.270990746459759e-06,
+      "passed": true
+    },
+    "e4_isolated": {
+      "returncode": 0,
+      "nonfinite_output": true,
+      "resolved": false
+    },
+    "conclusion": "E1 storage overflow diagnosed. Extending storage removes nonfinite results but leaves a discrepancy outside the unchanged tolerance. Isolated E4 remains unresolved; coupled E2/E4 has a separate passing reference."
+  },
   "requested_use_cases": {
     "experiment_planning": {
       "qualified": false,
@@ -312,9 +698,9 @@
     }
   },
   "remaining_gates": [
-    "Broader independent point-excitation coverage: projectile excitation, polarization and usable E1/E4 references",
+    "Resolve strict E1 discrepancy and isolated E4 reference behavior; broaden energies and detector error budgets",
     "Experimental gamma-yield reproduction with matched geometry, multipoles and all correction inputs",
-    "Nonlinear coupled-channel fit interval coverage, including low counts and normalization systematics",
+    "General nondegenerate multilevel fit interval coverage, including fitted normalization and detector systematics",
     "Independent nuclear-physics review and versioned scope sign-off"
   ]
 }
