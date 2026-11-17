@@ -3,7 +3,7 @@ import ast
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-UI_FILES = ['app.py', *[f'coulex/{n}.py' for n in ('help_ui', 'input_ui', 'measurement_ui', 'verification_ui', 'plots')]]
+UI_FILES = ['app.py', *[f'coulex/{n}.py' for n in ('help_ui', 'input_ui', 'measurement_ui', 'verification_ui', 'plots', 'research_ui')]]
 
 
 def literal_t_calls():
@@ -28,6 +28,8 @@ def dynamic_strings():
     found |= {meaning for _, _, meaning, _ in TCLX_LINES} | {'rest', 'Title'}
     for example in EXAMPLES:
         found |= {example.summary, example.focus}
+    from coulex.research_el import EL as RESEARCH_EL
+    found |= set(RESEARCH_EL)
     found |= {'AW60 parameter q', 'same as value', 'counts', '—'}
     found |= {'Rutherford scattering', 'First-order perturbation theory', 'Sudden limit, two states',
               'Sudden limit, rigid rotor', 'Elastic dσ/dΩ at θcm = 90° (barn/sr)', 'E{lam} 0+ → {state}, P at θcm = {theta}°',

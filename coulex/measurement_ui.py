@@ -47,7 +47,7 @@ def render_measurements(root, reaction, settings, stopping, stopping_text, thick
         st.caption(t('Each row is a point measurement at angle_deg. Uncertainty is optional, positive and one-sigma, '
                      'in the same units as value. For finite-bin data, use a corrected point cross section or '
                      'compare detector counts.'))
-    format_box(kind, root, 'measurements', expanded=True)
+    format_box(kind, root, 'measurements', expanded=False)
     st.session_state.setdefault('measurement_source', 'upload')
     source = st.segmented_control(t('Import measurements'), ['upload', 'paste'], required=True,
                                   format_func={'upload': t('Upload a file'), 'paste': t('Paste a table')}.__getitem__,
@@ -140,6 +140,15 @@ def render_measurements(root, reaction, settings, stopping, stopping_text, thick
         return
     compared = stored[1]
     ylabel = t(config['comparison_units']) if not kind == 'cross_section' else 'barn/sr'
+    known = compared.uncertainty.notna()
+    a, b, c = st.columns(3)
+    a.metric(t('Observations'), len(compared))
+    b.metric(t('With uncertainty'), f'{int(known.sum())}/{len(compared)}')
+    c.metric(t('Mean absolute residual'), f'{abs(compared.residual).mean():.4g} {ylabel}')
+    st.caption(t('Residuals compare measurements with fixed model inputs. They do not measure numerical convergence.'))
+    use_standardized = st.checkbox(t('Show residuals in uncertainty units'), key='standardized_residuals',
+                                    disabled=not known.any()) and known.any()
+    log_measurements = st.checkbox(t('Logarithmic measurement axis'), key='log_measurements')
     fig, residual = go.Figure(), go.Figure()
     for level, group in compared.groupby('level', sort=True):
         color = COLORS[(level-1) % len(COLORS)]
@@ -151,14 +160,25 @@ def render_measurements(root, reaction, settings, stopping, stopping_text, thick
                         error_x=dict(type='data', array=dx))
         fig.add_scatter(x=x, y=group.predicted, mode='markers', name=t('Level {level}: calculated', level=level),
                         marker=dict(color=color, symbol='x', size=10))
-        residual.add_scatter(x=x, y=group.residual, mode='markers', name=t('Level {level}', level=level),
-                             marker=dict(color=color, size=8), error_y=dict(type='data', array=errors))
+        residual.add_scatter(x=x, y=group.standardized_residual if use_standardized else group.residual,
+                             mode='markers', name=t('Level {level}', level=level),
+                             marker=dict(color=color, size=8), error_x=dict(type='data', array=dx),
+                             error_y=dict(type='data', array=np.where(group.uncertainty.notna(), 1., np.nan)
+                                          if use_standardized else errors))
     angle = t('CM') if frame == 'CM' else t('Lab')
     xlabel = t('{frame} detector-bin centre (°)', frame=angle) if counts else t('{frame} scattering angle (°)', frame=angle)
-    st.plotly_chart(style(fig, xlabel, ylabel, t('Measurements and predictions')),
+    style(fig, xlabel, ylabel, t('Measurements and predictions'))
+    if log_measurements:
+        fig.update_yaxes(type='log')
+        st.caption(t('Zero values are omitted on logarithmic axes; exported data retain the original values.'))
+    st.plotly_chart(fig,
                     alt=t('Measured values with error bars and calculated predictions'))
     residual.add_hline(y=0, line_dash='dash')
-    st.plotly_chart(style(residual, xlabel, t('Measured − calculated ({unit})', unit=ylabel), t('Residuals')),
+    residual_label = t('Residual / uncertainty') if use_standardized else t('Measured − calculated ({unit})', unit=ylabel)
+    if use_standardized:
+        residual.add_hrect(y0=-1, y1=1, fillcolor=COLORS[0], opacity=.08, line_width=0)
+        st.caption(t('Only observations with uncertainties appear here. The shaded band is −1 to +1 uncertainty unit.'))
+    st.plotly_chart(style(residual, xlabel, residual_label, t('Residuals')),
                     alt=t('Residuals: measured minus calculated'))
     known = compared.uncertainty.notna()
     if known.any():

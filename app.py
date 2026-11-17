@@ -12,21 +12,36 @@ from coulex import CoupledChannels, Reaction, SolverSettings
 from coulex.examples import DATA_SOURCES, KIND_LABELS
 from coulex.help_ui import format_box, formats_tab, instructions, quick_start
 from coulex.i18n import LANGUAGE_KEY, LANGUAGES, doc, error_text, t
+from coulex.i18n_el import EL
 from coulex.input_ui import reaction_input
 from coulex.literature import REFERENCES
 from coulex.measurement_ui import render_measurements
 from coulex.model import angle_grid
-from coulex.observables import integrate_detector, lab_angle, lab_jacobian, particle_yield, surface_separation
+from coulex.observables import integrate_detector, particle_yield
 from coulex.plots import COLORS, collision_plot, curves, label, levels, orbit, style
+from coulex.results_ui import render as render_results
 from coulex.stopping import StoppingTable
 from coulex.verification_ui import render as render_verification
-from coulex.workflow import calculate, results_frame
+from coulex.workflow import calculate
+from coulex.research_ui import render as render_research
 
 ROOT = Path(__file__).resolve().parent
 # Results and checks that belong to one reaction source; they are discarded when the source changes.
-RESULT_KEYS = ('calculation', 'dynamics', 'accuracy', 'measurement_comparison')
+RESULT_KEYS = ('calculation', 'dynamics', 'accuracy', 'measurement_comparison', 'detector_result')
 
 st.set_page_config(page_title='Coulomb Excitation Lab', page_icon='⚛', layout='wide')
+st.html('''<style>
+[data-testid="stMainBlockContainer"] {padding-top: 2rem; padding-bottom: 2rem;}
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {gap: .75rem;}
+[data-testid="stMainBlockContainer"] h1 {font-size: clamp(1.7rem, 3vw, 2.5rem);}
+.st-key-result_metrics [data-testid="stMetricLabel"] {height: auto; min-height: 1.5rem;}
+.st-key-result_metrics [data-testid="stMetricLabel"] p {white-space: normal; overflow: visible;}
+@media (max-width: 640px) {
+  [data-testid="stMainBlockContainer"] {padding-top: 3.5rem; padding-left: 1rem; padding-right: 1rem;}
+  .st-key-result_metrics [data-testid="stHorizontalBlock"] {display: grid; grid-template-columns: 1fr 1fr;}
+  .st-key-result_metrics [data-testid="stColumn"] {width: 100%; min-width: 0;}
+}
+</style>''')
 
 
 def follow(key, source, value):
@@ -48,10 +63,30 @@ TRANSLATED_CHOICES = ('reaction_source', 'excitation', 'measurement_kind', 'meas
 TRANSLATED_PREFIXES = ('measurement_frame_',)  # map_* selectboxes keep their raw values and need no help
 
 
+NAVIGATION = {
+    'section_tab': [(':material/calculate:', 'Calculation'), (':material/help:', 'Help and reference')],
+    'work_tab': [(':material/account_tree:', 'Level scheme'), (':material/show_chart:', 'Results'),
+                 (':material/timeline:', 'During the collision'), (':material/sensors:', 'Detector yields'),
+                 (':material/upload_file:', 'Measurements'), (':material/science:', 'Research')],
+    'result_tab': [('', 'Populations'), ('', 'Cross sections'), ('', 'Closest approach'), ('', 'Data and downloads')],
+}
+
+
 def keep_choices_on_language_change():
+    for key, options in NAVIGATION.items():
+        current = st.session_state.get(key)
+        for icon, name in options:
+            if current in {f'{icon} {name}'.strip(), f'{icon} {EL.get(name, name)}'.strip()}:
+                st.session_state[key] = f'{icon} {t(name)}'.strip()
+                break
     for key in list(st.session_state):
         if key in TRANSLATED_CHOICES or str(key).startswith(TRANSLATED_PREFIXES):
             st.session_state[key] = st.session_state[key]
+
+
+def open_results():
+    st.session_state['section_tab'] = f":material/calculate: {t('Calculation')}"
+    st.session_state['work_tab'] = f":material/show_chart: {t('Results')}"
 
 
 with st.sidebar:
@@ -60,19 +95,19 @@ with st.sidebar:
 
 st.title(t('Coulomb Excitation Lab'), anchor=False)
 st.caption(t('An interactive laboratory for nuclear physics'))
-st.caption(t('New here? The **Help and reference** tab has the step-by-step guide, the file formats, the physics '
-             'and the verification of results.'))
+
 # The working screen comes first; guide, formats, verification and physics live in a separate help section.
 # Both are tabs (not pages) so that widgets in the calculation views keep their state while help is open.
-work_tab, help_tab = st.tabs([f":material/calculate: {t('Calculation')}", f":material/help: {t('Help and reference')}"])
+work_tab, help_tab = st.tabs([f":material/calculate: {t('Calculation')}", f":material/help: {t('Help and reference')}"],
+                              key='section_tab', on_change='rerun')
 with work_tab:
     status = st.container()
     table_container = st.container()
     work_names = [(':material/account_tree:', 'Level scheme'), (':material/show_chart:', 'Results'),
                   (':material/timeline:', 'During the collision'), (':material/sensors:', 'Detector yields'),
-                  (':material/upload_file:', 'Measurements')]
-    overview, results_tab, dynamics_tab, yields_tab, measurements_tab = st.tabs(
-        [f'{icon} {t(name)}' for icon, name in work_names])
+                  (':material/upload_file:', 'Measurements'), (':material/science:', 'Research')]
+    overview, results_tab, dynamics_tab, yields_tab, measurements_tab, research_tab = st.tabs(
+        [f'{icon} {t(name)}' for icon, name in work_names], key='work_tab', on_change='rerun')
 with help_tab:
     help_names = [(':material/school:', 'Guide'), (':material/description:', 'File formats'),
                   (':material/verified:', 'Verification'), (':material/menu_book:', 'Physics')]
@@ -160,7 +195,7 @@ with st.sidebar:
         problems.append(t('Correct the error shown above.'))
 
     run = st.button(t('Run calculation'), type='primary', width='stretch', disabled=model is None, key='run',
-                    icon=':material/play_arrow:')
+                    icon=':material/play_arrow:', on_click=open_results)
     if model is None:
         st.caption(t('Complete the steps above to enable the calculation.'))
 
@@ -175,6 +210,21 @@ if model is not None:
     signature = hashlib.sha256(json.dumps(dict(model=asdict(model), angles=angles.tolist(), settings=asdict(settings),
                                                stopping=stopping_text, thickness=thickness, order=order),
                                           sort_keys=True).encode()).hexdigest()
+with status.container(border=True):
+    heading, action = st.columns([3, 1], vertical_alignment='center')
+    with heading:
+        st.markdown(f"**{t('Your calculation workspace')}**")
+        if model is not None:
+            count = len(angles)*(order if stopping else 1)
+            st.caption(t('{angles} angles · {levels} levels · {count} collision calculations',
+                         angles=len(angles), levels=len(model.levels), count=count))
+
+        else:
+            st.caption(t('Complete the reaction inputs to begin. Measurement uploads use the same nuclear model.'))
+    run_main = action.button(t('Run calculation'), key='run_main', type='primary', disabled=model is None,
+                             width='stretch', icon=':material/play_arrow:', on_click=open_results)
+run = run or run_main
+
 if run and model is not None:
     progress = status.progress(0., text=t('Integrating coupled amplitudes…'))
     started = time.perf_counter()
@@ -185,7 +235,8 @@ if run and model is not None:
                                                signature=signature, seconds=time.perf_counter()-started)
         st.session_state.pop('dynamics', None)
         st.session_state.pop('accuracy', None)
-        st.toast(t('Calculation finished. Open the Results tab.'), icon=':material/check_circle:')
+        st.session_state.pop('detector_result', None)
+        st.toast(t('Calculation finished.'), icon=':material/check_circle:')
     except (ValueError, RuntimeError) as error:
         with status:
             show_error(error)
@@ -241,55 +292,8 @@ with overview:
 
 if result:
     computed, scan, active_settings = result['model'], result['scan'], result['settings']
-    selected_default = list(range(1, min(5, len(computed.levels)))) or [0]
     with results_tab:
-        st.caption(f"{computed.title} · {computed.energy_lab:g} MeV · {t(computed.excitation.capitalize())} · "
-                   f"{t('{count} angles', count=len(scan.angles))} · {result['seconds']:.1f} s")
-        selected = st.multiselect(t('Levels to plot'), range(len(computed.levels)), default=selected_default,
-                                  format_func=lambda i: label(i, computed.levels[i]), key='plot_levels')
-        a, b, c = st.columns(3)
-        a.metric(t('Maximum probability drift'), f'{max(scan.norm_errors):.2e}')
-        b.metric(t('Beam energy sampled'), f'{min(scan.energies):.2f}–{max(scan.energies):.2f} MeV')
-        c.metric(t('Depth samples'), len(scan.energies))
-        st.plotly_chart(curves(computed, scan.angles, scan.probabilities, t('CM scattering angle (°)'),
-                               t('Level population probability'), selected), alt=t('Population probability versus angle'))
-        log_cs = st.checkbox(t('Logarithmic cross-section axis'), value=True, key='log_cs')
-        st.plotly_chart(curves(computed, scan.angles, scan.cross_sections, t('CM scattering angle (°)'), 'dσ/dΩcm (barn/sr)',
-                               selected, log_cs), alt=t('Differential cross section versus angle'))
-        if len(scan.energies) == 1:
-            fig = go.Figure()
-            for i in selected:
-                x = lab_angle(computed, scan.angles, computed.levels[i].energy)
-                y = scan.cross_sections[:, i]*lab_jacobian(computed, scan.angles, computed.levels[i].energy)
-                # Preserve CM order so two lab branches are not silently sorted together.
-                fig.add_scatter(x=x, y=y, name=label(i, computed.levels[i]), mode='lines+markers',
-                                line=dict(color=COLORS[i % len(COLORS)]))
-            style(fig, t('Scattered projectile lab angle (°)'), t('dσ/dΩlab per branch (barn/sr)'))
-            if log_cs:
-                fig.update_yaxes(type='log')
-            st.plotly_chart(fig, alt=t('Lab-frame cross section'))
-            st.caption(t('Lab curves include the solid-angle Jacobian and exit-channel speed. For a heavy projectile, two CM '
-                         'branches may reach the same lab angle; sum their contributions. Detector integration below '
-                         'includes both branches without sampling the singular turning point.'))
-        fig = go.Figure(go.Scatter(x=scan.angles, y=surface_separation(computed, scan.angles), name=t('Surface separation')))
-        fig.add_hline(y=5, line_dash='dash', annotation_text=t('Traditional 5 fm guideline'))
-        style(fig, t('CM scattering angle (°)'), t('Surface separation at closest approach (fm)'))
-        st.plotly_chart(fig, alt=t('Surface separation versus angle'))
-        st.caption(t('The nuclear-radius estimate is 1.25 A^(1/3) fm. Below the guideline, nuclear interactions may invalidate '
-                     'a pure Coulomb calculation. For energy-loss runs this plot uses the incident energy, the smallest '
-                     'separation in the target.'))
-        frame = results_frame(computed, scan)
-        with st.container(horizontal=True):
-            st.download_button(t('Download results CSV'), frame.to_csv(index=False), 'coulex_results.csv', 'text/csv',
-                               key='download_results', icon=':material/download:')
-            payload = dict(reaction=asdict(computed), solver=asdict(active_settings), input_text=result['text'],
-                           stopping_csv=result['stopping_text'], thickness_mg_cm2=result['thickness'], depth_order=result['order'],
-                           depth_energies_MeV=scan.energies.tolist(), depth_weights=scan.weights.tolist(),
-                           depth_cross_sections_barn_sr=scan.depth_cross_sections.tolist(), results=frame.to_dict('records'))
-            st.download_button(t('Download reproducible calculation JSON'), json.dumps(payload, indent=2), 'coulex_calculation.json',
-                               'application/json', key='download_json', icon=':material/download:')
-        with st.expander(t('Numerical results table'), icon=':material/table:'):
-            st.dataframe(frame, hide_index=True, alt=t('Numerical results'))
+        render_results(result)
     with dynamics_tab:
         detail_angle = st.slider(t('Inspect a CM angle (°)'), 1., 180., 90., 1., key='detail_angle')
         st.caption(t('This view follows one collision at the selected incident energy. A depth-averaged yield is a separate calculation.'))
@@ -338,6 +342,9 @@ if result:
             gamma_eff = c.number_input(t('Absolute gamma efficiency'), min_value=0., max_value=1., value=.1, key='gamma_eff')
             st.caption(t('Direct branch only; feeding cascades, internal conversion, and gamma angular correlations are not '
                          'inferred from excitation matrix elements.'))
+        detector_signature = (result['signature'], det_min, det_max, azimuth, intensity, days, efficiency,
+                              gamma, gamma_level if gamma else None, branching if gamma else None,
+                              gamma_eff if gamma else None)
         if st.button(t('Integrate detector yields'), key='integrate', icon=':material/functions:'):
             try:
                 records = []
@@ -352,11 +359,20 @@ if result:
                     if gamma:
                         record['direct gamma coincidences'] = count*branching*gamma_eff if level == gamma_level else np.nan
                     records.append(record)
-                st.dataframe(pd.DataFrame(records), hide_index=True, alt=t('Detector yields'))
-                st.warning(t('Check angular convergence by halving the CM angle step and recalculating. '
-                             'A tight ODE tolerance alone does not control detector-integration error.'))
+                st.session_state['detector_result'] = (detector_signature, pd.DataFrame(records))
             except ValueError as error:
                 show_error(error)
+        detector_result = st.session_state.get('detector_result')
+        if detector_result and detector_result[0] == detector_signature:
+            detector_frame = detector_result[1]
+            st.dataframe(detector_frame, hide_index=True, alt=t('Detector yields'))
+            st.download_button(t('Download detector yields CSV'), detector_frame.to_csv(index=False),
+                               'detector_yields.csv', 'text/csv', key='download_detector')
+            st.caption(t('Check angular convergence by halving the CM angle step and recalculating. '
+                         'A tight ODE tolerance alone does not control detector-integration error.'))
+        elif detector_result:
+            st.info(t('Detector settings changed. Integrate again to update the counts.'))
+
 else:
     for tab in (results_tab, dynamics_tab, yields_tab):
         with tab:
@@ -380,3 +396,9 @@ with physics_tab:
     st.markdown(doc('physics_scope'))
     st.subheader(t('References'), anchor=False)
     st.markdown('\n'.join(f'- **{key}** — {text}' for key, text in {**REFERENCES, **DATA_SOURCES}.items()))
+
+with research_tab:
+    try:
+        render_research(model, settings, stopping, thickness, order)
+    except (ValueError, KeyError, TypeError, IndexError) as error:
+        show_error(error)

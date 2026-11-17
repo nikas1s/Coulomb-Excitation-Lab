@@ -1,0 +1,87 @@
+{
+  "parameters": [
+    {
+      "kind": "element",
+      "index": 1
+    },
+    {
+      "kind": "element",
+      "index": 2
+    }
+  ],
+  "bounds": [
+    [
+      0.1,
+      -3.0
+    ],
+    [
+      2.0,
+      3.0
+    ]
+  ],
+  "starts": [
+    [
+      0.567704817454536,
+      -0.6031440350921077
+    ],
+    [
+      0.6938614435555441,
+      0.7539300438651345
+    ]
+  ],
+  "experiments": [
+    {
+      "kind": "cross_section",
+      "energy_lab": 140.0,
+      "likelihood": "gaussian",
+      "normalization_sigma": 0.03,
+      "data": [
+        {
+          "angle_deg": 50.0,
+          "level": 2,
+          "value": 1.3704280681693055,
+          "uncertainty": 0.041112842045079166
+        },
+        {
+          "angle_deg": 100.0,
+          "level": 2,
+          "value": 0.3897763644123305,
+          "uncertainty": 0.011693290932369914
+        },
+        {
+          "angle_deg": 150.0,
+          "level": 2,
+          "value": 0.10506521153853603,
+          "uncertainty": 0.003151956346156081
+        }
+      ]
+    },
+    {
+      "kind": "cross_section",
+      "energy_lab": 160.0,
+      "likelihood": "gaussian",
+      "normalization_sigma": 0.03,
+      "data": [
+        {
+          "angle_deg": 50.0,
+          "level": 2,
+          "value": 1.4725298000027909,
+          "uncertainty": 0.044175894000083725
+        },
+        {
+          "angle_deg": 100.0,
+          "level": 2,
+          "value": 0.2581015191834589,
+          "uncertainty": 0.0077430455755037675
+        },
+        {
+          "angle_deg": 150.0,
+          "level": 2,
+          "value": 0.054677795735963514,
+          "uncertainty": 0.0016403338720789053
+        }
+      ]
+    }
+  ],
+  "max_nfev": 80
+}

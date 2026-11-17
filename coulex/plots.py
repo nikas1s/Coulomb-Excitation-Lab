@@ -11,7 +11,10 @@ def style(fig, x, y, title=''):
     fig.update_layout(template='plotly_white', title=title, xaxis_title=x, yaxis_title=y,
                       margin=dict(l=30,r=20,t=45,b=40), height=390,
                       font=dict(family='Arial',size=13,color='#192d45'),
-                      legend=dict(orientation='h',y=-.24), hovermode='x unified')
+                      legend=dict(orientation='h',y=-.24), hovermode='x unified',
+                      paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='#ffffff')
+    fig.update_xaxes(showgrid=True, gridcolor='#e8edf2', zeroline=False)
+    fig.update_yaxes(showgrid=True, gridcolor='#e8edf2', zeroline=False)
     return fig
 
 
@@ -22,8 +25,13 @@ def label(index, level):
 def curves(reaction, x, values, xlabel, ylabel, selected=None, log=False):
     fig = go.Figure()
     for i in range(len(reaction.levels)) if selected is None else selected:
-        fig.add_scatter(x=x, y=values[:,i], mode='lines+markers', name=label(i,reaction.levels[i]),
-                        line=dict(color=COLORS[i%len(COLORS)]),marker=dict(size=4))
+        y = np.asarray(values[:,i])
+        if log:
+            y = np.where(y > 0, y, np.nan)
+        fig.add_scatter(x=x, y=y, mode='lines+markers', name=label(i,reaction.levels[i]),
+                        connectgaps=False, line=dict(color=COLORS[i%len(COLORS)], width=2),
+                        marker=dict(size=6, symbol=['circle', 'square', 'diamond', 'triangle-up', 'cross'][i%5]),
+                        hovertemplate='%{x:.4g}<br>%{y:.6g}<extra>%{fullData.name}</extra>')
     style(fig,xlabel,ylabel)
     if log:
         fig.update_yaxes(type='log')

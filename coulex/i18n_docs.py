@@ -234,7 +234,8 @@ sparse coupling operators. No Numerical Recipes implementation is used. The phys
 **Polarization:** D = d Ecm A/Z² uses the excited nucleus. The coefficient d defaults to 0.005 MeV⁻¹ and can be changed or disabled. It is a model assumption, not a measured universal constant. See [Orce (2016), Eq. (4) and footnote 1](https://arxiv.org/abs/1510.04087) for the mass convention and discussion of alternative strengths.
 
 **Model scope:** semiclassical electromagnetic E1–E4 excitation of one nucleus at a time. No magnetic transitions,
-nuclear-force coupling, mutual excitation, relativistic trajectory, or automatic gamma cascade. The input K column is
+nuclear-force coupling, mutual excitation or relativistic trajectory. The Research tab adds explicit gamma networks,
+pure-electric rest-frame angular response, shape invariants and parameter fitting; see docs/RESEARCH.md for assumptions. The input K column is
 retained as metadata. Numerical convergence does not establish the physical validity of the model.
 
 **Try in class:** set off-diagonal E2 elements to zero; reverse a diagonal quadrupole element; double a weak
@@ -246,8 +247,7 @@ trusting a detector yield; run the teaching rotor at 180° and compare with Alde
 **Πόλωση:** D = d Ecm A/Z² με A και Z του πυρήνα που διεγείρεται. Ο συντελεστής d έχει προεπιλογή 0,005 MeV⁻¹ και μπορεί να αλλάξει ή να απενεργοποιηθεί. Είναι υπόθεση μοντέλου, όχι μετρημένη καθολική σταθερά. Δείτε [Orce (2016), εξ. (4) και υποσημείωση 1](https://arxiv.org/abs/1510.04087) για τη σύμβαση μάζας και εναλλακτικούς συντελεστές.
 
 **Πεδίο ισχύος:** ημικλασική ηλεκτρομαγνητική διέγερση E1–E4 ενός πυρήνα κάθε φορά. Δεν περιλαμβάνονται μαγνητικές
-μεταβάσεις, σύζευξη μέσω πυρηνικών δυνάμεων, ταυτόχρονη διέγερση και των δύο πυρήνων, σχετικιστική τροχιά ή αυτόματος
-καταρράκτης γάμμα. Η στήλη K διατηρείται ως μεταδεδομένο. Η αριθμητική σύγκλιση δεν αποδεικνύει τη
+μεταβάσεις, σύζευξη μέσω πυρηνικών δυνάμεων, ταυτόχρονη διέγερση και των δύο πυρήνων ή σχετικιστική τροχιά. Η καρτέλα Έρευνα προσθέτει ρητά δίκτυα γάμμα, αμιγώς ηλεκτρική γωνιακή απόκριση στο σύστημα ηρεμίας, αναλλοίωτες σχήματος και προσαρμογή παραμέτρων· δείτε docs/RESEARCH.md για τις παραδοχές. Η στήλη K διατηρείται ως μεταδεδομένο. Η αριθμητική σύγκλιση δεν αποδεικνύει τη
 φυσική εγκυρότητα του μοντέλου.
 
 **Δοκιμάστε στην τάξη:** μηδενίστε τα μη διαγώνια στοιχεία E2· αντιστρέψτε το πρόσημο ενός διαγώνιου τετραπολικού

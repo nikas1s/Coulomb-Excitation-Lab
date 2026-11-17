@@ -6,6 +6,47 @@ Terminology follows Greek physics usage: διέγερση Coulomb, ενεργό�
 """
 
 EL = {
+    'Calculation finished.': 'Ο υπολογισμός ολοκληρώθηκε.',
+    'Explore your results': 'Εξερευνήστε τα αποτελέσματά σας',
+    'Peak total excitation': 'Μέγιστη συνολική διέγερση',
+    'At sampled CM angle': 'Στην υπολογισμένη γωνία ΚΜ',
+    'Minimum surface separation': 'Ελάχιστη απόσταση επιφανειών',
+    'Extrema refer to the calculated angle grid. Probability drift measures normalization, not total numerical error.': 'Τα ακρότατα αφορούν το υπολογισμένο πλέγμα γωνιών. Η απόκλιση πιθανότητας ελέγχει την κανονικοποίηση, όχι το συνολικό αριθμητικό σφάλμα.',
+    'Some angles fall below the 5 fm separation guideline. Inspect Closest approach before interpreting this as a pure Coulomb result.': 'Σε ορισμένες γωνίες η απόσταση είναι κάτω από την ενδεικτική τιμή των 5 fm. Ελέγξτε την Ελάχιστη απόσταση πριν ερμηνεύσετε το αποτέλεσμα ως αμιγώς Coulomb.',
+    'One angle was calculated. Use the angle inspector for its values, or widen the range for angular curves.': 'Υπολογίστηκε μία γωνία. Δείτε τις τιμές της στον πίνακα γωνίας ή διευρύνετε το εύρος για γωνιακές καμπύλες.',
+    'Choose levels here; click a plot legend to hide a curve, or double-click to isolate it.': 'Επιλέξτε στάθμες εδώ· πατήστε στο υπόμνημα για απόκρυψη μιας καμπύλης ή δύο φορές για απομόνωσή της.',
+    'Select at least one level to display curves. Complete numerical results remain available for download.': 'Επιλέξτε τουλάχιστον μία στάθμη για εμφάνιση καμπυλών. Τα πλήρη αριθμητικά αποτελέσματα παραμένουν διαθέσιμα για λήψη.',
+    'Populations': 'Πληθυσμοί',
+    'Cross sections': 'Ενεργές διατομές',
+    'Data and downloads': 'Δεδομένα και λήψεις',
+    'Each curve is the final population of one nuclear level, averaged over initial magnetic substates.': 'Κάθε καμπύλη δείχνει τον τελικό πληθυσμό μιας πυρηνικής στάθμης, με μέσο όρο στις αρχικές μαγνητικές υποστάθμες.',
+    'Logarithmic probability axis': 'Λογαριθμικός άξονας πιθανότητας',
+    'Zero values are omitted on logarithmic axes; exported data retain the original values.': 'Οι μηδενικές τιμές δεν εμφανίζονται σε λογαριθμικούς άξονες· τα εξαγόμενα δεδομένα διατηρούν τις αρχικές τιμές.',
+    'Inspect a calculated angle': 'Εξέταση υπολογισμένης γωνίας',
+    'Calculated CM angle (°)': 'Υπολογισμένη γωνία ΚΜ (°)',
+    'Level': 'Στάθμη',
+    'Population (%)': 'Πληθυσμός (%)',
+    'Values at the selected calculated angle': 'Τιμές στην επιλεγμένη υπολογισμένη γωνία',
+    'These are calculated grid points, without interpolation.': 'Πρόκειται για υπολογισμένα σημεία του πλέγματος, χωρίς παρεμβολή.',
+    'Laboratory-frame curves': 'Καμπύλες στο σύστημα εργαστηρίου',
+    'A thick target has a different lab-angle mapping at each depth. Use Detector yields or Measurements to integrate the depth-dependent acceptance.': 'Σε παχύ στόχο η αντιστοίχιση γωνιών εργαστηρίου διαφέρει σε κάθε βάθος. Χρησιμοποιήστε τα Γεγονότα στον ανιχνευτή ή τις Μετρήσεις για ολοκλήρωση της αποδοχής ανά βάθος.',
+    'A separation above the guideline is not a validation of the model. Check level-space truncation and convergence in Help and reference → Verification.': 'Απόσταση πάνω από την ενδεικτική τιμή δεν επικυρώνει το μοντέλο. Ελέγξτε την αποκοπή του σχήματος σταθμών και τη σύγκλιση στη Βοήθεια και αναφορά → Επαλήθευση.',
+    'CSV contains every level and angle. JSON also includes the physical inputs, solver settings and target-depth data.': 'Το CSV περιέχει κάθε στάθμη και γωνία. Το JSON περιλαμβάνει επίσης τα φυσικά δεδομένα εισόδου, τις ρυθμίσεις επιλυτή και τα δεδομένα βάθους στόχου.',
+    'Your calculation workspace': 'Ο χώρος υπολογισμού σας',
+    '{angles} angles · {levels} levels · {count} collision calculations': '{angles} γωνίες · {levels} στάθμες · {count} υπολογισμοί κρούσεων',
+    'Set up your reaction → run → explore results or compare measurements.': 'Ορίστε αντίδραση → εκτελέστε → εξερευνήστε αποτελέσματα ή συγκρίνετε μετρήσεις.',
+    'Complete the reaction inputs to begin. Measurement uploads use the same nuclear model.': 'Συμπληρώστε τα δεδομένα αντίδρασης για να ξεκινήσετε. Οι μετρήσεις χρησιμοποιούν το ίδιο πυρηνικό μοντέλο.',
+    'Download detector yields CSV': 'Λήψη γεγονότων ανιχνευτή σε CSV',
+    'Detector settings changed. Integrate again to update the counts.': 'Οι ρυθμίσεις ανιχνευτή άλλαξαν. Επαναλάβετε την ολοκλήρωση για ενημέρωση των γεγονότων.',
+    'Observations': 'Παρατηρήσεις',
+    'With uncertainty': 'Με αβεβαιότητα',
+    'Mean absolute residual': 'Μέσο απόλυτο υπόλοιπο',
+    'Residuals compare measurements with fixed model inputs. They do not measure numerical convergence.': 'Τα υπόλοιπα συγκρίνουν μετρήσεις με σταθερά δεδομένα μοντέλου. Δεν μετρούν την αριθμητική σύγκλιση.',
+    'Show residuals in uncertainty units': 'Εμφάνιση υπολοίπων σε μονάδες αβεβαιότητας',
+    'Logarithmic measurement axis': 'Λογαριθμικός άξονας μετρήσεων',
+    'Residual / uncertainty': 'Υπόλοιπο / αβεβαιότητα',
+    'Only observations with uncertainties appear here. The shaded band is −1 to +1 uncertainty unit.': 'Εμφανίζονται μόνο παρατηρήσεις με αβεβαιότητες. Η σκιασμένη ζώνη εκτείνεται από −1 έως +1 μονάδα αβεβαιότητας.',
+
     'Polarization strength d (MeV⁻¹)': 'Συντελεστής πόλωσης d (MeV⁻¹)',
     'D = d Ecm A/Z² for the excited nucleus. The default 0.005 is a model choice; see Physics for the literature and limitations.':
         'D = d Ecm A/Z² για τον πυρήνα που διεγείρεται. Η προεπιλογή 0,005 είναι επιλογή μοντέλου· δείτε τη Φυσική για τη βιβλιογραφία και τους περιορισμούς.',
@@ -760,3 +801,7 @@ ERRORS_EL = [
      'λείπουν τιμές σε μια γραμμή (αναμένονταν {0}, βρέθηκαν {1})'),
     (r'too many values to unpack \(expected (\d+)\)', 'περισσότερες τιμές από όσες αναμένονταν σε μια γραμμή ({0})'),
 ]
+
+# Research workbench translations live together with its scientific explanations.
+from .research_el import EL as RESEARCH_EL
+EL.update(RESEARCH_EL)

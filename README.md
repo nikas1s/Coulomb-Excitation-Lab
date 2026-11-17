@@ -58,6 +58,22 @@ For example, run `./start_mac.command --test`, `./start_linux.sh --test` or `sta
 
 ## What is new in this application
 
+### Result exploration and workflow
+
+- Run directly from the workspace; a completed run opens **Results** automatically.
+- Results are grouped into **Populations**, **Cross sections**, **Closest approach**, and **Data and downloads**.
+- Summary metrics identify peak total excitation on the computed grid, its angle, the minimum surface separation and normalization drift. These diagnostics are not physical error estimates.
+- Inspect the actual populations and cross sections at any calculated angle, without interpolation. Log scales make weak populations easier to see; zero values stay unchanged in exports.
+- Plot selection and active calculation/result tabs survive English/Greek switches. Plots retain zoom for the same calculation.
+- Detector yields persist across ordinary interactions, can be downloaded as CSV, and are marked stale when detector settings change.
+- Measurement comparisons show uncertainty coverage, mean absolute residual and optional residuals in uncertainty units. Missing uncertainties are omitted from that view, never filled with invented values.
+- A compact layout and mobile summary grid reduce scrolling; physics equations and integration settings are unchanged by this interface update.
+
+
+[Desktop interface preview](docs/interface.png) · [Greek mobile preview](docs/interface_mobile_el.png)
+
+### Application features
+
 These are additions and implementation improvements in this project, not claims of new physics:
 
 - **Start scripts for macOS, Windows and Linux** (plus a one-command launcher) and a Streamlit frontend with separate calculation and help sections.
@@ -180,9 +196,9 @@ No C++, ROOT or compiler is required. The original source and build tools have b
 
 Upload validated stopping data for your ion and target as `energy_mev,stopping_mev_per_mg_cm2`. The calculation integrates `dE/dx = −S(E)` with shape-preserving interpolation and rejects extrapolation. Depth quadrature averages each energy's cross section and detector acceptance. Increase its order to test convergence. Stopping-table uncertainty and straggling are not determined by numerical tolerance; straggling is not modeled.
 
-Detector counts include the actual target mass number, areal density, incident particles, solid angle and efficiency. Direct gamma coincidences additionally use supplied photon branching fractions and absolute gamma efficiency. Feeding cascades, internal conversion calculations and gamma angular correlations are outside scope.
+Detector counts include the actual target mass number, areal density, incident particles, solid angle and efficiency. Direct gamma coincidences additionally use supplied photon branching fractions and absolute gamma efficiency. The Research tab separately supports explicit decay feeding, supplied conversion coefficients and pure-electric angular correlations in the emitter rest frame; internal-conversion coefficients are not calculated.
 
-This is a nonrelativistic, semiclassical electromagnetic model for excitation of one collision partner at a time. Magnetic transitions, nuclear-force coupling, mutual excitation and parameter fitting are not included. The 5 fm surface-separation line is a guideline, not a proof that nuclear interactions can be ignored.
+This is a nonrelativistic, semiclassical electromagnetic model for excitation of one collision partner at a time. Magnetic transitions, nuclear-force coupling and mutual excitation are not included. Parameter fitting is available in the Research tab with the assumptions documented in the research guide. The 5 fm surface-separation line is a guideline, not a proof that nuclear interactions can be ignored.
 
 Read [NUMERICS.md](docs/NUMERICS.md) for equations and error controls, [LESSON.md](docs/LESSON.md) for classroom exercises and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution.
 
@@ -221,3 +237,9 @@ This program is free software: you can redistribute it and/or modify it under th
 **Origin and modifications.** This is a modified work: a Python reimplementation, written in 2026, of the semiclassical Coulomb-excitation calculation in [TCLX](https://github.com/jhenderson88/TCLX) and its successor [Cygnus](https://github.com/jhenderson88/Cygnus) by J. Henderson, which build on the Fortran CLX code of H. Ower and J. Gerl and the GOSIA formalism. The collision functions and the integration of the excitation amplitudes over the orbit follow that code, which Cygnus publishes under the GNU GPL v3. Changes include a new Python/SciPy solver, the English/Greek Streamlit interface, measurement comparisons, detector and energy-loss calculations, literature benchmarks, examples, documentation and tests.
 
 TCLX itself carries no licence. Its source is not included, and its two example input files are not distributed; [validation/tclx_inputs/README.md](validation/tclx_inputs/README.md) explains how to obtain them. Third-party libraries and their licences are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+### New research tools
+
+The **Research** tab adds sensitivity scans and experimental-design information, correlated input uncertainty bands, 0+ quadrupole shape invariants, joint multi-experiment fitting, gamma feeding and pure-electric angular correlations, and E3/polarization/model-space comparisons. It includes English/Greek controls, CSV decay/covariance uploads, portable JSON fit configurations and downloadable results tied to their inputs.
+
+Start with the [research guide](docs/RESEARCH.md), its equations and stated physical scope. The [synthetic examples](examples/research/) include two-energy fit data, a covariance matrix, a decay network, an opposite-parity model and a [standalone sensitivity plot](examples/research/sensitivity.png). These fixtures are teaching models, not experimental measurements. Research extensions have analytical and synthetic tests; fitting and gamma response are not claimed to be validated replacements for a full experimental analysis package.

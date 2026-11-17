@@ -81,6 +81,7 @@ class AngleResult:
     norm_error: float
     evaluations: int
     endpoint: float
+    density_matrices: tuple[np.ndarray, ...]
 
 
 class CoupledChannels:
@@ -175,8 +176,11 @@ class CoupledChannels:
             populations = np.mean(abs(solution.sol(omega).reshape(self.size, self.ground_size, -1))**2, axis=1)
             for level in range(len(self.reaction.levels)):
                 history[level] = populations[self.level_index == level].sum(axis=0)
+        final = amplitudes[:, :, -1]
+        densities = tuple(final[self.level_index == i]@final[self.level_index == i].conj().T/self.ground_size
+                          for i in range(len(self.reaction.levels)))
         return AngleResult(float(angle), probabilities, substate, omega, history,
-                           norm_error, solution.nfev, endpoint)
+                           norm_error, solution.nfev, endpoint, densities)
 
     def scan(self, angles, settings=None, progress=None):
         results = []

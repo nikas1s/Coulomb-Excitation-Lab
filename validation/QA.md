@@ -2,6 +2,18 @@
 
 Checked on **2026-11-16**, macOS ARM64 / Python 3.14. Dependency versions are pinned in `../requirements.txt`.
 
+
+## Interface and result exploration update — 2026-11-16
+
+The complete suite passed **121 tests in 81.42 seconds** ([ux-full-tests.log](ux-full-tests.log)). After the final plot-identity and presentation adjustments, the four new user-journey tests plus translation coverage passed again: **5 tests in 9.73 seconds** ([ux-final-checks.log](ux-final-checks.log)). Physics/integration modules were not modified.
+
+New checks verify automatic navigation to Results, exact grid-point inspection, empty curve selections with exports still available, result state across English/Greek switches, persistent detector yields, stale detector settings, efficiency scaling, missing measurement uncertainties, and zero handling on logarithmic plots without modifying the numerical arrays.
+
+The application was exercised in an isolated headless Chrome profile against a local Streamlit server. Desktop (1440 px) and mobile (390 px) layouts were visually inspected, including Greek. No horizontal page overflow was detected. Result sub-tabs and CSV/JSON download controls were checked. Mobile heading clearance and wrapping of metric labels were corrected following that inspection. Previews are saved in [the desktop screenshot](../docs/interface.png) and [the Greek mobile screenshot](../docs/interface_mobile_el.png).
+
+This is a local browser and interaction check, not an exhaustive device/accessibility audit. Existing one-command launchers, public-data import and numerical verification remain covered by the full suite.
+
+
 ## Automated tests
 
 `./start_mac.command --test` passed **117 tests with no skips** in 72 seconds, with the TCLX inputs present; see [tests.log](tests.log). In a fresh clone the three regression tests that need those inputs are skipped with an explanation (see [tclx_inputs/README.md](tclx_inputs/README.md)).
@@ -58,3 +70,16 @@ The comparison uses explicitly matched polarization settings (`reference`); appl
 The standalone PNG/SVG teaching figures were regenerated with the application's current default physics, independently of the comparison CSV. The PNG was visually inspected for readable labels, axes and curves.
 
 Frontend checks use Streamlit AppTest, including actual file-uploader bytes and English/Greek interactions. Numerical and theoretical checks do not establish experimental accuracy for arbitrary measurements; stopping tables and measurement examples supplied for demonstration are synthetic.
+
+## Research workbench branch
+
+Branch: `feature/research-analysis`. Six research workflows, Greek labels, reproducible synthetic fixtures and scientific scope are documented in `docs/RESEARCH.md`.
+
+- Full suite: **132 passed**, 124.79 s (`research-tests.log`). This includes existing excitation/reference and UI regressions.
+- Follow-up after density-response quadrature and validation hardening: **19 passed**, 75.37 s (`research-final-checks.log`).
+- Final workbench interaction/export and translation checks: **3 passed**, 19.35 s (`research-ui-final.log`).
+- The new E4 regression exposed azimuth aliasing from low-order numerical integration; azimuth is now integrated analytically. Full-solid-angle E4 response agrees with the density trace to floating-point precision.
+- The standalone synthetic sensitivity plot was generated and visually inspected. Tests exercise Streamlit with AppTest; a new browser screenshot audit was not performed for the research screens.
+- Analytical limits and synthetic inference are validated. Published raw gamma datasets, mixed/magnetic transitions and full laboratory gamma geometry remain outside the validation claim.
+- Additional final checks: 10 physics/translation checks passed (`research-physics-final.log`), the profile/JSON/parameter validation test passed, and the final research interaction check passed (`research-interaction-final.log`).
+- The downloadable two-energy, two-parameter synthetic fit converged from multiple starts and recovered the input elements, with objective approximately 5.94e-22 (`research-synthetic-fit.json`).
