@@ -22,6 +22,7 @@ python3 run.py --test
 1. Describe what changed and why.
 2. Include or update tests; keep `python3 run.py --test` passing.
 3. Keep unrelated changes in separate pull requests.
+4. Request review from the maintainer, [@nikas1s](https://github.com/nikas1s). Their code-owner approval is required by the `main` policy; a second review is encouraged but optional. See [MAINTAINERS.md](MAINTAINERS.md) for ownership and the special case of maintainer-authored PRs.
 
 ## Reporting problems
 

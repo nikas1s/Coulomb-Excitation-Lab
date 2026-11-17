@@ -1,0 +1,3 @@
+# Sole required code owner. A second reviewer is welcome but is not required.
+# This also owns CODEOWNERS and workflow changes through the global rule.
+* @nikas1s

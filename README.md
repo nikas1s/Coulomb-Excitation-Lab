@@ -194,6 +194,8 @@ No C++, ROOT or compiler is required. The original source and build tools have b
 
 ## Research tools and validation
 
+The joint-fit results now include interactive **observed-versus-fitted** and **likelihood-residual** plots for each dataset, with shared normalization applied and labelled parameter correlations. The [multilevel coverage figure](docs/multilevel_coverage.png) shows the recorded interval frequencies and parameter pulls; it helps assess the limits of local-covariance intervals.
+
 For the research qualification evidence and outstanding release gates, see [RESEARCH_QUALIFICATION.md](docs/RESEARCH_QUALIFICATION.md). Run `python run.py --qualify` to reproduce the published invariant benchmark, independent finite GOSIA point comparisons, a geometric spherical-harmonic E1/E4 solver, angular algebra checks and the scoped linear/nonlinear coverage experiments. The generated report explicitly records that research qualification remains incomplete.
 
 **New in this branch:** laboratory gamma detector folding (rotation, Doppler aberration, intrinsic response meshes and energy calibration), shared projectile/target normalization with named nuclear models, and independent geometric E1/E4 checks. Downloadable synthetic examples and a [laboratory response plot](docs/lab_gamma_response.png) explain these additions. Joint-fit count inputs can select projectile, recoil or either-particle event acceptance with a lab annulus and energy threshold. Profiles support a single parameter and show objective curves. The Poisson objective is checked against high-precision arithmetic. These additions and their limits are described in the research guide.
@@ -264,3 +266,8 @@ This program is free software: you can redistribute it and/or modify it under th
 **Origin and modifications.** This is a modified work: a Python reimplementation, written in 2026, of the semiclassical Coulomb-excitation calculation in [TCLX](https://github.com/jhenderson88/TCLX) and its successor [Cygnus](https://github.com/jhenderson88/Cygnus) by J. Henderson, which build on the Fortran CLX code of H. Ower and J. Gerl and the GOSIA formalism. The collision functions and the integration of the excitation amplitudes over the orbit follow that code, which Cygnus publishes under the GNU GPL v3. Changes include a new Python/SciPy solver, the English/Greek Streamlit interface, measurement comparisons, detector and energy-loss calculations, literature benchmarks, examples, documentation and tests.
 
 TCLX itself carries no licence. Its source is not included, and its two example input files are not distributed; [validation/tclx_inputs/README.md](validation/tclx_inputs/README.md) explains how to obtain them. Third-party libraries and their licences are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+
+## Maintainer and reviews
+
+[@nikas1s](https://github.com/nikas1s) maintains this repository and owns all code. Pull requests to `main` require their code-owner approval; a second review is welcome but optional. The maintainer retains the administrator override for their own PRs because GitHub does not allow self-approval. See [MAINTAINERS.md](MAINTAINERS.md) and the versioned [protection settings](.github/main-protection.json).

@@ -8,7 +8,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from .i18n import t, error_text
-from .research import Parameter, sensitivity, systematic_ensemble, joint_fit, profile_fit, information_matrix
+from .research import Parameter, sensitivity, systematic_ensemble, joint_fit, profile_fit, information_matrix,fit_predictions
 from .research_io import load_fit, fit_template, export_json
 from .joint_model import configured_model
 from .shapes import invariants, invariant_ensemble
@@ -169,6 +169,7 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 def run():
                     fit_model=configured_model(config,model)
                     fit=joint_fit(fit_model,parameters,experiments,config['bounds'],config.get('starts'),settings,config.get('max_nfev',100))
+                    fit['predictions']=fit_predictions(fit_model,parameters,experiments,fit,settings)
                     if config.get('profile'):
                         p=config['profile']
                         fit['profile']=profile_fit(fit_model,parameters,experiments,config['bounds'],p['parameter']-1,p['grid'],settings,config.get('max_nfev',100))
@@ -176,6 +177,25 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                 result=job('research_fit',payload,run)
                 if result:
                     fit=result['fit']; st.json(json.loads(export_json(fit)),expanded=False)
+                    if fit.get('predictions'):
+                        selected=st.selectbox(t('Fit dataset'),range(len(fit['predictions'])),
+                            format_func=lambda i:f"{i+1}: {fit['predictions'][i]['model']} · {fit['predictions'][i]['kind']}")
+                        entry=fit['predictions'][selected];observations=pd.DataFrame(entry['data'])
+                        x=np.arange(1,len(observations)+1)
+                        fig=go.Figure()
+                        error=observations.get('uncertainty')
+                        if entry['correlated']:
+                            error=np.sqrt(np.diag(np.asarray(config['experiments'][selected]['covariance'])))
+                        fig.add_scatter(x=x,y=observations.value,mode='markers',name=t('Observed'),
+                            error_y=dict(type='data',array=error,visible=True) if error is not None else None)
+                        fig.add_scatter(x=x,y=observations.predicted,mode='markers',name=t('Fitted prediction'))
+                        st.plotly_chart(style(fig,t('Observation row'),t('Observable in input units')))
+                        residual=go.Figure(go.Bar(x=x,y=observations.likelihood_residual,name=t('Likelihood residual')))
+                        residual.add_hline(y=0.,line_color='grey')
+                        residual.add_hline(y=2.,line_dash='dot');residual.add_hline(y=-2.,line_dash='dot')
+                        st.plotly_chart(style(residual,t('Observation row'),t('Likelihood residual')))
+                        st.caption(t('Predictions include fitted shared normalization. Gaussian residuals are (prediction − observation)/sigma, or Cholesky-whitened with covariance; Poisson residuals are signed square-root deviances. Prior penalties are excluded. The ±2 guides are descriptive, not a goodness-of-fit test.'))
+                        st.dataframe(observations,hide_index=True)
                     if 'profile' in fit:
                         profile=pd.DataFrame(fit['profile'])
                         delta=profile.objective-fit['objective']
@@ -190,7 +210,11 @@ def render(model,settings,stopping=None,thickness=0.,order=6):
                     if fit['covariance'] is None: st.warning(t('Local covariance is unavailable because the solution is singular or touches a bound.'))
                     else:
                         cov=np.asarray(fit['covariance']); sd=np.sqrt(np.diag(cov)); corr=cov/np.outer(sd,sd)
-                        st.plotly_chart(go.Figure(go.Heatmap(z=corr,zmin=-1,zmax=1,colorscale='RdBu')))
+                        from .joint_model import JointModel
+                        bundle=configured_model(config,model)
+                        labels=[(p.model or 'primary')+' · '+parameter_label(p,bundle.selected(p.model) if isinstance(bundle,JointModel) else bundle) for p in parameters]
+                        labels += ['η · '+(g['name'] or str(g['experiments'][0]+1)) for g in fit['normalization_groups']]
+                        st.plotly_chart(go.Figure(go.Heatmap(z=corr,x=labels,y=labels,zmin=-1,zmax=1,colorscale='RdBu')))
                     st.caption(t('Covariance is a local linear approximation without chi-square rescaling. Inspect all starting solutions and profile scans for sign ambiguities and non-Gaussian intervals.'))
             except (ValueError,KeyError,TypeError) as error: st.error(error_text(error))
     elif mode == modes[4]:

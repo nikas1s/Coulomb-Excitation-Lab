@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 from coulex import Reaction,Level,MatrixElement
 from coulex.joint_model import JointModel,configured_model
-from coulex.research import Parameter,Experiment,joint_fit,apply_parameters,_fit_objective
+from coulex.research import Parameter,Experiment,joint_fit,apply_parameters,_fit_objective,fit_predictions
 from coulex.research_io import load_fit
 
 
@@ -34,6 +34,10 @@ def test_simultaneous_projectile_target_fit_recovers_shared_free_normalization()
     assert fit['values']==pytest.approx([.4,.3,np.log(scale)],rel=2e-5)
     assert fit['objective']<1e-8
     assert fit['normalization_groups']==[dict(name='same_beam',experiments=[0,1],prior_sigma=None)]
+    predictions=fit_predictions(bundle,parameters,experiments,fit)
+    assert predictions[0]['normalization_scale']==pytest.approx(scale,rel=2e-5)
+    for entry in predictions:
+        for row in entry['data']: assert row['predicted']==pytest.approx(row['value'],rel=2e-5)
     changed=parameters[1].set(bundle,.2)
     assert changed.selected().elements[0].value==.4
     assert changed.selected('target').elements[0].value==.2
@@ -70,3 +74,15 @@ def test_portable_named_models_and_lab_response_configuration():
     with pytest.raises(ValueError,match='unknown'): bundle.selected('missing')
     with pytest.raises(ValueError): configured_model({'models':{'primary':asdict(target)}},primary)
     with pytest.raises(ValueError): Parameter('element',0,'')
+
+
+def test_plot_residuals_follow_correlated_gaussian_normalization_convention():
+    primary,_=models()
+    gaussian=Experiment(pd.DataFrame(dict(level=[1,1],lower=[2,2],lam=[2,2],value=[.14,.19])),
+        kind='strength',covariance=[[.001,.0002],[.0002,.002]],normalization_sigma=.1)
+    # An external Gaussian test with a known scale exercises covariance whitening.
+    fit=dict(values=np.array([.4,.03]),normalization_groups=[dict(experiments=[0],prior_sigma=.1)])
+    entry=fit_predictions(primary,[Parameter('element',0)],[gaussian],fit)[0]
+    expected=np.linalg.solve(np.linalg.cholesky(gaussian.covariance),np.full(2,.4**2*np.exp(.03))-[.14,.19])
+    assert [row['likelihood_residual'] for row in entry['data']]==pytest.approx(expected)
+    assert entry['correlated']

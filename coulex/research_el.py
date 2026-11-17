@@ -68,6 +68,13 @@ EL = {
 'Compare E3 strengths, diagonal E2 reorientation, polarization and explicit model-space truncations. These are alternative input models; E3 strength alone does not establish permanent octupole deformation.':'Συγκρίνετε ισχείς E3, διαγώνιο αναπροσανατολισμό E2, πόλωση και αποκοπές χώρου μοντέλου. Πρόκειται για εναλλακτικά μοντέλα εισόδου· η ισχύς E3 από μόνη της δεν τεκμηριώνει μόνιμη οκταπολική παραμόρφωση.',
 }
 EL.update({
+'Fit dataset':'Σύνολο δεδομένων προσαρμογής',
+'Observed':'Παρατηρούμενο',
+'Fitted prediction':'Πρόβλεψη προσαρμογής',
+'Observation row':'Γραμμή παρατήρησης',
+'Observable in input units':'Παρατηρήσιμο στις μονάδες εισόδου',
+'Likelihood residual':'Υπόλοιπο πιθανοφάνειας',
+'Predictions include fitted shared normalization. Gaussian residuals are (prediction − observation)/sigma, or Cholesky-whitened with covariance; Poisson residuals are signed square-root deviances. Prior penalties are excluded. The ±2 guides are descriptive, not a goodness-of-fit test.':'Οι προβλέψεις περιλαμβάνουν την προσαρμοσμένη κοινή κανονικοποίηση. Τα γκαουσιανά υπόλοιπα είναι (πρόβλεψη − παρατήρηση)/sigma ή λευκασμένα κατά Cholesky με συνδιακύμανση· τα υπόλοιπα Poisson είναι προσημασμένες τετραγωνικές ρίζες της απόκλισης. Δεν περιλαμβάνονται ποινές εκ των προτέρων περιορισμών. Οι οδηγοί ±2 είναι περιγραφικοί, όχι έλεγχος καλής προσαρμογής.',
 'Named nuclear models can share one normalization group for projectile and target datasets. Laboratory gamma counts accept calibrated detector meshes; see the downloadable examples.':'Ονομασμένα πυρηνικά μοντέλα μπορούν να μοιράζονται μία ομάδα κανονικοποίησης για δεδομένα βλήματος και στόχου. Οι εργαστηριακές καταμετρήσεις γάμμα δέχονται βαθμονομημένα πλέγματα ανιχνευτών· δείτε τα διαθέσιμα παραδείγματα.',
 'Branches include conversion. Supply evaluated alpha values and branching fractions. Rest-frame curves use the orbit axes; the optional laboratory response rotates these axes and includes Doppler aberration.':'Οι κλάδοι περιλαμβάνουν εσωτερική μετατροπή. Δώστε αξιολογημένες τιμές alpha και κλάσματα διακλάδωσης. Οι καμπύλες ηρεμίας χρησιμοποιούν τους άξονες τροχιάς· η προαιρετική εργαστηριακή απόκριση περιστρέφει αυτούς τους άξονες και περιλαμβάνει εκτροπή Doppler.',
 'Calculate laboratory detector response':'Υπολογισμός εργαστηριακής απόκρισης ανιχνευτή',

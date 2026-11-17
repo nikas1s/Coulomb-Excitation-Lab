@@ -363,6 +363,31 @@ def profile_fit(reaction, parameters, experiments, bounds, parameter_index, grid
     return pd.DataFrame(rows)
 
 
+def fit_predictions(reaction,parameters,experiments,fit,settings=None):
+    """Predictions at the fitted values, including the actual shared log-scales.
+
+    Gaussian residuals use covariance whitening when supplied; Poisson residuals
+    are signed square-root deviances. Normalization-prior terms are separate
+    from these observation residuals, exactly as in the objective.
+    """
+    local=apply_parameters(reaction,parameters,fit['values'][:len(parameters)])
+    scales={}
+    for j,group in enumerate(fit['normalization_groups']):
+        for index in group['experiments']:
+            scales[index]=float(np.exp(fit['values'][len(parameters)+j]))
+    predictions=[]
+    for i,experiment in enumerate(experiments):
+        predicted=experiment.predict(local,settings)*scales.get(i,1.)
+        residual=likelihood_residual(experiment.data.value,predicted,experiment.likelihood,
+            experiment.data.get('uncertainty'),experiment.covariance)
+        data=experiment.data.copy()
+        data['predicted']=predicted;data['likelihood_residual']=residual
+        predictions.append(dict(model=experiment.model or 'primary',kind=experiment.kind,frame=experiment.frame,
+            likelihood=experiment.likelihood,correlated=experiment.covariance is not None,
+            normalization_scale=scales.get(i,1.),data=data.to_dict('records')))
+    return predictions
+
+
 def information_matrix(jacobian, uncertainties, normalization_prediction=None, normalization_sigma=None):
     """Gaussian Fisher information, profiling one shared log-normalization nuisance."""
     jacobian, sigma = np.asarray(jacobian,float), np.asarray(uncertainties,float)

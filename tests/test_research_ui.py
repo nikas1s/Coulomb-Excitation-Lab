@@ -51,6 +51,8 @@ def test_single_parameter_profile_upload_and_plot():
     assert len(fit['profile'])==3
     assert all(fit['profile'].success)
     assert any('Profile thresholds' in x.value for x in app.caption)
+    assert fit['predictions'][0]['data'][0]['predicted']>0
+    assert any('Predictions include fitted shared normalization' in x.value for x in app.caption)
 
 
 def test_laboratory_gamma_controls_results_and_greek():

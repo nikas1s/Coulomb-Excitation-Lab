@@ -76,6 +76,12 @@ The count objective is checked against high-precision arithmetic near equal high
 
 Exact central Poisson limits follow [Garwood (1936)](https://doi.org/10.1093/biomet/28.3-4.437). The UI's asymptotic profile thresholds use [Wilks (1938)](https://doi.org/10.1214/aoms/1177732360); they are not exact small-count intervals.
 
+The recorded nondegenerate study completed all 100 fits without failures or active bounds. The transition element, diagonal element and log-normalization had observed 68% coverages **57%, 71%, 59%**, and 95% coverages **94%, 95%, 91%**, respectively. Each nominal value lies in its predeclared 99% binomial interval, but the 68% frequencies for transition strength and scale are low. The test's acceptance does not establish precise nominal coverage; larger studies and profile-based intervals are still justified before experimental interval claims.
+
+![Multilevel coverage and parameter pulls](multilevel_coverage.png)
+
+Regenerate the figure with `.venv/bin/python validation/plot_fit_coverage.py`. It uses the saved trial records; it does not refit or discard trials.
+
 ## Experimental target and release gates
 
 The first experimental target remains 96Sr + 120Sn from [Clément et al. (2016)](https://doi.org/10.1103/PhysRevC.94.054326). Seven Table I peak intensities and their reported errors are archived with attribution in `experiments/sr96_sn120/`. They are not efficiency-corrected and are not asserted to be raw Poisson counts. The manifest explicitly lists missing calibrated response, stopping/beam distribution, complete spectroscopic inputs, normalization/covariance and original fit settings. No guessed detector curve is substituted for the experiment's calibration.
